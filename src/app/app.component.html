@@ -1,0 +1,32 @@
+<nz-layout class="layout">
+  <nz-sider class="SamaTheme4"  nzCollapsible nzBreakpoint="lg" [nzCollapsedWidth]="0">
+    <div class="logo" style="text-align: center;color: white;padding-top: 5px;">BBSTech</div>
+    <ul nz-menu style="background: transparent" nzMode="inline">
+      <li nz-menu-item>
+        <i nz-icon nzType="user"></i>
+        <span><a class="button" routerLink="/crisis-list" routerLinkActive="activebutton">Crisis Center</a></span>
+      </li>
+      <li nz-menu-item>
+        <i nz-icon nzType="video-camera"></i>
+        <span><a class="button" routerLink="/heroes-list" routerLinkActive="activebutton">Heroes</a></span>
+      </li>
+      <li nz-menu-item>
+        <i nz-icon nzType="upload"></i>
+        <span><a class="button" routerLink="/login" routerLinkActive="activebutton">Login</a></span>
+      </li>
+      <li nz-menu-item>
+        <i nz-icon nzType="user"></i>
+        <span>nav 4</span>
+      </li>
+    </ul>
+  </nz-sider>
+  <nz-layout>
+    <nz-header></nz-header>
+    <nz-content>
+      <div class="inner-content">
+        <router-outlet></router-outlet>
+      </div>
+    </nz-content>
+    <nz-footer>BBSTech ©2021 Implémenter par Ada</nz-footer>
+  </nz-layout>
+</nz-layout>
