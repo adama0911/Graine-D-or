@@ -43,6 +43,7 @@ import { DashbordAdminComponent } from './adminGenerale/dashbord-admin/dashbord-
 import { LivreursComponent } from './vendeur/livreurs/livreurs.component';
 import { CommandesComponent } from './vendeur/commandes/commandes.component';
 import { DashboardComponent } from './vendeur/dashboard/dashboard.component';
+import { TableModule } from 'ngx-easy-table';
 
 @NgModule({
   declarations: [
@@ -60,6 +61,7 @@ import { DashboardComponent } from './vendeur/dashboard/dashboard.component';
   ],
   imports: [
     BrowserModule,
+    TableModule,
     FormsModule,
     AppRoutingModule,
     BrowserModule,
