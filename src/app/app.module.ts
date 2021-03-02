@@ -24,6 +24,9 @@ import { NzTableModule } from 'ng-zorro-antd/table';
 import { NzDropDownModule } from 'ng-zorro-antd/dropdown';
 import { NzLayoutModule } from 'ng-zorro-antd/layout';
 import { NzGridModule } from 'ng-zorro-antd/grid';
+
+import { NzCardModule } from 'ng-zorro-antd/card';
+
 /******************************************************
 *               Components
 *******************************************************/
@@ -57,12 +60,15 @@ import { DashbordAdminComponent } from './adminGenerale/dashbord-admin/dashbord-
       {path: 'crisis-list', component: CrisisListComponent},
       {path: 'heroes-list', component: HeroesListComponent},
       {path: 'login', component: LoginComponent},
+      {path: 'createCaisse', component: CreateCaisseComponent},
+      {path: 'dashbordAdmin', component: DashbordAdminComponent},
     ]),
     NzButtonModule,
     NzTableModule,
     NzDropDownModule,
     NzLayoutModule,
     NzGridModule,
+    NzCardModule
   ],
   providers: [ConfigService,
 

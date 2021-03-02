@@ -19,7 +19,21 @@ const ROUTE_VENDEUR: routeItem[] = [
     titre: 'Dashboard',
     description:'',
     icon:''
-  }
+  },
+  ,
+  {
+    path:'/dashbordAdmin',
+    titre: 'Dashboard admin',
+    description:'',
+    icon:''
+  },
+  ,
+  {
+    path:'/createCaisse',
+    titre: 'Création caisse',
+    description:'',
+    icon:''
+  },
 ];
 
 
