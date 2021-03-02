@@ -47,6 +47,7 @@ import { DashbordAdminComponent } from './adminGenerale/dashbord-admin/dashbord-
   ],
   imports: [
     BrowserModule,
+    FormsModule,
     AppRoutingModule,
     BrowserModule,
     HttpClientModule,
