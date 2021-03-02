@@ -152,6 +152,4 @@ export class HeroesListComponent implements OnInit {
   }
 
 
-
-
 }

@@ -33,6 +33,8 @@ import { CrisisListComponent } from './crisis-list/crisis-list.component';
 import { HeroesListComponent } from './heroes-list/heroes-list.component';
 import { ConfigService } from './services/Config.service';
 import { LoginComponent } from './login/login.component';
+import { CreateCaisseComponent } from './adminGenerale/create-caisse/create-caisse.component';
+import { DashbordAdminComponent } from './adminGenerale/dashbord-admin/dashbord-admin.component';
 
 @NgModule({
   declarations: [
@@ -40,6 +42,8 @@ import { LoginComponent } from './login/login.component';
     CrisisListComponent,
     HeroesListComponent,
     LoginComponent,
+    CreateCaisseComponent,
+    DashbordAdminComponent,
   ],
   imports: [
     BrowserModule,
