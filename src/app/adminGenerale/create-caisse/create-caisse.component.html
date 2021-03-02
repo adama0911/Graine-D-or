@@ -1,8 +1,52 @@
-<nz-card style="width:300px;" nzTitle="Card title" [nzExtra]="extraTemplate">
-    <p>Card content</p>
-    <p>Card content</p>
-    <p>Card content</p>
+<nz-card style="width:100%;" nzTitle="Gestion des admins caisses" >
+  
+    <div nz-row style="text-align: center;">
+        <div nz-col nzSpan="12" style="text-align: right;">
+            <button class="btn btn-primary" (click)="etapeDisplay = 1" style="margin-left: 5px;">Liste admin caisse</button>
+        </div>
+        <div nz-col nzSpan="12" style="text-align: left;">
+            <button class="btn btn-info" (click)="etapeDisplay = 2" style="margin-left: 5px;">Création admin caisse</button>
+        </div>
+    </div>
+    <div *ngIf="etapeDisplay == 1" >
+
+       
+  
+    
+    </div>
+    
+    <div *ngIf="etapeDisplay == 2" >
+        <form >
+            <div nz-row>
+                <div nz-col nzSpan="11" style="margin-top: 1rem;">
+                    <label for="exampleInputEmail1">Prénom</label>
+                    <input type="text" [ngModelOptions]="{standalone: true}" class="form-control" [(ngModel)]="prenom" id="prenom" aria-describedby="emailHelp" placeholder="Prénom">
+                </div>
+                <div nz-col nzSpan="11" style="margin-top: 1rem;margin-left: 5px;" >
+                    <label for="exampleInputEmail1">Nom</label>
+                    <input type="text" [ngModelOptions]="{standalone: true}" class="form-control" [(ngModel)]="nom" id="nom" aria-describedby="emailHelp" placeholder="Nom">
+                </div>
+
+                <div nz-col nzSpan="11" style="margin-top: 1rem;">
+                    <label for="exampleInputEmail1">Téléphone</label>
+                    <input type="text" [ngModelOptions]="{standalone: true}" class="form-control" [(ngModel)]="telephone" id="prenom" aria-describedby="emailHelp" placeholder="Téléphone">
+                </div>
+                <div nz-col nzSpan="11" style="margin-top: 1rem;margin-left: 5px;" >
+                    <label for="exampleInputEmail1">Addresse</label>
+                    <input type="text" [ngModelOptions]="{standalone: true}" class="form-control" [(ngModel)]="adresse" id="nom" aria-describedby="emailHelp" placeholder="Addresse">
+                </div>
+
+                <div nz-col nzSpan="22" style="text-align: center;margin-top: 1rem;">
+                    <label for="exampleInputEmail1">Identifiant</label>
+                    <input type="text" [ngModelOptions]="{standalone: true}" class="form-control" [(ngModel)]="identifiant" id="prenom" aria-describedby="emailHelp" placeholder="Identifiant">
+                </div>
+              
+            </div>
+            <div nz-col nzSpan="24" style="text-align: center;margin-top: 1rem;">
+                <button class="btn btn-success">Valider</button>
+            </div>
+        
+        </form>
+    </div>
   </nz-card>
-  <ng-template #extraTemplate>
-    <a>More</a>
-  </ng-template>
+  

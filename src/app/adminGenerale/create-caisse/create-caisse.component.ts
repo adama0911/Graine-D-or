@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
+
 @Component({
   selector: 'app-create-caisse',
   templateUrl: './create-caisse.component.html',
@@ -7,9 +8,26 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CreateCaisseComponent implements OnInit {
 
-  constructor() { }
+  prenom
+  nom
+  adresse
+  telephone
+  identifiant
+  etapeDisplay:number = 1;
+  searchValue = '';
+  visible = false;
+
+  selected = []
+
+
+  constructor() { 
+   
+  }
+
+ 
 
   ngOnInit(): void {
+   
   }
 
 }

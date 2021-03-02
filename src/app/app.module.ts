@@ -25,7 +25,9 @@ import { NzDropDownModule } from 'ng-zorro-antd/dropdown';
 import { NzLayoutModule } from 'ng-zorro-antd/layout';
 import { NzGridModule } from 'ng-zorro-antd/grid';
 
+import { NzFormModule } from 'ng-zorro-antd/form';
 import { NzCardModule } from 'ng-zorro-antd/card';
+
 
 /******************************************************
 *               Components
@@ -38,6 +40,9 @@ import { ConfigService } from './services/Config.service';
 import { LoginComponent } from './login/login.component';
 import { CreateCaisseComponent } from './adminGenerale/create-caisse/create-caisse.component';
 import { DashbordAdminComponent } from './adminGenerale/dashbord-admin/dashbord-admin.component';
+import { LivreursComponent } from './vendeur/livreurs/livreurs.component';
+import { CommandesComponent } from './vendeur/commandes/commandes.component';
+import { DashboardComponent } from './vendeur/dashboard/dashboard.component';
 
 @NgModule({
   declarations: [
@@ -45,8 +50,13 @@ import { DashbordAdminComponent } from './adminGenerale/dashbord-admin/dashbord-
     CrisisListComponent,
     HeroesListComponent,
     LoginComponent,
+
     CreateCaisseComponent,
     DashbordAdminComponent,
+
+    LivreursComponent,
+    CommandesComponent,
+    DashboardComponent,
   ],
   imports: [
     BrowserModule,
@@ -60,15 +70,25 @@ import { DashbordAdminComponent } from './adminGenerale/dashbord-admin/dashbord-
       {path: 'crisis-list', component: CrisisListComponent},
       {path: 'heroes-list', component: HeroesListComponent},
       {path: 'login', component: LoginComponent},
+
       {path: 'createCaisse', component: CreateCaisseComponent},
       {path: 'dashbordAdmin', component: DashbordAdminComponent},
+
+      {path: 'livreurs', component: LivreursComponent},
+      {path: 'commandes', component: CommandesComponent},
+      {path: 'dashboardVendeur', component: DashboardComponent},
+
     ]),
     NzButtonModule,
     NzTableModule,
     NzDropDownModule,
     NzLayoutModule,
     NzGridModule,
-    NzCardModule
+    NzCardModule,
+    NzFormModule,
+    NzGridModule,
+    FormsModule,
+    
   ],
   providers: [ConfigService,
 

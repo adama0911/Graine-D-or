@@ -15,19 +15,19 @@ const ROUTE_VENDEUR: routeItem[] = [
     icon:''
   },
   {
-    path:'/dashboard',
+    path:'/dashboardVendeur',
     titre: 'Dashboard',
     description:'',
     icon:''
   },
-  ,
+  
   {
     path:'/dashbordAdmin',
     titre: 'Dashboard admin',
     description:'',
     icon:''
   },
-  ,
+  
   {
     path:'/createCaisse',
     titre: 'Création caisse',
@@ -35,8 +35,20 @@ const ROUTE_VENDEUR: routeItem[] = [
     icon:''
   },
 ];
-
-
+const ROUTE_ADMIN: routeItem[] = [
+{
+  path:'/dashbordAdmin',
+  titre: 'Dashboard admin',
+  description:'',
+  icon:''
+},
+{
+  path:'/createCaisse',
+  titre: 'Création caisse',
+  description:'',
+  icon:''
+}
+];
 
 @Component({
   selector: 'app-root',
@@ -49,6 +61,6 @@ const ROUTE_VENDEUR: routeItem[] = [
 export class AppComponent {
   title = 'angular-router-sample';
   
-  menu:routeItem[] = ROUTE_VENDEUR;
+  menu:routeItem[] = ROUTE_ADMIN;
   
 }
