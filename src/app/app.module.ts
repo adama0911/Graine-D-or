@@ -33,6 +33,9 @@ import { CrisisListComponent } from './crisis-list/crisis-list.component';
 import { HeroesListComponent } from './heroes-list/heroes-list.component';
 import { ConfigService } from './services/Config.service';
 import { LoginComponent } from './login/login.component';
+import { LivreursComponent } from './vendeur/livreurs/livreurs.component';
+import { CommandesComponent } from './vendeur/commandes/commandes.component';
+import { DashboardComponent } from './vendeur/dashboard/dashboard.component';
 
 @NgModule({
   declarations: [
@@ -40,6 +43,9 @@ import { LoginComponent } from './login/login.component';
     CrisisListComponent,
     HeroesListComponent,
     LoginComponent,
+    LivreursComponent,
+    CommandesComponent,
+    DashboardComponent,
   ],
   imports: [
     BrowserModule,
@@ -53,6 +59,9 @@ import { LoginComponent } from './login/login.component';
       {path: 'crisis-list', component: CrisisListComponent},
       {path: 'heroes-list', component: HeroesListComponent},
       {path: 'login', component: LoginComponent},
+      {path: 'livreurs', component: LivreursComponent},
+      {path: 'commandes', component: CommandesComponent},
+      {path: 'dashboardVendeur', component: DashboardComponent},
     ]),
     NzButtonModule,
     NzTableModule,

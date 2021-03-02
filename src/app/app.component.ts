@@ -15,7 +15,7 @@ const ROUTE_VENDEUR: routeItem[] = [
     icon:''
   },
   {
-    path:'/dashboard',
+    path:'/dashboardVendeur',
     titre: 'Dashboard',
     description:'',
     icon:''
