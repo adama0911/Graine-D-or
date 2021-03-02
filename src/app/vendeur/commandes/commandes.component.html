@@ -1,10 +1,32 @@
 <div class="container">
     <div class="row">
-        <div class="col-12">
+        <div class="col-12" style="max-width: 100% !important">
             <ngx-table [configuration]="configuration"
                     [data]="data"
-                    [columns]="columns">
+                    [columns]="columns"
+                    style="overflow:auto"
+                    style="max-width: 100% !important">
             </ngx-table>
+
+            
         </div>
     </div>
 </div>
+<ng-template let-row let-rowIndex="rowIndex" let-column="column" #actionTpl>
+    <td>
+        <button *ngIf="row.etat==1" class="btn btn-primary">Enregistrer </button>
+        <button *ngIf="row.etat==2" class="btn btn-primary">Valider </button>
+        <button *ngIf="row.etat==3" class="btn btn-primary">Preparer</button>
+        <button *ngIf="row.etat==4" class="btn btn-primary">En cour de livraison</button> 
+        <button *ngIf="row.etat==5" class="btn btn-primary">Payer</button> 
+    </td>
+</ng-template>
+<!-- <ng-template let-row let-rowIndex="rowIndex" let-column="column" #actionTpl>
+    <td>
+        <button *ngIf="row.etat==1" class="btn btn-primary">Enregistrer </button>
+        <button *ngIf="row.etat==2" class="btn btn-primary">Valider </button>
+        <button *ngIf="row.etat==3" class="btn btn-danger">Preparer</button>
+        <button *ngIf="row.etat==4" class="btn btn-danger">En cour de livraison</button> 
+        <button *ngIf="row.etat==5" class="btn btn-danger">Payer</button> 
+    </td>
+</ng-template> -->
