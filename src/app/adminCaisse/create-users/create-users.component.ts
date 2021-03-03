@@ -4,13 +4,12 @@ import { Config } from 'protractor';
 import { DataItem } from 'src/app/interfaces/dataItem.object';
 import { AdminGeneralService } from 'src/app/services/adminGeneral/admin-general.service';
 
-
 @Component({
-  selector: 'app-create-caisse',
-  templateUrl: './create-caisse.component.html',
-  styleUrls: ['./create-caisse.component.scss']
+  selector: 'app-create-users',
+  templateUrl: './create-users.component.html',
+  styleUrls: ['./create-users.component.scss']
 })
-export class CreateCaisseComponent implements OnInit {
+export class CreateUsersComponent implements OnInit {
 
   prenom
   nom
@@ -20,7 +19,7 @@ export class CreateCaisseComponent implements OnInit {
   etapeDisplay:number = 1;
   searchValue = '';
   visible = false;
-
+  typeUser
   selected 
 
   public configuration: Config;
@@ -34,7 +33,14 @@ export class CreateCaisseComponent implements OnInit {
     console.log(this.selected)
   }
   createUser(){
-    this._serviceAdmin.createUser({depends_on:2,prenom:this.prenom,nom:this.nom,login:this.identifiant,telephone:this.telephone,adresse:this.adresse,accesslevel:2}).then(res=>{
+    let accesslevel 
+    if(this.typeUser == "vendeuse"){
+      accesslevel = 3
+    }
+    if(this.typeUser == "livreur"){
+      accesslevel = 4
+    }
+    this._serviceAdmin.createUser({depends_on:2,prenom:this.prenom,nom:this.nom,login:this.identifiant,telephone:this.telephone,adresse:this.adresse,accesslevel:accesslevel}).then(res=>{
       console.log(res);
     });
     //this.data.push({prenom:this.prenom,nom:this.nom,login:this.identifiant,telephone:this.telephone,adresse:this.adresse,action:"Valider"})

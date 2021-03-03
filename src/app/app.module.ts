@@ -27,6 +27,7 @@ import { NzGridModule } from 'ng-zorro-antd/grid';
 
 import { NzFormModule } from 'ng-zorro-antd/form';
 import { NzCardModule } from 'ng-zorro-antd/card';
+import { NzModalModule } from 'ng-zorro-antd/modal';
 
 
 /******************************************************
@@ -44,6 +45,8 @@ import { LivreursComponent } from './vendeur/livreurs/livreurs.component';
 import { CommandesComponent } from './vendeur/commandes/commandes.component';
 import { DashboardComponent } from './vendeur/dashboard/dashboard.component';
 import { TableModule } from 'ngx-easy-table';
+import { CreateUsersComponent } from './adminCaisse/create-users/create-users.component';
+import { DashbordAdminCaisseComponent } from './adminCaisse/dashbord-admin-caisse/dashbord-admin-caisse.component';
 
 @NgModule({
   declarations: [
@@ -58,6 +61,8 @@ import { TableModule } from 'ngx-easy-table';
     LivreursComponent,
     CommandesComponent,
     DashboardComponent,
+    CreateUsersComponent,
+    DashbordAdminCaisseComponent,
   ],
   imports: [
     BrowserModule,
@@ -76,6 +81,9 @@ import { TableModule } from 'ngx-easy-table';
       {path: 'createCaisse', component: CreateCaisseComponent},
       {path: 'dashbordAdmin', component: DashbordAdminComponent},
 
+      {path: 'createUsers', component: CreateUsersComponent},
+      {path: 'dashbordAdminCaisse', component: DashbordAdminCaisseComponent},
+
       {path: 'livreurs', component: LivreursComponent},
       {path: 'commandes', component: CommandesComponent},
       {path: 'dashboardVendeur', component: DashboardComponent},
@@ -90,6 +98,7 @@ import { TableModule } from 'ngx-easy-table';
     NzFormModule,
     NzGridModule,
     FormsModule,
+    NzModalModule,
     
   ],
   providers: [ConfigService,

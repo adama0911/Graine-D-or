@@ -3,20 +3,17 @@ import { Columns, DefaultConfig } from 'ngx-easy-table';
 import { Config } from 'protractor';
 import { AdminGeneralService } from 'src/app/services/adminGeneral/admin-general.service';
 @Component({
-  selector: 'app-dashbord-admin',
-  templateUrl: './dashbord-admin.component.html',
-  styleUrls: ['./dashbord-admin.component.scss']
+  selector: 'app-dashbord-admin-caisse',
+  templateUrl: './dashbord-admin-caisse.component.html',
+  styleUrls: ['./dashbord-admin-caisse.component.scss']
 })
-export class DashbordAdminComponent implements OnInit {
+export class DashbordAdminCaisseComponent implements OnInit {
 
   public configuration: Config;
   public columns: Columns[];
   dd
   df
   @ViewChild('actionTpl', { static: true }) actionTpl: TemplateRef<any>;
-  constructor(private _serviceAdmin:AdminGeneralService) { 
-   
-  }
 
   public data = [
     {
@@ -37,12 +34,6 @@ export class DashbordAdminComponent implements OnInit {
   ngOnInit(): void {
     this.dd = (new Date().toJSON()).split("T")[0]
     this.df = (new Date().toJSON()).split("T")[0]
-    let dateDebut = this.dd.split('-')[2]+"/"+this.dd.split('-')[1]+"/"+this.dd.split('-')[0]
-    let dateFin = this.df.split('-')[2]+"/"+this.df.split('-')[1]+"/"+this.df.split('-')[0]
-    this._serviceAdmin.getCommande({debut:dateDebut,fin:dateFin}).then(res=>{
-      console.log(res);
-      
-    })
     this.configuration = { ...DefaultConfig };
     this.configuration.searchEnabled = true;
     this.columns = [
