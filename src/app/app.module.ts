@@ -24,6 +24,7 @@ import { NzTableModule } from 'ng-zorro-antd/table';
 import { NzDropDownModule } from 'ng-zorro-antd/dropdown';
 import { NzLayoutModule } from 'ng-zorro-antd/layout';
 import { NzGridModule } from 'ng-zorro-antd/grid';
+import { NzProgressModule } from 'ng-zorro-antd/progress';
 /******************************************************
 *               Components
 *******************************************************/
@@ -35,8 +36,12 @@ import { ConfigService } from './services/Config.service';
 import { LoginComponent } from './login/login.component';
 import { LivreursComponent } from './vendeur/livreurs/livreurs.component';
 import { CommandesComponent } from './vendeur/commandes/commandes.component';
+import { CommandesComponent as LivreurCommandesComponent} from './livreur/commandes/commandes.component';
 import { DashboardComponent } from './vendeur/dashboard/dashboard.component';
 import { TableModule } from 'ngx-easy-table';
+import { ChartsModule } from 'ng2-charts';
+import { HistoriqueComponent } from './livreur/historique/historique.component';
+import { HomeComponent } from './home/home.component';
 
 @NgModule({
   declarations: [
@@ -46,7 +51,10 @@ import { TableModule } from 'ngx-easy-table';
     LoginComponent,
     LivreursComponent,
     CommandesComponent,
+    LivreurCommandesComponent,
     DashboardComponent,
+    HistoriqueComponent,
+    HomeComponent,
   ],
   imports: [
     BrowserModule,
@@ -57,19 +65,25 @@ import { TableModule } from 'ngx-easy-table';
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
+    ChartsModule,
     RouterModule.forRoot([
       {path: 'crisis-list', component: CrisisListComponent},
       {path: 'heroes-list', component: HeroesListComponent},
       {path: 'login', component: LoginComponent},
       {path: 'livreurs', component: LivreursComponent},
       {path: 'commandes', component: CommandesComponent},
+      {path: 'commandesLivreur', component: LivreurCommandesComponent},
+      {path: 'historiqueLivreur', component: HistoriqueComponent},
       {path: 'dashboardVendeur', component: DashboardComponent},
+      {path: 'home', component: HomeComponent},
     ]),
     NzButtonModule,
     NzTableModule,
     NzDropDownModule,
     NzLayoutModule,
     NzGridModule,
+   NzProgressModule,
+
   ],
   providers: [ConfigService,
 

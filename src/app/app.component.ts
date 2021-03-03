@@ -1,26 +1,7 @@
 import { Component } from '@angular/core';
 import { routeItem } from './interfaces/routeItem.interface';
-
-const ROUTE_VENDEUR: routeItem[] = [
-  {
-    path:'/livreurs',
-    titre: 'Livreurs',
-    description:'',
-    icon:''
-  },
-  {
-    path:'/commandes',
-    titre: 'Commandes',
-    description:'',
-    icon:''
-  },
-  {
-    path:'/dashboardVendeur',
-    titre: 'Dashboard',
-    description:'',
-    icon:''
-  }
-];
+import { LoginService } from './services/login.service';
+import { Router } from '@angular/router';
 
 
 
@@ -34,7 +15,28 @@ const ROUTE_VENDEUR: routeItem[] = [
 
 export class AppComponent {
   title = 'angular-router-sample';
-  
-  menu:routeItem[] = ROUTE_VENDEUR;
-  
+  public login = null;
+  public password = null;
+
+  constructor (private _logService:LoginService,private router:Router){
+
+  }
+
+
+  loger (){
+    this._logService.loger({login:this.login,password:this.password}).then(res=>{
+      console.log(res);
+      if(res.status==1){
+        console.log(res);
+        sessionStorage.setItem('profile','vendeur');
+        sessionStorage.setItem('accessLevel','1');
+        this.router.navigate(['/home'])
+      }else{
+        console.log(res);
+        sessionStorage.setItem('profile','vendeur');
+        sessionStorage.setItem('accessLevel','1');
+        this.router.navigate(['/home'])
+      }
+    })
+  }
 }

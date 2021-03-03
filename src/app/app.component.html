@@ -1,20 +1,36 @@
 <nz-layout class="layout">
-  <nz-sider class="SamaTheme"  nzCollapsible nzBreakpoint="lg" [nzCollapsedWidth]="0">
-    <div class="logo" style="height: 54px;text-align: center;color: white;padding-top: 5px;"><img  style="width: 46%;" src="../assets/images/logo-grainedor.png" alt="" srcset=""></div>
-    <ul nz-menu style="background: transparent" nzMode="inline">
-      <li nz-menu-item *ngFor='let item of this.menu'>
-        <i nz-icon nzType="user"></i>
-        <span><a style="color: white;" class="button" routerLink="{{item.path}}" routerLinkActive="activebutton">{{item.titre}}</a></span>
-      </li>
-    </ul>
-  </nz-sider>
   <nz-layout>
-    <nz-header></nz-header>
     <nz-content>
-      <div class="inner-content">
-        <app-commandes></app-commandes>
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-3 col-md-1 col-xs-1">
+
+          </div>
+          <div class="col-lg-6 col-md-10 col-xs-10">
+            <div class="inner-content">
+              <form style="background-image: url('../assets/images/backgroun_image.jpg') !important;">
+                <div class="form-group">
+                  <label for="exampleInputEmail1">Email address</label>
+                  <input [ngModelOptions]="{standalone: true}" [(ngModel)]="this.login"  type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email" />
+                </div>
+                <div class="form-group">
+                  <label for="exampleInputPassword1">Password</label>
+                  <input  [ngModelOptions]="{standalone: true}" [(ngModel)]="this.password" type="password" class="form-control" id="exampleInputPassword1" placeholder="Password" />
+                </div>
+                <div class="form-check">
+                  <input type="checkbox" class="form-check-input" id="exampleCheck1">
+                  <label class="form-check-label" for="exampleCheck1">Check me out</label>
+                </div>
+                <button (click)="loger()" type="submit" class="btn btn-primary">Submit</button>
+              </form>
+            </div>
+          </div>
+        </div>
+
       </div>
+
+
     </nz-content>
-    <nz-footer>BBSTech ©2021 Implémenter par Ada</nz-footer>
+    <nz-footer>BBSTech ©2021</nz-footer>
   </nz-layout>
 </nz-layout>

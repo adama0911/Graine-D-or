@@ -10,15 +10,13 @@ import { commandeItem } from '../interfaces/commandeItem.interface';
 import { ConfigService } from 'src/app/services/Config.service';
 
 
-
-
 @Component({
-  selector: 'app-dashboard',
-  templateUrl: './dashboard.component.html',
-  styleUrls: ['./dashboard.component.scss']
+  selector: 'app-commandesLivreur',
+  templateUrl: './commandes.component.html',
+  styleUrls: ['./commandes.component.scss']
 })
-export class DashboardComponent implements OnInit {
 
+export class CommandesComponent implements OnInit {
   public configuration: Config;
   public columns: Columns[];
 
@@ -32,7 +30,6 @@ export class DashboardComponent implements OnInit {
     {
       id:1,
       commande: '122',
-      livreur: 'Adama Goudiaby',
       client: "Abdoul Hamid",
       montantCommande: 500,
       montantLivraison: 2000,
@@ -43,42 +40,21 @@ export class DashboardComponent implements OnInit {
     },
   ];
 
-  barChartOptions = {
-    scaleShowVerticalLines: false,
-    responsive: true
-  };
-
-  barChartLabels = ['2006', '2007', '2008', '2009', '2010', '2011', '2012'];
-  barChartType = 'bar';
-  barChartLegend = true;
-  barChartData = [
-    {data: [65, 59, 80, 81, 56, 55, 40], label: 'Series A'},
-    {data: [28, 48, 40, 19, 86, 27, 90], label: 'Series B'}
-  ];
-
-  public doughnutChartLabels = ['Sales Q1', 'Sales Q2', 'Sales Q3', 'Sales Q4'];
-  public doughnutChartData = [120, 150, 180, 90];
-  public doughnutChartType = 'doughnut';
-
-
-
-
-
-  graphs (){
-    
-  }
-
   ngOnInit(): void {
     this.configuration = { ...DefaultConfig };
+    this.configuration.isLoading = true;
     this.configuration.searchEnabled = true;
     // ... etc.
     this.columns = [
       { key: 'commande', title: 'COMMANDE' },
-      { key: 'livreur', title: 'LIVREUR' },
       { key: 'client', title: 'CLIENT' },
       { key: 'montantCommande', title: 'MONTANT COMMANDE' },
       { key: 'montantLivraison', title: 'MONTANT LIVRAISON' },
+      { key: 'paiement', title: 'PAIEMENT' },
+      { key: 'recuperation', title: 'RÉCUPÉRATION' },
+      { key: 'etat', title: 'ETAT COMMANDE' },
       { key: 'monnaie', title: 'MONNAIE À PRÉPARÉE' },
+      { key: 'action', title: 'Actions', cellTemplate: this.actionTpl },
     ];
 
     this._confService.getHistoriques({}).then(res=>{

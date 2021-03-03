@@ -80,8 +80,7 @@ export class HeroesListComponent implements OnInit {
   listOfDisplayData = [...this.listOfData];
 
   constructor(private configService:ConfigService,private i18n: NzI18nService) { 
-    this.configService.getConfig()
-    .subscribe((data: any) =>  console.log(data));
+
   }
 
 
