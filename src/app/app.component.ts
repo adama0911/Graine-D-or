@@ -3,8 +3,56 @@ import { routeItem } from './interfaces/routeItem.interface';
 import { LoginService } from './services/login.service';
 import { Router } from '@angular/router';
 
-
-
+const ROUTE_VENDEUR: routeItem[] = [
+  {
+    path:'/livreurs',
+    titre: 'Livreurs',
+    description:'',
+    icon:''
+  },
+  {
+    path:'/commandes',
+    titre: 'Commandes',
+    description:'',
+    icon:''
+  },
+  {
+    path:'/dashboardVendeur',
+    titre: 'Dashboard',
+    description:'',
+    icon:''
+  },
+  
+];
+const ROUTE_ADMIN: routeItem[] = [
+{
+  path:'/dashbordAdmin',
+  titre: 'Dashboard admin',
+  description:'',
+  icon:''
+},
+{
+  path:'/createCaisse',
+  titre: 'Création caisse',
+  description:'',
+  icon:''
+}
+];
+const ROUTE_ADMIN_CAISSE: routeItem[] = [
+  {
+    path:'/dashbordAdminCaisse',
+    titre: 'Dashboard caisse',
+    description:'',
+    icon:''
+  },
+  {
+    path:'/createUsers',
+    titre: 'Création utilisateur',
+    description:'',
+    icon:''
+  }
+  ];
+  
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -30,13 +78,14 @@ export class AppComponent {
         console.log(res);
         sessionStorage.setItem('profile','vendeur');
         sessionStorage.setItem('accessLevel','1');
-        this.router.navigate(['/home'])
       }else{
         console.log(res);
         sessionStorage.setItem('profile','vendeur');
         sessionStorage.setItem('accessLevel','1');
         this.router.navigate(['/home'])
       }
+      this.router.navigate(['/home'])
     })
   }
+    
 }

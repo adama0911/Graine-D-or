@@ -1,0 +1,57 @@
+<nz-card style="width:100%;" nzTitle="Dashbord des commandes" >
+    <div style="background: #ECECEC;padding:10px;">
+        <div nz-row [nzGutter]="8">
+          <div nz-col [nzSpan]="8">
+            <nz-card nzTitle="Nombre de commandes">
+              <span>15 </span><small>commandes </small>
+            </nz-card>
+          </div>
+          <div nz-col [nzSpan]="8">
+            <nz-card nzTitle="Solde graine d'or">
+              <span>150000 </span><small>FCFA</small>
+            </nz-card>
+          </div>
+          <div nz-col [nzSpan]="8">
+            <nz-card nzTitle="Solde BBS">
+              <span>150000 </span><small>FCFA</small>
+            </nz-card>
+          </div>
+        </div>
+      </div>
+    <div  >
+        <div style="background: #ECECEC;padding:10px;">
+            <div nz-row [nzGutter]="8">
+              <div nz-col [nzSpan]="8">
+                <label for="exampleInputEmail1">Date début</label>
+                <input type="date" [ngModelOptions]="{standalone: true}" class="form-control" [(ngModel)]="dd" id="dateD" aria-describedby="emailHelp" placeholder="Prénom">
+              </div>
+              <div nz-col [nzSpan]="8">
+                <label for="exampleInputEmail1">Date fin</label>
+                <input type="date" [ngModelOptions]="{standalone: true}" class="form-control" [(ngModel)]="df" id="dateF" aria-describedby="emailHelp" placeholder="Prénom">
+              </div>
+              <div nz-col [nzSpan]="8">
+                <button class="btn btn-success" style="margin-top: 2.5rem;" >Rcherche</button>
+              </div>
+            </div>
+          </div>
+        <div class="col-12" style="max-width: 100% !important">
+            <ngx-table [configuration]="configuration"
+                    [data]="data"
+                    [columns]="columns"
+                    style="overflow:auto"
+                    style="max-width: 100% !important">
+            </ngx-table>
+        </div>
+       
+    </div>
+ 
+  </nz-card>
+<ng-template let-row let-rowIndex="rowIndex" let-column="column" #actionTpl>
+    <td>
+        <button *ngIf="row.etat==1" class="btn btn-primary">Enregistrer </button>
+        <button *ngIf="row.etat==2" class="btn btn-primary">Valider </button>
+        <button *ngIf="row.etat==3" class="btn btn-primary">Preparer</button>
+        <button *ngIf="row.etat==4" class="btn btn-primary">En cour de livraison</button> 
+        <button *ngIf="row.etat==5" class="btn btn-primary">Payer</button> 
+    </td>
+</ng-template>

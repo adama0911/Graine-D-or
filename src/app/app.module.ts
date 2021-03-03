@@ -24,7 +24,16 @@ import { NzTableModule } from 'ng-zorro-antd/table';
 import { NzDropDownModule } from 'ng-zorro-antd/dropdown';
 import { NzLayoutModule } from 'ng-zorro-antd/layout';
 import { NzGridModule } from 'ng-zorro-antd/grid';
+
 import { NzProgressModule } from 'ng-zorro-antd/progress';
+
+
+import { NzFormModule } from 'ng-zorro-antd/form';
+import { NzCardModule } from 'ng-zorro-antd/card';
+import { NzModalModule } from 'ng-zorro-antd/modal';
+
+
+
 /******************************************************
 *               Components
 *******************************************************/
@@ -34,6 +43,8 @@ import { CrisisListComponent } from './crisis-list/crisis-list.component';
 import { HeroesListComponent } from './heroes-list/heroes-list.component';
 import { ConfigService } from './services/Config.service';
 import { LoginComponent } from './login/login.component';
+import { CreateCaisseComponent } from './adminGenerale/create-caisse/create-caisse.component';
+import { DashbordAdminComponent } from './adminGenerale/dashbord-admin/dashbord-admin.component';
 import { LivreursComponent } from './vendeur/livreurs/livreurs.component';
 import { CommandesComponent } from './vendeur/commandes/commandes.component';
 import { CommandesComponent as LivreurCommandesComponent} from './livreur/commandes/commandes.component';
@@ -42,6 +53,9 @@ import { TableModule } from 'ngx-easy-table';
 import { ChartsModule } from 'ng2-charts';
 import { HistoriqueComponent } from './livreur/historique/historique.component';
 import { HomeComponent } from './home/home.component';
+import { CreateUsersComponent } from './adminCaisse/create-users/create-users.component';
+import { DashbordAdminCaisseComponent } from './adminCaisse/dashbord-admin-caisse/dashbord-admin-caisse.component';
+
 
 @NgModule({
   declarations: [
@@ -49,12 +63,18 @@ import { HomeComponent } from './home/home.component';
     CrisisListComponent,
     HeroesListComponent,
     LoginComponent,
+
+    CreateCaisseComponent,
+    DashbordAdminComponent,
+
     LivreursComponent,
     CommandesComponent,
     LivreurCommandesComponent,
     DashboardComponent,
     HistoriqueComponent,
     HomeComponent,
+    CreateUsersComponent,
+    DashbordAdminCaisseComponent,
   ],
   imports: [
     BrowserModule,
@@ -70,12 +90,20 @@ import { HomeComponent } from './home/home.component';
       {path: 'crisis-list', component: CrisisListComponent},
       {path: 'heroes-list', component: HeroesListComponent},
       {path: 'login', component: LoginComponent},
+
+      {path: 'createCaisse', component: CreateCaisseComponent},
+      {path: 'dashbordAdmin', component: DashbordAdminComponent},
+
+      {path: 'createUsers', component: CreateUsersComponent},
+      {path: 'dashbordAdminCaisse', component: DashbordAdminCaisseComponent},
+
       {path: 'livreurs', component: LivreursComponent},
       {path: 'commandes', component: CommandesComponent},
       {path: 'commandesLivreur', component: LivreurCommandesComponent},
       {path: 'historiqueLivreur', component: HistoriqueComponent},
       {path: 'dashboardVendeur', component: DashboardComponent},
       {path: 'home', component: HomeComponent},
+
     ]),
     NzButtonModule,
     NzTableModule,
@@ -84,6 +112,12 @@ import { HomeComponent } from './home/home.component';
     NzGridModule,
    NzProgressModule,
 
+    NzCardModule,
+    NzFormModule,
+    NzGridModule,
+    FormsModule,
+    NzModalModule,
+    
   ],
   providers: [ConfigService,
 
