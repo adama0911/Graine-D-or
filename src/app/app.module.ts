@@ -15,7 +15,6 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
-import { RouterModule } from '@angular/router';
 import { AppRoutingModule } from './app-routing.module';
 import { HttpClientModule } from '@angular/common/http';
 
@@ -57,6 +56,7 @@ import { CreateUsersComponent } from './adminCaisse/create-users/create-users.co
 import { DashbordAdminCaisseComponent } from './adminCaisse/dashbord-admin-caisse/dashbord-admin-caisse.component';
 
 
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -86,25 +86,6 @@ import { DashbordAdminCaisseComponent } from './adminCaisse/dashbord-admin-caiss
     FormsModule,
     ReactiveFormsModule,
     ChartsModule,
-    RouterModule.forRoot([
-      {path: 'crisis-list', component: CrisisListComponent},
-      {path: 'heroes-list', component: HeroesListComponent},
-      {path: 'login', component: LoginComponent},
-
-      {path: 'createCaisse', component: CreateCaisseComponent},
-      {path: 'dashbordAdmin', component: DashbordAdminComponent},
-
-      {path: 'createUsers', component: CreateUsersComponent},
-      {path: 'dashbordAdminCaisse', component: DashbordAdminCaisseComponent},
-
-      {path: 'livreurs', component: LivreursComponent},
-      {path: 'commandes', component: CommandesComponent},
-      {path: 'commandesLivreur', component: LivreurCommandesComponent},
-      {path: 'historiqueLivreur', component: HistoriqueComponent},
-      {path: 'dashboardVendeur', component: DashboardComponent},
-      {path: 'home', component: HomeComponent},
-
-    ]),
     NzButtonModule,
     NzTableModule,
     NzDropDownModule,

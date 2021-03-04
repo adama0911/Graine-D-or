@@ -5,7 +5,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
   providedIn: 'root'
 })
 export class LoginService {
-  private url = "https://2e7610725e61.ngrok.io/backendGrainedor/public/index.php";
+  private url = "http://161.97.73.229/backendGrainedor/public/index.php";
 
   private header :HttpHeaders;
 
