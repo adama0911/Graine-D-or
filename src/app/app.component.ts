@@ -76,6 +76,7 @@ export class AppComponent {
       console.log(res);
       if(res.status==1){
         console.log(res);
+        
         sessionStorage.setItem('profile','vendeur');
         sessionStorage.setItem('accessLevel','1');
       }else{
