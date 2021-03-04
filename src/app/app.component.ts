@@ -3,6 +3,7 @@ import { routeItem } from './interfaces/routeItem.interface';
 import { LoginService } from './services/login.service';
 import { Router } from '@angular/router';
 import * as sha1 from 'js-sha1';
+import { faCoffee } from '@fortawesome/free-solid-svg-icons';
 
 const ROUTE_VENDEUR: routeItem[] = [
   {
@@ -86,7 +87,8 @@ export class AppComponent {
   public login = null;
   public password = null;
   isLogin=0
-
+  public isLivreur = 0;
+  faCoffee = faCoffee;
   
   menu:routeItem[] = ROUTE_VENDEUR;
   
@@ -102,6 +104,12 @@ export class AppComponent {
 
 
   loger (){
+
+    // this.isLogin = 1;
+    // this.isLivreur = 1;
+    // this.menu = ROUTE_LIVREUR;
+    // this.router.navigate(['/commandesLivreur'])
+
     this._logService.loger({login:this.login,password:sha1(this.password)}).then(res=>{
       console.log(res);
       if(res.status==1){
@@ -133,6 +141,7 @@ export class AppComponent {
         console.log(res);
       }
     })
-   }
+  
+  }
     
 }

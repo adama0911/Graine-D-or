@@ -6,6 +6,8 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 })
 export class LoginService {
   private url = "http://161.97.73.229/backendGrainedor/public/index.php";
+  // private url = "https://3ddd1083596b.ngrok.io/backendGrainedor/public/index.php";
+  
 
   private header :HttpHeaders;
 
@@ -22,4 +24,13 @@ export class LoginService {
     let link=this.url+ '/admin/login';
     return this.http.post(link,params,{headers:this.header}).toPromise().then( res => {console.log(res); return res} ).catch(error => {console.log(error); return 'bad' });
   } 
+
+  public logout(param): Promise<any>{
+    let params="param="+JSON.stringify(param);
+    console.log(params);
+    let link=this.url+ '/admin/logout';
+    return this.http.post(link,params,{headers:this.header}).toPromise().then( res => {console.log(res); return res} ).catch(error => {console.log(error); return 'bad' });
+  } 
+
+  
 }

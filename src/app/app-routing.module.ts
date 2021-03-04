@@ -13,58 +13,7 @@ import { DashbordAdminCaisseComponent } from './adminCaisse/dashbord-admin-caiss
 
 
 const routes: Routes = [
-  {
-    path: "",
-    redirectTo: "/",
-    pathMatch: "full"
-  },
-  {
-    path:"createCaisse",
-    component:CreateCaisseComponent
-  },
-  {
-    path:"dashbordAdmin",
-    component:DashbordAdminComponent
-  },
-  {
-    path:"createUsers",
-    component:CreateUsersComponent
-  },
-  {
-    path: "dashbordAdminCaisse",
-    component: DashbordAdminCaisseComponent,
-    // children: [
-    //   {
-    //     path: "",
-    //     loadChildren:
-    //       "./layouts/admin-layout/admin-layout.module#AdminLayoutModule"
-    //   }
-    // ]
-  }, {
-    path: 'livreurs',
-    component: LivreursComponent,
 
-  },
-  {
-    path:"commandes",
-    component:CommandesComponent
-  },
-  {
-    path:"commandesLivreur",
-    component:LivreurCommandesComponent
-  },
-  {
-    path:"historiqueLivreur",
-    component:HistoriqueComponent
-  },
-  {
-    path:"dashboardVendeur",
-    component:DashboardComponent
-  },
-  {
-    path: "**",
-    redirectTo: "/"
-  }
 ];
 
 @NgModule({

@@ -1,4 +1,14 @@
 import { Component, OnInit } from '@angular/core';
+import { Columns, Config, DefaultConfig } from 'ngx-easy-table';
+
+import {
+  ChangeDetectionStrategy,
+  TemplateRef,
+  ViewChild,
+} from '@angular/core';
+import { commandeItem } from '../interfaces/commandeItem.interface';
+import { ConfigService } from 'src/app/services/Config.service';
+
 
 @Component({
   selector: 'app-historique',
@@ -6,10 +16,25 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./historique.component.scss']
 })
 export class HistoriqueComponent implements OnInit {
+  public configuration: Config;
+  public columns: Columns[];
 
-  constructor() { }
+  @ViewChild('actionTpl', { static: true }) actionTpl: TemplateRef<any>;
+
+  constructor (private _confService:ConfigService){
+
+  }
+
+  public data:commandeItem[] = [
+
+  ];
 
   ngOnInit(): void {
+
+
+    this._confService.getHistoriques({}).then(res=>{
+      console.log(res);
+    })
   }
 
 }
