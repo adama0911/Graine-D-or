@@ -39,6 +39,36 @@ const ROUTE_LIVREUR: routeItem[] = [
 ];
 
 
+const ROUTE_ADMIN: routeItem[] = [
+  {
+    path:'/dashbordAdmin',
+    titre: 'Dashboard admin',
+    description:'',
+    icon:''
+  },
+  {
+    path:'/createCaisse',
+    titre: 'Création caisse',
+    description:'',
+    icon:''
+  }
+  ];
+  const ROUTE_ADMIN_CAISSE: routeItem[] = [
+    {
+      path:'/dashbordAdminCaisse',
+      titre: 'Dashboard caisse',
+      description:'',
+      icon:''
+    },
+    {
+      path:'/createUsers',
+      titre: 'Création utilisateur',
+      description:'',
+      icon:''
+    }
+];
+  
+    
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',

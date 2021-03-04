@@ -1,1 +1,60 @@
-<p>historique works!</p>
+<div class="container" style="width: 100%;">
+    <div class="row" style="margin-bottom: 2rem;">
+        <div class="col-lg-4 col-md-6 col-xs-12">
+                <nz-card nzTitle="Nombre de commandes">
+                  <span>15 </span><small>commandes </small>
+                </nz-card>
+        </div>
+        <div class="col-lg-4 col-md-6 col-xs-12">
+            <nz-card nzTitle="Solde">
+                <span>150000 </span><small>FCFA</small>
+            </nz-card>
+        </div>
+    </div>
+
+    <div nz-row [nzGutter]="{ xs: 24, sm: 24, md: 24, lg: 24 }" >
+        <div nz-col class="gutter-row" [nzSpan]="24">
+            <div class="inner-box">
+                <form>
+                    <div class="form-group">
+                      <label for="exampleInputEmail1">Rechercher Dans le tableau</label>
+                      <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="mot clé">
+                      <small id="emailHelp" class="form-text text-muted">La recherche s'effectue sur toutes les colonnes du tableau</small>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div nz-row [nzGutter]="{ xs: 24, sm: 24, md: 24, lg: 24 }">
+        <div nz-col class="gutter-row" [nzSpan]="24">
+            <div class="inner-box">
+                <ngx-table [configuration]="configuration"
+                    [data]="data"
+                    [columns]="columns"
+                    style="overflow:auto"
+                    style="max-width: 100% !important">
+                </ngx-table>
+            </div>
+        </div>
+    </div>
+</div>
+<ng-template let-row let-rowIndex="rowIndex" let-column="column" #actionTpl>
+    <button *ngIf="row.etat==1" class="btn btn-primary">Enregistrer </button>
+    <button *ngIf="row.etat==2" class="btn btn-primary">Valider </button>
+</ng-template>
+<ng-template let-row let-rowIndex="rowIndex" let-column="column" #paiementTpl>
+    <p *ngIf="row.paiement==1" >en ligne </p>
+    <p *ngIf="row.paiement==2" >à la livraison </p>
+</ng-template>
+<ng-template let-row let-rowIndex="rowIndex" let-column="column" #recuperationTpl>
+    <p *ngIf="row.recuperation==1" >sur place </p>
+    <p *ngIf="row.recuperation==2" >à livrer</p>
+</ng-template>
+
+<ng-template let-row let-rowIndex="rowIndex" let-column="column" #etatTpl>
+    <p *ngIf="row.etat==1">Enregistrer </p>
+    <p *ngIf="row.etat==2">Valider </p>
+    <p *ngIf="row.etat==3">Preparer</p>
+    <p *ngIf="row.etat==4">En cour de livraison</p> 
+    <p *ngIf="row.etat==5">Payer</p> 
+</ng-template>

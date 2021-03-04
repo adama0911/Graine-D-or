@@ -2,6 +2,13 @@
     <div nz-row [nzGutter]="{ xs: 24, sm: 24, md: 24, lg: 24 }">
         <div nz-col class="gutter-row" [nzSpan]="24">
             <div class="inner-box">
+                <button style="float: right;" type="button" class="btn btn-primary" (click)="openModalWithClass(template)">Pointage</button>
+            </div>
+        </div>
+    </div>
+    <div nz-row [nzGutter]="{ xs: 24, sm: 24, md: 24, lg: 24 }">
+        <div nz-col class="gutter-row" [nzSpan]="24">
+            <div class="inner-box">
                 <form>
                     <div class="form-group">
                       <label for="exampleInputEmail1">Rechercher Dans le tableau</label>
@@ -45,3 +52,30 @@
     <p *ngIf="row.etat==4">En cour de livraison</p> 
     <p *ngIf="row.etat==5">Payer</p> 
 </ng-template>
+
+
+<ng-template #template>  
+  <div class="modal-header">  
+    <h4 class="modal-title pull-left">Pointage</h4>  
+    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">  
+      <span aria-hidden="true">×</span>  
+    </button>  
+  </div>  
+  <div class="modal-body">  
+    <form>
+        <div class="form-group">
+          <label for="exampleInputEmail1">Identifiant</label>
+          <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
+        </div>
+        <div class="form-group">
+          <label for="exampleInputPassword1">Mot de passe</label>
+          <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+        </div>
+        <button type="submit" class="btn btn-primary" style="float: right;">Pointer</button>
+    </form>
+
+  </div>  
+  <div class="modal-footer">  
+    <button type="button" class="btn btn-default" (click)="modalRef.hide()">Close</button>  
+  </div>  
+</ng-template>  

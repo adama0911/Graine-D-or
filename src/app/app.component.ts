@@ -85,6 +85,7 @@ export class AppComponent {
   public login = null;
   public password = null;
   isLogin=0
+  public isLivreur = 0;
 
   
   menu:routeItem[] = ROUTE_VENDEUR;
@@ -101,6 +102,10 @@ export class AppComponent {
 
 
   loger (){
+    // this.isLogin = 1;
+    // this.isLivreur = 1;
+    // this.menu = ROUTE_LIVREUR;
+    // this.router.navigate(['/commandesLivreur'])
     this._logService.loger({login:this.login,password:this.password}).then(res=>{
       console.log(res);
       if(res.status==1){
@@ -130,6 +135,7 @@ export class AppComponent {
       }
       this.router.navigate(['/home'])
     })
-   }
+  
+  }
     
 }

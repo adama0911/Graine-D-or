@@ -12,11 +12,13 @@ import { en_US, NZ_I18N, fr_FR } from 'ng-zorro-antd/i18n';
 *               Modules
 *******************************************************/
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
+import { RouterModule,Routes } from '@angular/router';
 import { AppRoutingModule } from './app-routing.module';
 import { HttpClientModule } from '@angular/common/http';
+
 
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzTableModule } from 'ng-zorro-antd/table';
@@ -31,6 +33,9 @@ import { NzFormModule } from 'ng-zorro-antd/form';
 import { NzCardModule } from 'ng-zorro-antd/card';
 import { NzModalModule } from 'ng-zorro-antd/modal';
 
+
+
+import { BsModalService, ModalModule } from 'ngx-bootstrap/modal';
 
 
 /******************************************************
@@ -54,6 +59,62 @@ import { HistoriqueComponent } from './livreur/historique/historique.component';
 import { HomeComponent } from './home/home.component';
 import { CreateUsersComponent } from './adminCaisse/create-users/create-users.component';
 import { DashbordAdminCaisseComponent } from './adminCaisse/dashbord-admin-caisse/dashbord-admin-caisse.component';
+
+const routes: Routes = [
+  {
+    path: "",
+    redirectTo: "/",
+    pathMatch: "full"
+  },
+  {
+    path:"createCaisse",
+    component:CreateCaisseComponent
+  },
+  {
+    path:"dashbordAdmin",
+    component:DashbordAdminComponent
+  },
+  {
+    path:"createUsers",
+    component:CreateUsersComponent
+  },
+  {
+    path: "dashbordAdminCaisse",
+    component: DashbordAdminCaisseComponent,
+    // children: [
+    //   {
+    //     path: "",
+    //     loadChildren:
+    //       "./layouts/admin-layout/admin-layout.module#AdminLayoutModule"
+    //   }
+    // ]
+  }, 
+  {
+    path: 'livreurs',
+    component: LivreursComponent,
+
+  },
+  {
+    path:"commandes",
+    component:CommandesComponent
+  },
+  {
+    path:"commandesLivreur",
+    component:LivreurCommandesComponent
+  },
+  {
+    path:"historiqueLivreur",
+    component:HistoriqueComponent
+  },
+  {
+    path:"dashboardVendeur",
+    component:DashboardComponent
+  },
+  {
+    path: "**",
+    redirectTo: "/"
+  }
+];
 
 
 
@@ -86,12 +147,16 @@ import { DashbordAdminCaisseComponent } from './adminCaisse/dashbord-admin-caiss
     FormsModule,
     ReactiveFormsModule,
     ChartsModule,
+    RouterModule.forRoot(routes),
+    ModalModule.forRoot(),
     NzButtonModule,
     NzTableModule,
     NzDropDownModule,
     NzLayoutModule,
     NzGridModule,
    NzProgressModule,
+   
+   
 
     NzCardModule,
     NzFormModule,
@@ -100,7 +165,7 @@ import { DashbordAdminCaisseComponent } from './adminCaisse/dashbord-admin-caiss
     NzModalModule,
     
   ],
-  providers: [ConfigService,
+  providers: [ConfigService,BsModalService,
 
     {
       provide: NZ_I18N,

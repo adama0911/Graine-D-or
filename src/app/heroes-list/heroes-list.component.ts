@@ -80,7 +80,7 @@ export class HeroesListComponent implements OnInit {
   listOfDisplayData = [...this.listOfData];
 
   constructor(private configService:ConfigService,private i18n: NzI18nService) { 
-
+    
   }
 
 
@@ -149,6 +149,8 @@ export class HeroesListComponent implements OnInit {
   ngOnInit(): void {
     
   }
+
+
 
 
 }

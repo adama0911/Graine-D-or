@@ -5,7 +5,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
   providedIn: 'root'
 })
 export class VendeurService {
-  private url = "https://b38a6a901469.ngrok.io/backendGrainedor/public/index.php";
+  private url = "http://161.97.73.229/backendGrainedor/public/index.php";
 
   private header :HttpHeaders;
 

@@ -6,6 +6,8 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 })
 export class LoginService {
   private url = "http://161.97.73.229/backendGrainedor/public/index.php";
+  // private url = "https://3ddd1083596b.ngrok.io/backendGrainedor/public/index.php";
+  
 
   private header :HttpHeaders;
 
