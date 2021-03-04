@@ -32,6 +32,7 @@ import { NzProgressModule } from 'ng-zorro-antd/progress';
 import { NzFormModule } from 'ng-zorro-antd/form';
 import { NzCardModule } from 'ng-zorro-antd/card';
 import { NzModalModule } from 'ng-zorro-antd/modal';
+import { NzIconModule } from 'ng-zorro-antd/icon';
 
 
 
@@ -43,10 +44,7 @@ import { BsModalService, ModalModule } from 'ngx-bootstrap/modal';
 *******************************************************/
 
 import { AppComponent } from './app.component';
-import { CrisisListComponent } from './crisis-list/crisis-list.component';
-import { HeroesListComponent } from './heroes-list/heroes-list.component';
 import { ConfigService } from './services/Config.service';
-import { LoginComponent } from './login/login.component';
 import { CreateCaisseComponent } from './adminGenerale/create-caisse/create-caisse.component';
 import { DashbordAdminComponent } from './adminGenerale/dashbord-admin/dashbord-admin.component';
 import { LivreursComponent } from './vendeur/livreurs/livreurs.component';
@@ -56,9 +54,10 @@ import { DashboardComponent } from './vendeur/dashboard/dashboard.component';
 import { TableModule } from 'ngx-easy-table';
 import { ChartsModule } from 'ng2-charts';
 import { HistoriqueComponent } from './livreur/historique/historique.component';
-import { HomeComponent } from './home/home.component';
 import { CreateUsersComponent } from './adminCaisse/create-users/create-users.component';
 import { DashbordAdminCaisseComponent } from './adminCaisse/dashbord-admin-caisse/dashbord-admin-caisse.component';
+
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 const routes: Routes = [
   {
@@ -121,10 +120,7 @@ const routes: Routes = [
 @NgModule({
   declarations: [
     AppComponent,
-    CrisisListComponent,
-    HeroesListComponent,
-    LoginComponent,
-
+   
     CreateCaisseComponent,
     DashbordAdminComponent,
 
@@ -133,7 +129,6 @@ const routes: Routes = [
     LivreurCommandesComponent,
     DashboardComponent,
     HistoriqueComponent,
-    HomeComponent,
     CreateUsersComponent,
     DashbordAdminCaisseComponent,
   ],
@@ -154,7 +149,9 @@ const routes: Routes = [
     NzDropDownModule,
     NzLayoutModule,
     NzGridModule,
+    NzIconModule,
    NzProgressModule,
+   FontAwesomeModule,
    
    
 

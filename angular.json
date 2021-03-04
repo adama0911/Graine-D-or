@@ -32,7 +32,6 @@
               "./node_modules/ngx-bootstrap/datepicker/bs-datepicker.css",
               "node_modules/ngx-easy-table/style.css",
               "node_modules/ng-zorro-antd/ng-zorro-antd.min.css",
-              "node_modules/bootstrap/dist/css/bootstrap.min.css",
               "src/styles.scss"
             ],
             "scripts": []
