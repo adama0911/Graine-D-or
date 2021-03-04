@@ -13,8 +13,11 @@ export class DashbordAdminComponent implements OnInit {
   public columns: Columns[];
   dd
   df
+
   @ViewChild('actionTpl', { static: true }) actionTpl: TemplateRef<any>;
-  constructor(private _serviceAdmin:AdminGeneralService) { 
+  @ViewChild('paiementTpl', { static: true }) paiementTpl: TemplateRef<any>;
+  @ViewChild('recuperationTpl', { static: true }) recuperationTpl: TemplateRef<any>;
+  @ViewChild('etatTpl', { static: true }) etatTpl: TemplateRef<any>;  constructor(private _serviceAdmin:AdminGeneralService) { 
    
   }
 
@@ -52,9 +55,9 @@ export class DashbordAdminComponent implements OnInit {
       { key: 'client', title: 'CLIENT' },
       { key: 'montantCommande', title: 'MONTANT COMMANDE' },
       { key: 'montantLivraison', title: 'MONTANT LIVRAISON' },
-      { key: 'paiement', title: 'PAIEMENT' },
-      { key: 'recuperation', title: 'RÉCUPÉRATION' },
-      { key: 'etat', title: 'ETAT COMMANDE' },
+      { key: 'paiement', title: 'PAIEMENT' , cellTemplate: this.paiementTpl},
+      { key: 'recuperation', title: 'RÉCUPÉRATION' , cellTemplate: this.recuperationTpl},
+      { key: 'etat', title: 'ETAT COMMANDE' , cellTemplate: this.etatTpl},
       { key: 'monnaie', title: 'MONNAIE À PRÉPARÉE' },
       { key: 'action', title: 'Actions', cellTemplate: this.actionTpl },
     ];

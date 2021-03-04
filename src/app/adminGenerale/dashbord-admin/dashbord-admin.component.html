@@ -47,6 +47,18 @@
  
   </nz-card>
 <ng-template let-row let-rowIndex="rowIndex" let-column="column" #actionTpl>
+  <button *ngIf="row.etat==1" class="btn btn-primary">Enregistrer </button>
+  <button *ngIf="row.etat==2" class="btn btn-primary">Valider </button>
+</ng-template>
+<ng-template let-row let-rowIndex="rowIndex" let-column="column" #paiementTpl>
+    <p *ngIf="row.paiement==1" >en ligne </p>
+    <p *ngIf="row.paiement==2" >à la livraison </p>
+</ng-template>
+<ng-template let-row let-rowIndex="rowIndex" let-column="column" #recuperationTpl>
+    <p *ngIf="row.recuperation==1" >sur place </p>
+    <p *ngIf="row.recuperation==2" >à livrer</p>
+</ng-template>
+<ng-template let-row let-rowIndex="rowIndex" let-column="column" #actionTpl>
     <td>
         <button *ngIf="row.etat==1" class="btn btn-primary">Enregistrer </button>
         <button *ngIf="row.etat==2" class="btn btn-primary">Valider </button>
