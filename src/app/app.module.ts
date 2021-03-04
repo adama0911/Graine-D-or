@@ -15,7 +15,6 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
-import { RouterModule } from '@angular/router';
 import { AppRoutingModule } from './app-routing.module';
 import { HttpClientModule } from '@angular/common/http';
 
@@ -51,6 +50,8 @@ import { ChartsModule } from 'ng2-charts';
 import { HistoriqueComponent } from './livreur/historique/historique.component';
 import { CreateUsersComponent } from './adminCaisse/create-users/create-users.component';
 import { DashbordAdminCaisseComponent } from './adminCaisse/dashbord-admin-caisse/dashbord-admin-caisse.component';
+import { RouterModule } from '@angular/router';
+
 
 
 @NgModule({
@@ -93,6 +94,7 @@ import { DashbordAdminCaisseComponent } from './adminCaisse/dashbord-admin-caiss
       {path: 'dashboardVendeur', component: DashboardComponent},
 
     ]),
+
     NzButtonModule,
     NzTableModule,
     NzDropDownModule,

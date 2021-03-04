@@ -9,7 +9,6 @@ import {
 } from '@angular/core';
 
 import { livreurItem } from '../interfaces/livreurItem.interface';
-import { NzMessageService } from 'ng-zorro-antd/message';
 
 
 @Component({
@@ -21,7 +20,7 @@ export class LivreursComponent implements OnInit {
   public configuration: Config;
   public columns: Columns[];
 
-  constructor(private nzMessageService: NzMessageService) {}
+  constructor() {}
 
   @ViewChild('actionTpl', { static: true }) actionTpl: TemplateRef<any>;
 
@@ -38,13 +37,6 @@ export class LivreursComponent implements OnInit {
 
   ];
 
-  cancel(): void {
-    this.nzMessageService.info('click cancel');
-  }
-
-  confirm(): void {
-    this.nzMessageService.info('click confirm');
-  }
 
   ngOnInit(): void {
     this.configuration = { ...DefaultConfig };

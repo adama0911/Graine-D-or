@@ -35,6 +35,7 @@ export class DashbordAdminComponent implements OnInit {
   ];
 
   ngOnInit(): void {
+    console.log(JSON.parse(sessionStorage.getItem('currentUser')).id)
     this.dd = (new Date().toJSON()).split("T")[0]
     this.df = (new Date().toJSON()).split("T")[0]
     let dateDebut = this.dd.split('-')[2]+"/"+this.dd.split('-')[1]+"/"+this.dd.split('-')[0]
