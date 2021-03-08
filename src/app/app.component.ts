@@ -102,6 +102,13 @@ export class AppComponent {
 
   }
 
+  goToLivreur(){
+    this.isLogin = 1;
+    this.isLivreur = 1;
+    this.menu = ROUTE_LIVREUR;
+    this.router.navigate(['/commandesLivreur'])
+  }
+
 
   loger (){
 
