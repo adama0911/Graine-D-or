@@ -57,6 +57,7 @@ import { HistoriqueComponent } from './livreur/historique/historique.component';
 import { CreateUsersComponent } from './adminCaisse/create-users/create-users.component';
 import { DashbordAdminCaisseComponent } from './adminCaisse/dashbord-admin-caisse/dashbord-admin-caisse.component';
 
+import { NgxPaginationModule } from 'ngx-pagination';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 const routes: Routes = [
@@ -139,6 +140,7 @@ const routes: Routes = [
     AppRoutingModule,
     BrowserModule,
     HttpClientModule,
+    NgxPaginationModule,
     FormsModule,
     ReactiveFormsModule,
     ChartsModule,

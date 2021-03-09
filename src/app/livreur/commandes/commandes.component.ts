@@ -9,6 +9,7 @@ import {
 } from '@angular/core';
 import { commandeItem } from '../interfaces/commandeItem.interface';
 import { ConfigService } from 'src/app/services/Config.service';
+import { LivreurService } from 'src/app/services/livreur.service';
 
 
 @Component({
@@ -27,7 +28,7 @@ export class CommandesComponent implements OnInit {
   @ViewChild('recuperationTpl', { static: true }) recuperationTpl: TemplateRef<any>;
   @ViewChild('etatTpl', { static: true }) etatTpl: TemplateRef<any>;
 
-  constructor (private _confService:ConfigService,private modalService: BsModalService){
+  constructor (private _confService:ConfigService,private modalService: BsModalService,private _livreurService: LivreurService){
 
   }
 
@@ -55,7 +56,6 @@ export class CommandesComponent implements OnInit {
           Object.assign({}, { class: 'gray modal-lg' })  
     
         );  
-    
   }  
 
   ngOnInit(): void {
@@ -76,7 +76,12 @@ export class CommandesComponent implements OnInit {
       { key: 'action', title: 'Actions', cellTemplate: this.actionTpl },
     ];
 
-    this._confService.getHistoriques({}).then(res=>{
+    let dd = (new Date().toJSON()).split("T")[0]
+    let df = (new Date().toJSON()).split("T")[0]
+    let dateDebut = dd.split('-')[2]+"/"+dd.split('-')[1]+"/"+dd.split('-')[0]
+    let dateFin = df.split('-')[2]+"/"+df.split('-')[1]+"/"+df.split('-')[0]
+
+    this._livreurService.getCommandes({debut:"01/01/2019",fin:dateFin}).then(res=>{
       console.log(res);
     })
   }

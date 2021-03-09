@@ -4,7 +4,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 @Injectable({
   providedIn: 'root'
 })
-export class VendeurService {
+export class LivreurService {
   private url = "http://161.97.73.229/backendGrainedor/public/index.php";
 
   private header :HttpHeaders;
