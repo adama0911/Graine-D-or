@@ -75,6 +75,7 @@ const ROUTE_ADMIN_CAISSE: routeItem[] = [
 ];
   
   
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -107,6 +108,14 @@ export class AppComponent {
     this.isLogin = 0;
     sessionStorage.clear()
   }
+  goToLivreur(){
+    this.isLogin = 1;
+    this.isLivreur = 1;
+    this.menu = ROUTE_LIVREUR;
+    this.router.navigate(['/commandesLivreur'])
+  }
+
+
   loger (){
 
     // this.isLogin = 1;
