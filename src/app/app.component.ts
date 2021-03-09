@@ -3,6 +3,7 @@ import { routeItem } from './interfaces/routeItem.interface';
 import { LoginService } from './services/login.service';
 import { Router } from '@angular/router';
 import * as sha1 from 'js-sha1';
+
 import { faCoffee } from '@fortawesome/free-solid-svg-icons';
 
 const ROUTE_VENDEUR: routeItem[] = [
@@ -102,7 +103,10 @@ export class AppComponent {
 
   }
 
-
+  logout(){
+    this.isLogin = 0;
+    sessionStorage.clear()
+  }
   loger (){
 
     // this.isLogin = 1;
