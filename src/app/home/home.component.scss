@@ -1,0 +1,154 @@
+.layout {
+    min-height: 100vh;
+  }
+
+  .logo {
+    height: 32px;
+    background: rgba(255, 255, 255, 0.2);
+    margin: 16px;
+  }
+
+  nz-header {
+    background: #fff;
+    padding: 0;
+  }
+
+  nz-content {
+    margin: 24px 16px 0;
+  }
+
+  .inner-content {
+    padding: 24px;
+    background: #fff;
+    min-height: 360px;
+  }
+
+  nz-footer {
+    text-align: center;
+  }
+
+  .SamaTheme {
+    background: #00f2c3;
+    background-image: -webkit-gradient(linear, right top, left bottom, from(#00f2c3), color-stop(#0098f0), to(#00f2c3));
+    background-image: linear-gradient(to bottom left, #00f2c3, #0098f0, #00f2c3);
+    background-size: 210% 210%;
+    background-position: top right;
+    background-color: #00f2c3;
+    -webkit-transition: all 0.15s ease;
+    transition: all 0.15s ease;
+    box-shadow: none;
+    color: #ffffff;
+}
+
+.SamaTheme4 {
+  background: #00f2c3;
+  background-image: -webkit-gradient(linear, right top, left bottom, from(#B9593C), color-stop(#D28A74), to(#E6BEB2));
+  background-image: linear-gradient(to bottom left, #B9593C, #D28A74, #E6BEB2);
+  background-size: 210% 210%;
+  background-position: top right;
+  background-color: #00f2c3;
+  -webkit-transition: all 0.15s ease;
+  transition: all 0.15s ease;
+  box-shadow: none;
+  color: #ffffff;
+}
+
+.SamaTheme2 {
+  background: #00f2c3;
+  background-image: -webkit-gradient(linear, right top, left bottom, from(#7530a6), color-stop(#333295), to(#333295));
+  background-image: linear-gradient(to bottom left, #7530a6, #333295, #333295);
+  background-size: 210% 210%;
+  background-position: top right;
+  background-color: #00f2c3;
+  -webkit-transition: all 0.15s ease;
+  transition: all 0.15s ease;
+  box-shadow: none;
+  color: #ffffff;
+}
+
+.SamaTheme3  {
+    color: #fff;
+    background: linear-gradient(90deg,#7530a6,#333295);
+}
+
+.container{
+  height: 100%;
+  max-width: 100% !important;
+  min-width: 100% !important;
+  height: 100vh !important;
+  align-content: center;
+  padding-top: 2%;
+  }
+  
+  .card{
+  height: 370px;
+  margin-top: auto;
+  margin-bottom: auto;
+  width: 400px;
+  background-color: rgba(0,0,0,0.5) !important;
+  }
+  
+  .social_icon span{
+  font-size: 60px;
+  margin-left: 10px;
+  color: #FFC312;
+  }
+  
+  .social_icon span:hover{
+  color: white;
+  cursor: pointer;
+  }
+  
+  .card-header h3{
+  color: white;
+  }
+  
+  .social_icon{
+  position: absolute;
+  right: 20px;
+  top: -45px;
+  }
+  
+  .input-group-prepend span{
+  width: 50px;
+  background-color: #FFC312;
+  color: black;
+  border:0 !important;
+  }
+  
+  input:focus{
+  outline: 0 0 0 0  !important;
+  box-shadow: 0 0 0 0 !important;
+  
+  }
+  
+  .remember{
+  color: white;
+  }
+  
+  .remember input
+  {
+  width: 20px;
+  height: 20px;
+  margin-left: 15px;
+  margin-right: 5px;
+  }
+  
+  .login_btn{
+  color: black;
+  background-color: #FFC312;
+  width: 100px;
+  }
+  
+  .login_btn:hover{
+  color: black;
+  background-color: white;
+  }
+  
+  .links{
+  color: white;
+  }
+  
+  .links a{
+  margin-left: 4px;
+  }

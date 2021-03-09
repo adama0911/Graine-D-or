@@ -14,6 +14,7 @@ export class DashbordAdminCaisseComponent implements OnInit {
   dd
   df
 
+  @ViewChild('panier', { static: true }) panier: TemplateRef<any>;
   @ViewChild('actionTpl', { static: true }) actionTpl: TemplateRef<any>;
   @ViewChild('paiementTpl', { static: true }) paiementTpl: TemplateRef<any>;
   @ViewChild('recuperationTpl', { static: true }) recuperationTpl: TemplateRef<any>;
@@ -22,6 +23,7 @@ export class DashbordAdminCaisseComponent implements OnInit {
     {
       id:1,
       commande: '122',
+      designation: "2 pains",
       livreur: 'Adama Goudiaby',
       client: "Abdoul Hamid",
       montantCommande: 500,
@@ -40,7 +42,7 @@ export class DashbordAdminCaisseComponent implements OnInit {
     this.configuration = { ...DefaultConfig };
     this.configuration.searchEnabled = true;
     this.columns = [
-      { key: 'commande', title: 'COMMANDE' },
+      { key: 'commande', title: 'COMMANDE'  , cellTemplate: this.panier},
       { key: 'livreur', title: 'LIVREUR' },
       { key: 'client', title: 'CLIENT' },
       { key: 'montantCommande', title: 'MONTANT COMMANDE' },
