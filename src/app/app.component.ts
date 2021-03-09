@@ -3,6 +3,7 @@ import { routeItem } from './interfaces/routeItem.interface';
 import { LoginService } from './services/login.service';
 import { Router } from '@angular/router';
 import * as sha1 from 'js-sha1';
+
 import { faCoffee } from '@fortawesome/free-solid-svg-icons';
 
 const ROUTE_VENDEUR: routeItem[] = [
@@ -74,6 +75,7 @@ const ROUTE_ADMIN_CAISSE: routeItem[] = [
 ];
   
   
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -102,6 +104,10 @@ export class AppComponent {
 
   }
 
+  logout(){
+    this.isLogin = 0;
+    sessionStorage.clear()
+  }
   goToLivreur(){
     this.isLogin = 1;
     this.isLivreur = 1;

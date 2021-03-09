@@ -13,8 +13,12 @@ export class DashbordAdminComponent implements OnInit {
   public columns: Columns[];
   dd
   df
+
+  @ViewChild('panier', { static: true }) panier: TemplateRef<any>;
   @ViewChild('actionTpl', { static: true }) actionTpl: TemplateRef<any>;
-  constructor(private _serviceAdmin:AdminGeneralService) { 
+  @ViewChild('paiementTpl', { static: true }) paiementTpl: TemplateRef<any>;
+  @ViewChild('recuperationTpl', { static: true }) recuperationTpl: TemplateRef<any>;
+  @ViewChild('etatTpl', { static: true }) etatTpl: TemplateRef<any>;  constructor(private _serviceAdmin:AdminGeneralService) { 
    
   }
 
@@ -22,6 +26,7 @@ export class DashbordAdminComponent implements OnInit {
     {
       id:1,
       commande: '122',
+      designation: "2 pains",
       livreur: 'Adama Goudiaby',
       client: "Abdoul Hamid",
       montantCommande: 500,
@@ -47,14 +52,14 @@ export class DashbordAdminComponent implements OnInit {
     this.configuration = { ...DefaultConfig };
     this.configuration.searchEnabled = true;
     this.columns = [
-      { key: 'commande', title: 'COMMANDE' },
+      { key: 'commande', title: 'COMMANDE' , cellTemplate: this.panier},
       { key: 'livreur', title: 'LIVREUR' },
       { key: 'client', title: 'CLIENT' },
       { key: 'montantCommande', title: 'MONTANT COMMANDE' },
       { key: 'montantLivraison', title: 'MONTANT LIVRAISON' },
-      { key: 'paiement', title: 'PAIEMENT' },
-      { key: 'recuperation', title: 'RÉCUPÉRATION' },
-      { key: 'etat', title: 'ETAT COMMANDE' },
+      { key: 'paiement', title: 'PAIEMENT' , cellTemplate: this.paiementTpl},
+      { key: 'recuperation', title: 'RÉCUPÉRATION' , cellTemplate: this.recuperationTpl},
+      { key: 'etat', title: 'ETAT COMMANDE' , cellTemplate: this.etatTpl},
       { key: 'monnaie', title: 'MONNAIE À PRÉPARÉE' },
       { key: 'action', title: 'Actions', cellTemplate: this.actionTpl },
     ];
