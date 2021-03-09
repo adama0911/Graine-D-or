@@ -2,20 +2,23 @@
     <div class="row">
         <div class="col-12">
             <div class="inner-box">
-                <button style="float: right;" type="button" class="btn btn-primary" (click)="openModalWithClass(template)">Pointage</button>
-            </div>
+                <button style="float: right;" type="button" class="btn btn-primary" (click)="openModalWithClass(modalTempmate)">Pointage</button>
+                <button style="float: right;" type="button" class="btn btn-primary" (click)="openModalWithClass(modalTempmate1)">Pointage1</button>
+
+              </div>
         </div>
     </div>
     <div class="row">
         <div class="col-12">
-            <div class="inner-box">
+              <div class="inner-box">
                 <form>
                     <div class="form-group">
                       <label for="exampleInputEmail1">Rechercher Dans le tableau</label>
-                      <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="mot clé">
+                      <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="mot clé" />
                       <small id="emailHelp" class="form-text text-muted">La recherche s'effectue sur toutes les colonnes du tableau</small>
                     </div>
-                </form>            </div>
+                </form>            
+              </div>
         </div>
     </div>
     <div class="row">
@@ -30,14 +33,19 @@
         </div>
     </div>
 </div>
+
+
+
 <ng-template let-row let-rowIndex="rowIndex" let-column="column" #actionTpl>
     <button *ngIf="row.etat==1" class="btn btn-primary">Enregistrer </button>
     <button *ngIf="row.etat==2" class="btn btn-primary">Valider </button>
 </ng-template>
+
 <ng-template let-row let-rowIndex="rowIndex" let-column="column" #paiementTpl>
     <p *ngIf="row.paiement==1" >en ligne </p>
     <p *ngIf="row.paiement==2" >à la livraison </p>
 </ng-template>
+
 <ng-template let-row let-rowIndex="rowIndex" let-column="column" #recuperationTpl>
     <p *ngIf="row.recuperation==1" >sur place </p>
     <p *ngIf="row.recuperation==2" >à livrer</p>
@@ -52,7 +60,7 @@
 </ng-template>
 
 
-<ng-template #template>  
+<ng-template #modalTempmate>  
   <div class="modal-header">  
     <h4 class="modal-title pull-left">Pointage</h4>  
     <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">  
@@ -77,3 +85,19 @@
     <button type="button" class="btn btn-default" (click)="modalRef.hide()">Close</button>  
   </div>  
 </ng-template>  
+
+<ng-template #modalTempmate1>  
+  <div class="modal-header">  
+    <h4 class="modal-title pull-left">Pointage</h4>  
+    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">  
+      <span aria-hidden="true">×</span>  
+    </button>  
+  </div>  
+  <div class="modal-body">  
+
+
+  </div>  
+  <div class="modal-footer">  
+    <button type="button" class="btn btn-default" (click)="modalRef.hide()">Close</button>  
+  </div>  
+</ng-template> 

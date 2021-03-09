@@ -48,13 +48,9 @@ export class CommandesComponent implements OnInit {
   ];
 
   openModalWithClass(template: TemplateRef<any>) {  
-    
         this.modalRef = this.modalService.show(  
-    
           template,  
-    
           Object.assign({}, { class: 'gray modal-lg' })  
-    
         );  
   }  
 
