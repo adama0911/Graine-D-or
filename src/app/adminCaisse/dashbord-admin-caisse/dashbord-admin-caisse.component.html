@@ -3,17 +3,17 @@
         <div nz-row [nzGutter]="8">
           <div nz-col [nzSpan]="8">
             <nz-card nzTitle="Nombre de commandes">
-              <span>15 </span><small>commandes </small>
+              <span>{{nbrCommandes}} </span><small>commandes </small>
             </nz-card>
           </div>
           <div nz-col [nzSpan]="8">
             <nz-card nzTitle="Solde graine d'or">
-              <span>150000 </span><small>FCFA</small>
+              <span>{{soldeGraineDor}} </span><small>FCFA</small>
             </nz-card>
           </div>
           <div nz-col [nzSpan]="8">
-            <nz-card nzTitle="Solde BBS">
-              <span>150000 </span><small>FCFA</small>
+            <nz-card nzTitle="Solde compense BBS">
+              <span>{{soldeCompenseBBS}} </span><small>FCFA</small>
             </nz-card>
           </div>
         </div>
@@ -30,7 +30,7 @@
                 <input type="date" [ngModelOptions]="{standalone: true}" class="form-control" [(ngModel)]="df" id="dateF" aria-describedby="emailHelp" placeholder="Prénom">
               </div>
               <div nz-col [nzSpan]="8">
-                <button class="btn btn-success" style="margin-top: 2.5rem;" >Recherche</button>
+                <button class="btn btn-success" (click)="recherche()" style="margin-top: 3rem;" >Recherche</button>
               </div>
             </div>
           </div>
@@ -48,38 +48,57 @@
   </nz-card>
   <ng-template let-row let-rowIndex="rowIndex" let-column="column" #panier>
     <div class="dropdown">
-      <span>{{row.commande}}</span>
+      <span *ngIf="row.refCommande != ''">{{row.refCommande}}</span>
+      <span *ngIf="row.refCommande == ''">refCommande</span>
       <div class="dropdown-content">
       <p style="color: black;">{{row.designation}}</p>
       </div>
     </div>
   </ng-template>
   <ng-template let-row let-rowIndex="rowIndex" let-column="column" #actionTpl>
-    <button *ngIf="row.etat==1" class="btn btn-primary">Enregistrer </button>
-    <button *ngIf="row.etat==2" class="btn btn-primary">Valider </button>
+    <button type="button" *ngIf="row.etat==3" class="btn btn-warning" (click)="encoursLivraison(row)">En cours de livraison </button>
+    <button type="button" *ngIf="row.etat==4" class="btn btn-warning" (click)="payer(row)">Payer </button>
   </ng-template>
   <ng-template let-row let-rowIndex="rowIndex" let-column="column" #paiementTpl>
-      <p *ngIf="row.paiement==1" >en ligne </p>
-      <p *ngIf="row.paiement==2" >à la livraison </p>
+      <p *ngIf="row.mode_paiement==1" >en ligne </p>
+      <p *ngIf="row.mode_paiement==0" >à la livraison </p>
   </ng-template>
   <ng-template let-row let-rowIndex="rowIndex" let-column="column" #recuperationTpl>
       <p *ngIf="row.recuperation==1" >sur place </p>
-      <p *ngIf="row.recuperation==2" >à livrer</p>
-  </ng-template>
-  <ng-template let-row let-rowIndex="rowIndex" let-column="column" #actionTpl>
-      <td>
-          <button *ngIf="row.etat==1" class="btn btn-primary">Enregistrer </button>
-          <button *ngIf="row.etat==2" class="btn btn-primary">Valider </button>
-          <button *ngIf="row.etat==3" class="btn btn-primary">Preparer</button>
-          <button *ngIf="row.etat==4" class="btn btn-primary">En cour de livraison</button> 
-          <button *ngIf="row.etat==5" class="btn btn-primary">Payer</button> 
-      </td>
+      <p *ngIf="row.recuperation==0" >à livrer</p>
   </ng-template>
   
+  
   <ng-template let-row let-rowIndex="rowIndex" let-column="column" #etatTpl>
+    <p *ngIf="row.etat==-1">Annuler </p>
     <p *ngIf="row.etat==1">Enregistrer </p>
     <p *ngIf="row.etat==2">Valider </p>
     <p *ngIf="row.etat==3">Preparer</p>
     <p *ngIf="row.etat==4">En cour de livraison</p> 
     <p *ngIf="row.etat==5">Payer</p> 
   </ng-template>
+  <ng-template let-row let-rowIndex="rowIndex" let-column="column" #livreur>
+    <td>
+      <p *ngIf="row.livreur != ''">{{displayData(row.livreur,'prenom')}} {{displayData(row.livreur,'nom')}}</p>
+      <p *ngIf="row.livreur == ''">pas de livreur</p>
+    </td>
+  </ng-template>
+  <ng-template let-row let-rowIndex="rowIndex" let-column="column" #monnaiePrepa>
+    <td>
+      {{monnairePrpa(row.montant,row.frais_livraison)}}
+    </td>
+  </ng-template>
+  
+<div *ngIf="loading">
+  <div style="position: absolute ; left: 15%; top:25%; min-width: 100rem ; min-height: 40rem ;text-align: -webkit-center; padding-top: 10%; z-index:1000; background-color: white; opacity: 0.4;">
+  <div class="loader">
+      <div class="ball-pulse">
+      <div></div>
+      <div></div>
+      <div></div>
+      </div>
+  </div>  
+  </div>
+</div>
+
+  

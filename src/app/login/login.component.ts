@@ -21,7 +21,9 @@ export class LoginComponent implements OnInit {
 
   ngOnInit(): void {
   }
-  
+  goToLivreur(){
+    
+  }
   loger (){
 
     // this.isLogin = 1;

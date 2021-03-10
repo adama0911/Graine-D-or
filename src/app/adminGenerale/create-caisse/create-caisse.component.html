@@ -89,3 +89,16 @@
         <button class="btn btn-danger" nz-button (click)="deleteUser(row);"  >Supprimer </button>
     </td>
 </ng-template> 
+
+<div *ngIf="loading">
+    <div style="position: absolute ; left: 15%; top:25%; min-width: 100rem ; min-height: 40rem ;text-align: -webkit-center; padding-top: 10%; z-index:1000; background-color: white; opacity: 0.4;">
+    <div class="loader">
+        <div class="ball-pulse">
+        <div></div>
+        <div></div>
+        <div></div>
+        </div>
+    </div>  
+    </div>
+  </div>
+  
