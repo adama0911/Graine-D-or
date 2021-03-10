@@ -4,6 +4,7 @@ import * as sha1 from 'js-sha1';
 
 import { faCoffee } from '@fortawesome/free-solid-svg-icons';
 import { routeItem } from '../interfaces/routeItem.interface';
+import { LoginService } from '../services/login.service';
 const ROUTE_VENDEUR: routeItem[] = [
   {
     path:'/livreurs',
@@ -82,9 +83,17 @@ export class HomeComponent implements OnInit {
   menu;
   public isLivreur = 0;
   faCoffee = faCoffee;
-  constructor(private router:Router) { }
+  constructor(private router:Router,private _serviceLogin:LoginService) { }
   logout(){
-    this.router.navigate(["/login"])
+    if(confirm('Voulez-vous vous déconnecté')){
+      this._serviceLogin.logout({login:JSON.parse(sessionStorage.getItem('currentUser')).login}).then(res=>{
+        if(res.status == 1){
+          sessionStorage.clear();
+          this.router.navigate(["/login"])
+        }
+      })
+    }
+   
   }
   ngOnInit(): void {
     let user = JSON.parse(sessionStorage.getItem('currentUser'))
