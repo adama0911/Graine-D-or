@@ -15,13 +15,49 @@
     <div nz-row [nzGutter]="{ xs: 24, sm: 24, md: 24, lg: 24 }">
         <div nz-col class="gutter-row" [nzSpan]="24">
             <div class="inner-box">
-                <ngx-table [configuration]="configuration"
+                <!-- <ngx-table [configuration]="configuration"
                     class="table-responsive"
                     [data]="data"
                     [columns]="columns"
                     style="overflow:auto"
                     style="max-width: 100% !important">
-                </ngx-table>
+                </ngx-table> -->
+                <div class="table-responsive">
+                    <table class="table">
+                      <thead>
+                        <tr>
+                          <th *ngFor="let item of this.columns">{{item.title}}</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr *ngFor="let item of this.data">
+                          <td>{{item.prenom}}</td>
+                          <td>{{item.nom}}</td>
+                          <td>{{item.telephone}}</td>
+                          <td>{{item.adresse}}</td>
+                          <td>{{item.created_at}}</td>
+                          <td>
+                            <p *ngIf="item.etat==1">Pointé</p>
+                            <p *ngIf="item.etat==1">Non Pointé</p>
+                          </td>
+                          <td>
+                              <button class="btn btn-warning">pointer</button>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+      
+                    <pagination [boundaryLinks]="showBoundaryLinks" 
+                    [directionLinks]="showDirectionLinks" 
+                    [totalItems]="this.data.length"
+                    [itemsPerPage]="5"
+                    (pageChanged)="pageChanged($event)"></pagination>
+                    <div class="checkbox">
+                      <label><input type="checkbox" [(ngModel)]="showBoundaryLinks">Afficher les liens de délimitation</label>
+                      <br/>
+                      <label><input type="checkbox" [(ngModel)]="showDirectionLinks">Afficher les liens de direction</label>
+                   </div>
+                  </div>
             </div>
         </div>
     </div>

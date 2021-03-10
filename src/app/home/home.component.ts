@@ -79,6 +79,7 @@ const ROUTE_ADMIN_CAISSE: routeItem[] = [
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss']
 })
+
 export class HomeComponent implements OnInit {
   menu;
   public isLivreur = 0;
@@ -98,17 +99,21 @@ export class HomeComponent implements OnInit {
   ngOnInit(): void {
     let user = JSON.parse(sessionStorage.getItem('currentUser'))
     if(user.accesslevel==1){
+      this.isLivreur=0;
       this.menu = ROUTE_ADMIN;
       this.router.navigate(['/dashbordAdmin'])
 
     } else if(user.accesslevel==2){
+      this.isLivreur=0;
       this.menu = ROUTE_ADMIN_CAISSE;
       this.router.navigate(['/dashbordAdminCaisse'])
     } else if(user.accesslevel==3){
+      this.isLivreur=0;
       this.menu = ROUTE_VENDEUR;
       this.router.navigate(['/livreurs'])
     }
     else if(user.accesslevel==4){
+      this.isLivreur=1;
       this.menu = ROUTE_LIVREUR;
       this.isLivreur = 1;
       this.router.navigate(['/commandesLivreur'])

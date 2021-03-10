@@ -1,7 +1,7 @@
 
         
 <nz-layout class="layout" >
-  <nz-sider class="SamaTheme"  nzCollapsible nzBreakpoint="lg" [nzCollapsedWidth]="0" >
+  <nz-sider class="SamaTheme4"  nzCollapsible nzBreakpoint="lg" [nzCollapsedWidth]="0" *ngIf="this.isLivreur==0">
     <div class="logo" style="height: 54px;text-align: center;color: white;padding-top: 5px;float: none;">
       <img  style="width: 46%;float: none;"  src="../assets/images/logo-grainedor.png" alt="" srcset="">
     </div>
@@ -19,7 +19,7 @@
 
         </div>
         <div class="col-lg-4">
-          <button (click)="logout()" style="float: right; margin-right: 1rem;    margin-bottom: 0;padding: 0;margin-top: 1.5rem;" nz-button nzType="primary"  nzShape="circle"><fa-icon [icon]="faCoffee"></fa-icon></button>
+          <button *ngIf="this.isLivreur==0" (click)="logout()" style="float: right; margin-right: 1rem;    margin-bottom: 0;padding: 0;margin-top: 1.5rem;" nz-button nzType="primary"  nzShape="circle"><fa-icon [icon]="faCoffee"></fa-icon></button>
         </div>
       </div>
     </nz-header>

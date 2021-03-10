@@ -2,42 +2,159 @@
     <div class="row">
         <div class="col-12">
             <div class="inner-box">
-                <button style="float: right;" type="button" class="btn btn-primary" (click)="openModalWithClass(template)">Pointage</button>
-            </div>
+                <button class="btn btn-lg btn-outline-primary" (click)="openPointage()" style="float: right;margin-top: 2rem;">Pointage</button>
+              </div>
         </div>
     </div>
     <div class="row">
         <div class="col-12">
-            <div class="inner-box">
+              <div class="inner-box">
                 <form>
                     <div class="form-group">
                       <label for="exampleInputEmail1">Rechercher Dans le tableau</label>
-                      <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="mot clé">
+                      <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="mot clé" />
                       <small id="emailHelp" class="form-text text-muted">La recherche s'effectue sur toutes les colonnes du tableau</small>
                     </div>
-                </form>            </div>
+                </form>            
+              </div>
         </div>
     </div>
     <div class="row">
         <div class="col-12">
-            <ngx-table 
-                class="table-responsive"
+            <!-- <ngx-table 
                 [configuration]="configuration"
-                [data]="data"
-                [columns]="columns"
+                [data]="this.data"
+                [columns]="this.columns"
                 style="max-width: 100% !important">
-            </ngx-table>
+            </ngx-table> -->
+            <div class="table-responsive">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th *ngFor="let item of this.columns">{{item.title}}</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let item of this.data">
+                    <td >{{item.commande}}</td>
+                    <td >{{item.livreur}}</td>
+                    <td >{{item.client}}</td>
+                    <td >{{item.vendeuse}}</td>
+                    <td >{{item.montantCommande}}</td>
+                    <td >{{item.montantLivraison}}</td>
+                    <td>
+                      <p *ngIf="item.paiement==1" >en ligne </p>
+                      <p *ngIf="item.paiement==2" >à la livraison </p>
+                    </td>
+                    <td>
+                      <p *ngIf="item.recuperation==1" >sur place </p>
+                      <p *ngIf="item.recuperation==2" >à livrer</p>
+                    </td>
+                    <td [ngClass]="{'bg-danger': item.etat==-1,'bg-secondary': item.etat==1,'bg-info': item.etat==2,'bg-warning': item.etat==3,'bg-primary': item.etat==4,'bg-success': item.etat==5}">
+                      <p *ngIf="item.etat==1">Enregistrer </p>
+                      <p *ngIf="item.etat==2">Valider </p>
+                      <p *ngIf="item.etat==3">Preparer</p>
+                      <p *ngIf="item.etat==4">En cour de livraison</p> 
+                      <p *ngIf="item.etat==5">Payer</p> 
+                    </td>
+                    <td>{{item.monnaie}}</td>
+                    <td>{{item.action}}</td>
+                  </tr>
+                </tbody>
+              </table>
+
+              <pagination [boundaryLinks]="showBoundaryLinks" 
+              [directionLinks]="showDirectionLinks" 
+              [totalItems]="this.data.length"
+              [itemsPerPage]="5"
+              (pageChanged)="pageChanged($event)"></pagination>
+              <div class="checkbox">
+                <label><input type="checkbox" [(ngModel)]="showBoundaryLinks">Afficher les liens de délimitation</label>
+                <br/>
+                <label><input type="checkbox" [(ngModel)]="showDirectionLinks">Afficher les liens de direction</label>
+             </div>
+            </div>
+
+
         </div>
     </div>
 </div>
+
+<div class="modal fade" id="editmember" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+      <div class="modal-content">
+          <form>
+              <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                  <h4 class="modal-title text-info" id="myModalLabel">Edit Account Details</h4>
+              </div>
+              <div class="modal-body">    
+                  <div class = "form-group">
+                      <label>ID Number</label>
+                      <input type = "number" class = "form-control"/>
+                  </div>
+                  <div class = "form-group">
+                      <label>Full Name</label>
+                      <input type = "text" class = "form-control"/>
+                  </div>
+                  <div class = "form-group">
+                      <label>Email Address</label>
+                      <input type = "email" class = "form-control"/>
+                  </div>
+              </div>
+              <div class="modal-footer">
+                  <button class="btn btn-success" data-dismiss = "modal"><i class="fa fa-edit" aria-hidden="true"></i> Update</button>
+              </div>
+          </form>
+      </div>
+  </div>
+</div>
+
+<ng-template #content let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Profile update</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form>
+      <div class="form-group">
+        <label for="dateOfBirth">Date of birth</label>
+        <div class="input-group">
+          <input id="dateOfBirth" class="form-control" placeholder="yyyy-mm-dd" name="dp" ngbDatepicker #dp="ngbDatepicker">
+          <div class="input-group-append">
+            <button class="btn btn-outline-secondary calendar" (click)="dp.toggle()" type="button"></button>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Save</button>
+  </div>
+</ng-template>
+
+
+<ng-template let-row let-rowIndex="rowIndex" let-column="column" #panier>
+  <div class="dropdown">
+    <span>{{row.commande}}</span>
+    <div class="dropdown-content">
+    <p style="color: black;">{{row.designation}}</p>
+    </div>
+  </div>
+</ng-template>
+
 <ng-template let-row let-rowIndex="rowIndex" let-column="column" #actionTpl>
     <button *ngIf="row.etat==1" class="btn btn-primary">Enregistrer </button>
     <button *ngIf="row.etat==2" class="btn btn-primary">Valider </button>
 </ng-template>
+
 <ng-template let-row let-rowIndex="rowIndex" let-column="column" #paiementTpl>
     <p *ngIf="row.paiement==1" >en ligne </p>
     <p *ngIf="row.paiement==2" >à la livraison </p>
 </ng-template>
+
 <ng-template let-row let-rowIndex="rowIndex" let-column="column" #recuperationTpl>
     <p *ngIf="row.recuperation==1" >sur place </p>
     <p *ngIf="row.recuperation==2" >à livrer</p>
@@ -52,7 +169,7 @@
 </ng-template>
 
 
-<ng-template #template>  
+<ng-template #modalTempmate>  
   <div class="modal-header">  
     <h4 class="modal-title pull-left">Pointage</h4>  
     <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">  
@@ -77,3 +194,45 @@
     <button type="button" class="btn btn-default" (click)="modalRef.hide()">Close</button>  
   </div>  
 </ng-template>  
+
+<div id="modalTempmate1" class="monmodal">
+  <div class="row">
+    <div class="col-lg-4 col-md-3 col-sm-2 col-xs-1"></div>
+    <div class="col-lg-4 col-md-6 col-sm-8 col-xs-10">
+      <form style="background-color:white; padding: 2rem;" *ngIf="this.loadingStat==0">
+        <div class="form-group">
+          <label for="exampleInputEmail1">Login</label>
+          <input [ngModelOptions]="{standalone: true}" [(ngModel)]="this.login" type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
+        </div>
+        <div class="form-group">
+          <label for="exampleInputPassword1">Password</label>
+          <input [ngModelOptions]="{standalone: true}" [(ngModel)]="this.password" type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+        </div>
+        <div class="form-group" style="text-align: right;">
+          
+          <button type="button" class="btn btn-default" (click)="closePointage()">Annuler</button>
+          <button type="submit" class="btn btn-primary" (click)="loger()">Pointer</button>
+        </div>
+        
+      </form>
+      <div class="row" style="background-color:white; padding: 2rem;text-align:center;" *ngIf="this.loadingStat==1">
+        <div class="col-12">
+          <h3 >
+            <i class="fas fa-check" style="font-size: 8em;color: green;"></i>
+          </h3>
+          <button class="btn btn-info" (click)="this.closePointage()">Fermer</button>
+        </div>
+      </div>
+      <ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px' }" [template]="customLoadingTemplate"></ngx-loading>
+
+    </div>
+  </div>
+</div> 
+
+<ng-template #customLoadingTemplate>
+  <div class="custom-class">
+      <h3>
+          Chargement en cour...
+      </h3>
+  </div>
+</ng-template>

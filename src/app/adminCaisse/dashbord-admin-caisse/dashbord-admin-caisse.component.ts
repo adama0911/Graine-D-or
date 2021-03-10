@@ -13,6 +13,7 @@ export class DashbordAdminCaisseComponent implements OnInit {
   public columns: Columns[];
   dd;
   df;
+
   nbrCommandes = 0;
   soldeGraineDor = 0;
   soldeCompenseBBS = 0;

@@ -1,6 +1,7 @@
 export interface commandeItem {
     id:number;
     commande: string;
+    designation:string;
     livreur: string;
     client: string;
     montantCommande: number;

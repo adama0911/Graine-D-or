@@ -6,6 +6,7 @@ import * as sha1 from 'js-sha1';
 
 import { faCoffee } from '@fortawesome/free-solid-svg-icons';
 
+
 const ROUTE_VENDEUR: routeItem[] = [
   {
     path:'/livreurs',
@@ -118,8 +119,7 @@ export class AppComponent {
 
   loger (){
 
-    // this.isLogin = 1;
-    // this.isLivreur = 1;
+    this.isLivreur = 0;
     // this.menu = ROUTE_LIVREUR;
     // this.router.navigate(['/commandesLivreur'])
 

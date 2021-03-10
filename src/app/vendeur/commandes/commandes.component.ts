@@ -10,6 +10,8 @@ import {
 import { commandeItem } from '../interfaces/commandeItem.interface';
 import { ConfigService } from 'src/app/services/Config.service';
 import { VendeurService } from 'src/app/services/vendeur.service';
+import { PageChangedEvent } from 'ngx-bootstrap/pagination';
+
 
 
 
@@ -22,30 +24,78 @@ export class CommandesComponent implements OnInit {
 
   public configuration: Config;
   public columns: Columns[];
+  closeResult = '';
+  public login = null;
+  public password = null;
+  showBoundaryLinks: boolean = true;
+  showDirectionLinks: boolean = true
+  public loading = false;
 
-  @ViewChild('actionTpl', { static: true }) actionTpl: TemplateRef<any>;
-  @ViewChild('paiementTpl', { static: true }) paiementTpl: TemplateRef<any>;
-  @ViewChild('recuperationTpl', { static: true }) recuperationTpl: TemplateRef<any>;
-  @ViewChild('etatTpl', { static: true }) etatTpl: TemplateRef<any>;
+
 
   constructor (private _vendeurService:VendeurService){
 
   }
 
-  public data:commandeItem[] = [
-    {
-      id:1,
-      commande: '122',
-      livreur: 'Adama Goudiaby',
-      client: "Abdoul Hamid",
-      montantCommande: 500,
-      montantLivraison: 2000,
-      paiement: 1,
-      recuperation: 1,
-      etat: 1,
-      monnaie: 100,
-    },
-  ];
+  public data:commandeItem[] = [];
+  public dataSave:commandeItem[] = [];
+
+
+  prenomComplet (objString:string){
+    let obj:any;
+    if(objString.trim()!=''){
+      obj = JSON.parse(objString);
+      return obj.prenom +' '+ obj.nom;
+    }
+    return "";
+  }
+
+  changerEtatCommander(commande:any,etat:string){
+    this.loading = true;
+
+    console.log(commande);
+    console.log({user:(JSON.parse(sessionStorage.getItem('currentUser'))).login,idCommande:commande.id,oldstate:commande.etat,newstate:parseInt(etat)});
+    this._vendeurService.updateEtat({user:(JSON.parse(sessionStorage.getItem('currentUser'))).login,idCommande:commande.id,oldstate:commande.etat,newstate:parseInt(etat)}).then(res=>{
+      console.log(res);
+      this.getCommandes();
+    })
+  }
+  parseDatas(datas){
+    let data = [];
+    let caissier = {prenom:"",nom:""}
+    datas.forEach(element => {
+        caissier = JSON.parse(element.caissier);
+        data.push( 
+          {
+            id:element.id,
+            commande: element.id,
+            designation: element.designation,
+            livreur: this.prenomComplet(element.livreur),
+            caissier: this.prenomComplet(element.caissier),
+            adresse:element.adresse,
+            client: element.client,
+            vendeuse: this.prenomComplet(element.vendeuse),
+            montantCommande: element.montant,
+            montantLivraison: element.frais_livraison,
+            paiement: element.mode_paiement,
+            recuperation: element.recuperation,
+            etat: element.etat,
+            monnaie: this.monnairePrpa(element.montant,element.frais_livraison),
+       
+          });
+    });
+    console.log(data)
+    return data;
+  }
+
+  monnairePrpa(mtt1 ,mtt2){
+    let somme = parseInt(mtt1)+parseInt(mtt2);
+    let temp = somme/10000;
+    let temp1 = temp.toString().split('.')[0];
+    temp1 = temp1 + 1;
+    let monnaie = parseInt(temp1) * 10000;
+    return monnaie - somme;
+  }
 
 
   exportToExcel(): void {
@@ -81,6 +131,14 @@ export class CommandesComponent implements OnInit {
   //   csvExporter.generateCsv(this.data);
   // }
 
+  pageChanged(event: PageChangedEvent): void {
+    const startItem = (event.page - 1) * event.itemsPerPage;
+    const endItem = event.page * event.itemsPerPage;
+    this.data = this.dataSave.slice(startItem, endItem);
+ }
+    
+ 
+
   ngOnInit(): void {
     this.configuration = { ...DefaultConfig };
     this.configuration.searchEnabled = true;
@@ -91,15 +149,29 @@ export class CommandesComponent implements OnInit {
       { key: 'client', title: 'CLIENT' },
       { key: 'montantCommande', title: 'MONTANT COMMANDE' },
       { key: 'montantLivraison', title: 'MONTANT LIVRAISON' },
-      { key: 'paiement', title: 'PAIEMENT' , cellTemplate: this.paiementTpl},
-      { key: 'recuperation', title: 'RÉCUPÉRATION' , cellTemplate: this.recuperationTpl},
-      { key: 'etat', title: 'ETAT COMMANDE' , cellTemplate: this.etatTpl},
+      { key: 'paiement', title: 'PAIEMENT' },
+      { key: 'recuperation', title: 'RÉCUPÉRATION' },
+      { key: 'etat', title: 'ETAT COMMANDE' },
       { key: 'monnaie', title: 'MONNAIE À PRÉPARÉE' },
-      { key: 'action', title: 'Actions', cellTemplate: this.actionTpl },
+      { key: 'action', title: 'Actions' },
     ];
 
-    this._vendeurService.getCommandes({}).then(res=>{
+    this.getCommandes();
+
+  }
+
+  getCommandes(){
+    this.loading = true;
+    let dd = (new Date().toJSON()).split("T")[0]
+    let df = (new Date().toJSON()).split("T")[0]
+    let dateDebut = dd.split('-')[2]+"/"+dd.split('-')[1]+"/"+dd.split('-')[0]
+    let dateFin = df.split('-')[2]+"/"+df.split('-')[1]+"/"+df.split('-')[0]
+    this._vendeurService.getCommandes({debut:"01/01/2019",fin:dateFin}).then(res=>{
       console.log(res);
+      if(res.status==1){
+        this.dataSave = this.data = this.parseDatas(res.data);
+        this.loading = false;
+      }
     })
   }
 
