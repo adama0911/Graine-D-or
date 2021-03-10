@@ -29,6 +29,8 @@ export class CommandesComponent implements OnInit {
   public password = null;
   showBoundaryLinks: boolean = true;
   showDirectionLinks: boolean = true
+  public loading = false;
+
 
 
   constructor (private _vendeurService:VendeurService){
@@ -49,6 +51,7 @@ export class CommandesComponent implements OnInit {
   }
 
   changerEtatCommander(commande:any,etat:string){
+    this.loading = true;
 
     console.log(commande);
     console.log({user:(JSON.parse(sessionStorage.getItem('currentUser'))).login,idCommande:commande.id,oldstate:commande.etat,newstate:parseInt(etat)});
@@ -158,6 +161,7 @@ export class CommandesComponent implements OnInit {
   }
 
   getCommandes(){
+    this.loading = true;
     let dd = (new Date().toJSON()).split("T")[0]
     let df = (new Date().toJSON()).split("T")[0]
     let dateDebut = dd.split('-')[2]+"/"+dd.split('-')[1]+"/"+dd.split('-')[0]
@@ -166,6 +170,7 @@ export class CommandesComponent implements OnInit {
       console.log(res);
       if(res.status==1){
         this.dataSave = this.data = this.parseDatas(res.data);
+        this.loading = false;
       }
     })
   }

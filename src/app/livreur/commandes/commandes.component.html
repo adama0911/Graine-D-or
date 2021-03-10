@@ -36,11 +36,12 @@
                 </thead>
                 <tbody>
                   <tr *ngFor="let item of this.data">
-                    <td>{{item.commande}}</td>
-                    <td>{{item.livreur}}</td>
-                    <td>{{item.vendeuse}}</td>
-                    <td>{{item.montantCommande}}</td>
-                    <td>{{item.montantLivraison}}</td>
+                    <td >{{item.commande}}</td>
+                    <td >{{item.livreur}}</td>
+                    <td >{{item.client}}</td>
+                    <td >{{item.vendeuse}}</td>
+                    <td >{{item.montantCommande}}</td>
+                    <td >{{item.montantLivraison}}</td>
                     <td>
                       <p *ngIf="item.paiement==1" >en ligne </p>
                       <p *ngIf="item.paiement==2" >à la livraison </p>
@@ -49,7 +50,7 @@
                       <p *ngIf="item.recuperation==1" >sur place </p>
                       <p *ngIf="item.recuperation==2" >à livrer</p>
                     </td>
-                    <td>
+                    <td [ngClass]="{'bg-danger': item.etat==-1,'bg-secondary': item.etat==1,'bg-info': item.etat==2,'bg-warning': item.etat==3,'bg-primary': item.etat==4,'bg-success': item.etat==5}">
                       <p *ngIf="item.etat==1">Enregistrer </p>
                       <p *ngIf="item.etat==2">Valider </p>
                       <p *ngIf="item.etat==3">Preparer</p>
@@ -194,11 +195,11 @@
   </div>  
 </ng-template>  
 
-<div id="modalTempmate1" class="monmodal">  
+<div id="modalTempmate1" class="monmodal">
   <div class="row">
     <div class="col-lg-4 col-md-3 col-sm-2 col-xs-1"></div>
     <div class="col-lg-4 col-md-6 col-sm-8 col-xs-10">
-      <form style="background-color:white; padding: 2rem;">
+      <form style="background-color:white; padding: 2rem;" *ngIf="this.loadingStat==0">
         <div class="form-group">
           <label for="exampleInputEmail1">Login</label>
           <input [ngModelOptions]="{standalone: true}" [(ngModel)]="this.login" type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
@@ -210,9 +211,28 @@
         <div class="form-group" style="text-align: right;">
           
           <button type="button" class="btn btn-default" (click)="closePointage()">Annuler</button>
-          <button type="submit" class="btn btn-primary" (click)="loger()">Submit</button>
+          <button type="submit" class="btn btn-primary" (click)="loger()">Pointer</button>
         </div>
+        
       </form>
+      <div class="row" style="background-color:white; padding: 2rem;text-align:center;" *ngIf="this.loadingStat==1">
+        <div class="col-12">
+          <h3 >
+            <i class="fas fa-check" style="font-size: 8em;color: green;"></i>
+          </h3>
+          <button class="btn btn-info" (click)="this.closePointage()">Fermer</button>
+        </div>
+      </div>
+      <ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px' }" [template]="customLoadingTemplate"></ngx-loading>
+
     </div>
   </div>
 </div> 
+
+<ng-template #customLoadingTemplate>
+  <div class="custom-class">
+      <h3>
+          Chargement en cour...
+      </h3>
+  </div>
+</ng-template>

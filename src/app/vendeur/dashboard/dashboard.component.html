@@ -2,7 +2,7 @@
     <div nz-row [nzGutter]="{ xs: 24, sm: 24, md: 24, lg: 24 }" style="margin-bottom: 1rem;">
         <div nz-col class="gutter-row" [nzSpan]="8">
             <div class="inner-box totalVente">
-                Total : 153.563.123 cfa
+                Total : {{this.montantTotal}} cfa
             </div>
         </div>
         <div nz-col class="gutter-row" [nzSpan]="8">
@@ -104,7 +104,7 @@
                             <p *ngIf="item.recuperation==1" >sur place </p>
                             <p *ngIf="item.recuperation==2" >à livrer</p>
                           </td>
-                          <td>
+                          <td [ngClass]="{'bg-danger': item.etat==-1,'bg-secondary': item.etat==1,'bg-info': item.etat==2,'bg-warning': item.etat==3,'bg-primary': item.etat==4,'bg-success': item.etat==5}">
                             <p *ngIf="item.etat==1">Enregistrer </p>
                             <p *ngIf="item.etat==2">Valider </p>
                             <p *ngIf="item.etat==3">Preparer</p>
@@ -131,6 +131,7 @@
                       <br/>
                       <label><input type="checkbox" [(ngModel)]="showDirectionLinks">Afficher les liens de direction</label>
                    </div>
+                   <ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px' }" [template]="customLoadingTemplate"></ngx-loading>
                   </div>
             </div>
         </div>
@@ -144,6 +145,13 @@
     <button *ngIf="row.etat==4" class="btn btn-primary">En cour de livraison</button> 
     <button *ngIf="row.etat==5" class="btn btn-primary">Payer</button> 
 </td>
+</ng-template>
+<ng-template #customLoadingTemplate>
+    <div class="custom-class">
+        <h3>
+            Chargement en cour...
+        </h3>
+    </div>
 </ng-template>
 <!-- <ng-template let-row let-rowIndex="rowIndex" let-column="column" #actionTpl>
 <td>

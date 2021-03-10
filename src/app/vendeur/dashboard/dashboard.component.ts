@@ -28,6 +28,8 @@ export class DashboardComponent implements OnInit {
   public password = null;
   showBoundaryLinks: boolean = true;
   showDirectionLinks: boolean = true
+  montantTotal = 0;
+  public loading = false;
 
   @ViewChild('panier', { static: true }) panier: TemplateRef<any>;
   @ViewChild('actionTpl', { static: true }) actionTpl: TemplateRef<any>;
@@ -49,8 +51,8 @@ export class DashboardComponent implements OnInit {
   barChartType = 'bar';
   barChartLegend = true;
   barChartData = [
-    {data: [65, 59, 80, 81, 56, 55, 40], label: 'Series A'},
-    {data: [28, 48, 40, 19, 86, 27, 90], label: 'Series B'}
+    {data: [65, 59, 80, 81, 56, 55, 40], label: 'nombre commandes'},
+    {data: [28, 48, 40, 19, 86, 27, 90], label: 'montant'}
   ];
 
 
@@ -97,6 +99,8 @@ export class DashboardComponent implements OnInit {
             monnaie: this.monnairePrpa(element.montant,element.frais_livraison),
        
           });
+
+          this.montantTotal += element.montant;
       }
     });
     console.log(data)
@@ -119,6 +123,25 @@ export class DashboardComponent implements OnInit {
     this.data = this.dataSave.slice(startItem, endItem);
  }
 
+ getCommandes(){
+  let dd = (new Date().toJSON()).split("T")[0]
+  let df = (new Date().toJSON()).split("T")[0]
+  let dateDebut = dd.split('-')[2]+"/"+dd.split('-')[1]+"/"+dd.split('-')[0]
+  let dateFin = df.split('-')[2]+"/"+df.split('-')[1]+"/"+df.split('-')[0]
+  this.loading = true;
+  this._vendeurService.getCommandes({debut:"01/01/2019",fin:dateFin}).then(res=>{
+    console.log(res);
+    if(res.status==1){
+      this.dataSave = this.data = this.parseDatas(res.data);
+      if(this.dataSave.length!=0){
+        this.loading = false;
+      }
+    }
+  }).catch(err => {
+    this.loading = false;
+  })
+ }
+
 
   ngOnInit(): void {
     this.configuration = { ...DefaultConfig };
@@ -136,16 +159,7 @@ export class DashboardComponent implements OnInit {
       { key: 'monnaie', title: 'MONNAIE À PRÉPARÉE' },
     ];
 
-    let dd = (new Date().toJSON()).split("T")[0]
-    let df = (new Date().toJSON()).split("T")[0]
-    let dateDebut = dd.split('-')[2]+"/"+dd.split('-')[1]+"/"+dd.split('-')[0]
-    let dateFin = df.split('-')[2]+"/"+df.split('-')[1]+"/"+df.split('-')[0]
-    this._vendeurService.getCommandes({debut:"01/01/2019",fin:dateFin}).then(res=>{
-      console.log(res);
-      if(res.status==1){
-        this.dataSave = this.data = this.parseDatas(res.data);
-      }
-    })
+    this.getCommandes()
   }
 
 }

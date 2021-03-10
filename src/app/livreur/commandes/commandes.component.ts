@@ -32,6 +32,9 @@ export class CommandesComponent implements OnInit {
   public password = null;
   showBoundaryLinks: boolean = true;
   showDirectionLinks: boolean = true
+  public loading = false;
+  loadingStat = 0;
+
 
   @ViewChild('panier', { static: true }) panier: TemplateRef<any>;
   @ViewChild('actionTpl', { static: true }) actionTpl: TemplateRef<any>;
@@ -50,25 +53,21 @@ export class CommandesComponent implements OnInit {
 
 
   loger (){
-
-    // this.isLogin = 1;
-    // this.isLivreur = 1;
-    // this.menu = ROUTE_LIVREUR;
-    // this.router.navigate(['/commandesLivreur'])
-
+    this.loading = true;
     this._logService.loger({login:this.login,password:sha1(this.password)}).then(res=>{
       console.log(res);
       if(res.status==1){
-       /* console.log(res); 
-        sessionStorage.setItem('profile','vendeur');
-        sessionStorage.setItem('accessLevel','1');*/
-
+        this.loadingStat = 1;
+        this.loading = false;
       }else{
         console.log(res);
+        this.loading = false;
       }
     })
   
   }
+
+
 
   pageChanged(event: PageChangedEvent): void {
     const startItem = (event.page - 1) * event.itemsPerPage;
@@ -95,11 +94,11 @@ export class CommandesComponent implements OnInit {
             id:element.id,
             commande: element.id,
             designation: element.designation,
-            livreur: element.livreur,
+            livreur: this.prenomComplet(element.livreur),
             caissier: caissier.prenom + " "+ caissier.nom,
             adresse:element.adresse,
-            client: element.numero_client,
-            vendeuse:element.vendeuse,
+            client:  element.numero_client,
+            vendeuse: this.prenomComplet(element.vendeuse),
             montantCommande: element.montant,
             montantLivraison: element.frais_livraison,
             paiement: element.mode_paiement,
@@ -119,6 +118,15 @@ export class CommandesComponent implements OnInit {
     temp1 = temp1 + 1;
     let monnaie = parseInt(temp1) * 10000;
     return monnaie - somme;
+  }
+
+  prenomComplet (objString:string){
+    let obj:any;
+    if(objString.trim()!=''){
+      obj = JSON.parse(objString);
+      return obj.prenom +' '+ obj.nom;
+    }
+    return "";
   }
 
   ngOnInit(): void {

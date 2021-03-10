@@ -5,11 +5,11 @@ import { HttpHeaders, HttpClient } from '@angular/common/http';
   providedIn: 'root'
 })
 export class AdminGeneralService {
-
+  
    //l'url de base
-  // private url = "http://localhost:8088/midleware_grainedor/index.php";
-   private url = "http://161.97.73.229/backendGrainedor/public/index.php";
-   //http://161.97.73.229/backendGrainedor/public/index.php
+  private url = "http://161.97.73.229/backendGrainedor/public/index.php";
+  // private url = "https://a52b6d862cb8.ngrok.io/backendGrainedor/public/index.php";
+  //http://161.97.73.229/backendGrainedor/public/index.php
    //Headers
    private header :HttpHeaders;
  
@@ -56,6 +56,30 @@ export class AdminGeneralService {
       console.log(params);
       
       let link=this.url+"/admin/getCommandes";
+      return this.http.post(link,params,{headers:this.header}).toPromise().then( res => {console.log(JSON.stringify(res)); return res} ).catch(error => {console.log(error); return 'bad' });
+    }
+     // getCommandeByCaissier pour obtenir les commandes par caissier
+     public getCommandeByCaissier(param): Promise<any>{
+      let params="param="+JSON.stringify(param);
+      console.log(params);
+      
+      let link=this.url+"/admin/getCommandesByIdCaissier";
+      return this.http.post(link,params,{headers:this.header}).toPromise().then( res => {console.log(JSON.stringify(res)); return res} ).catch(error => {console.log(error); return 'bad' });
+    }
+     // updateEtat pour modifier les etats des commandes
+     public updateEtat(param): Promise<any>{
+      let params="param="+JSON.stringify(param);
+      console.log(params);
+      
+      let link=this.url+"/service/updateEtat";
+      return this.http.post(link,params,{headers:this.header}).toPromise().then( res => {console.log(JSON.stringify(res)); return res} ).catch(error => {console.log(error); return 'bad' });
+    }
+    // remiseSurFileDattente pour remettre le livreur sur la fil d'attente
+    public remiseSurFileDattente(param): Promise<any>{
+      let params="param="+JSON.stringify(param);
+      console.log(params);
+      
+      let link=this.url+"/service/remiseSurFileDattente";
       return this.http.post(link,params,{headers:this.header}).toPromise().then( res => {console.log(JSON.stringify(res)); return res} ).catch(error => {console.log(error); return 'bad' });
     }
 }

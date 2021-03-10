@@ -1,6 +1,4 @@
 <div class="container" style="width: 100%;">
-
-   
         <div nz-row [nzGutter]="{ xs: 24, sm: 24, md: 24, lg: 24 }">
             <div nz-col class="gutter-row" [nzSpan]="24">
                 <div class="inner-box">
@@ -53,7 +51,7 @@
                                 <p *ngIf="item.recuperation==1" >sur place </p>
                                 <p *ngIf="item.recuperation==2" >à livrer</p>
                               </td>
-                              <td>
+                              <td [ngClass]="{'bg-danger': item.etat==-1,'bg-secondary': item.etat==1,'bg-info': item.etat==2,'bg-warning': item.etat==3,'bg-primary': item.etat==4,'bg-success': item.etat==5}">
                                 <p *ngIf="item.etat==1">Enregistrer </p>
                                 <p *ngIf="item.etat==2">Valider </p>
                                 <p *ngIf="item.etat==3">Preparer</p>
@@ -80,6 +78,7 @@
                           <br/>
                           <label><input type="checkbox" [(ngModel)]="showDirectionLinks">Afficher les liens de direction</label>
                        </div>
+                       <ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px' }" [template]="customLoadingTemplate"></ngx-loading>
                       </div>
                 </div>
             </div>
@@ -114,4 +113,11 @@
         <p *ngIf="row.etat==3">Preparer</p>
         <p *ngIf="row.etat==4">En cour de livraison</p> 
         <p *ngIf="row.etat==5">Payer</p> 
+</ng-template>
+<ng-template #customLoadingTemplate>
+  <div class="custom-class">
+      <h3>
+          Chargement en cour...
+      </h3>
+  </div>
 </ng-template>

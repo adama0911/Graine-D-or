@@ -61,14 +61,97 @@ import { NgxPaginationModule } from 'ngx-pagination';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { PaginationModule,PaginationConfig } from 'ngx-bootstrap/pagination';
+import { NgxLoadingModule } from 'ngx-loading';
+
+
+import { LoginComponent } from './login/login.component';
+import { HomeComponent } from './home/home.component';
 
 
 const routes: Routes = [
   {
     path: "",
-    redirectTo: "/",
+    redirectTo: "/login",
     pathMatch: "full"
   },
+  {
+    path:"login",
+    component:LoginComponent
+  },
+  { path: '', component: HomeComponent,
+      children: [
+       
+        {
+          path:"home",
+          component:HomeComponent
+        },
+        
+        {
+          path:"createCaisse",
+          component:CreateCaisseComponent
+        },
+        {
+          path:"dashbordAdmin",
+          component:DashbordAdminComponent
+        },
+        {
+          path:"createUsers",
+          component:CreateUsersComponent
+        },
+        {
+          path: "dashbordAdminCaisse",
+          component: DashbordAdminCaisseComponent,
+          // children: [
+          //   {
+          //     path: "",
+          //     loadChildren:
+          //       "./layouts/admin-layout/admin-layout.module#AdminLayoutModule"
+          //   }
+          // ]
+        }, 
+        {
+          path: 'livreurs',
+          component: LivreursComponent,
+      
+        },
+        {
+          path:"commandes",
+          component:CommandesComponent
+        },
+        {
+          path:"commandesLivreur",
+          component:LivreurCommandesComponent
+        },
+        {
+          path:"historiqueLivreur",
+          component:HistoriqueComponent
+        },
+        {
+          path:"dashboardVendeur",
+          component:DashboardComponent
+        },
+        {
+          path: "**",
+          redirectTo: "/"
+        }
+      ]
+  }
+];
+/*const routes: Routes = [
+  {
+    path: "",
+    redirectTo: "/login",
+    pathMatch: "full"
+  },
+  {
+    path:"login",
+    component:LoginComponent
+  },
+  {
+    path:"home",
+    component:HomeComponent
+  },
+  
   {
     path:"createCaisse",
     component:CreateCaisseComponent
@@ -117,7 +200,7 @@ const routes: Routes = [
     path: "**",
     redirectTo: "/"
   }
-];
+];*/
 
 
 
@@ -135,6 +218,8 @@ const routes: Routes = [
     HistoriqueComponent,
     CreateUsersComponent,
     DashbordAdminCaisseComponent,
+    LoginComponent,
+    HomeComponent,
   ],
   imports: [
     BrowserModule,
@@ -150,6 +235,7 @@ const routes: Routes = [
     ChartsModule,
     RouterModule.forRoot(routes),
     ModalModule.forRoot(),
+    NgxLoadingModule.forRoot({}),
     NzButtonModule,
     NzTableModule,
     NzDropDownModule,
@@ -158,7 +244,6 @@ const routes: Routes = [
     NzIconModule,
    NzProgressModule,
    FontAwesomeModule,
-   
    
 
     NzCardModule,
