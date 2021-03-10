@@ -6,6 +6,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 })
 export class VendeurService {
   private url = "http://161.97.73.229/backendGrainedor/public/index.php";
+  //private url = "https://a52b6d862cb8.ngrok.io/backendGrainedor/public/index.php";
 
   private header :HttpHeaders;
 
@@ -19,6 +20,20 @@ export class VendeurService {
     let params="param="+JSON.stringify(param);
     console.log(params);
     let link=this.url+ '/admin/getCommandes';
+    return this.http.post(link,params,{headers:this.header}).toPromise().then( res => {console.log(res); return res} ).catch(error => {console.log(error); return 'bad' });
+  } 
+
+  public getLivreurs(param): Promise<any>{
+    let params="param="+JSON.stringify(param);
+    console.log(params);
+    let link=this.url+ '/service/getLivreur';
+    return this.http.post(link,params,{headers:this.header}).toPromise().then( res => {console.log(res); return res} ).catch(error => {console.log(error); return 'bad' });
+  } 
+
+  public updateEtat(param): Promise<any>{
+    let params="param="+JSON.stringify(param);
+    console.log(params);
+    let link=this.url+ '/service/updateEtat';
     return this.http.post(link,params,{headers:this.header}).toPromise().then( res => {console.log(res); return res} ).catch(error => {console.log(error); return 'bad' });
   } 
 }

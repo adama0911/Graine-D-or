@@ -59,6 +59,9 @@ import { DashbordAdminCaisseComponent } from './adminCaisse/dashbord-admin-caiss
 
 import { NgxPaginationModule } from 'ngx-pagination';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { PaginationModule,PaginationConfig } from 'ngx-bootstrap/pagination';
+
 
 const routes: Routes = [
   {
@@ -140,6 +143,7 @@ const routes: Routes = [
     AppRoutingModule,
     BrowserModule,
     HttpClientModule,
+    PaginationModule,
     NgxPaginationModule,
     FormsModule,
     ReactiveFormsModule,
@@ -162,9 +166,10 @@ const routes: Routes = [
     NzGridModule,
     FormsModule,
     NzModalModule,
+    NgbModule,
     
   ],
-  providers: [ConfigService,BsModalService,
+  providers: [ConfigService,BsModalService,PaginationConfig,
 
     {
       provide: NZ_I18N,

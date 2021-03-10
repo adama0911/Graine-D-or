@@ -11,8 +11,8 @@ export class DashbordAdminCaisseComponent implements OnInit {
 
   public configuration: Config;
   public columns: Columns[];
-  dd
-  df
+  dd;
+  df;
 
   @ViewChild('actionTpl', { static: true }) actionTpl: TemplateRef<any>;
   @ViewChild('paiementTpl', { static: true }) paiementTpl: TemplateRef<any>;
