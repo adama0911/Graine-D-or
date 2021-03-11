@@ -29,6 +29,11 @@ export class HistoriqueComponent implements OnInit {
 
   ];
 
+  /**
+   * @param:0
+   * @return :0 
+   * @function: methode appelé lorsque le compenent est pret
+  **/
   ngOnInit(): void {
 
 

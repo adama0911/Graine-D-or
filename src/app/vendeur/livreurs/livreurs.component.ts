@@ -27,14 +27,18 @@ export class LivreursComponent implements OnInit {
   public password = null;
   showBoundaryLinks: boolean = true;
   showDirectionLinks: boolean = true
+  motcle = null;
 
   constructor(private _vendeurService:VendeurService) {}
 
   @ViewChild('actionTpl', { static: true }) actionTpl: TemplateRef<any>;
 
+
+  /**
+   * @var data: tableau de Livreurs qui charge par raport aux manipulations faites sur la tableau dataSave
+   * @return dataSave : tableau de livreurs fixe
+   **/
   public data:livreurItem[] = [];
-
-
   public dataSave:livreurItem[] = [];
 
 
@@ -44,31 +48,53 @@ export class LivreursComponent implements OnInit {
     this.data = this.dataSave.slice(startItem, endItem);
  }
 
+   /**
+   * @param datas: tableau de livreur reçu appret requette sur serveur
+   * @return data : tableau formater pour l'affichage a l'ecran
+   * @function: Formatage des données reçu du serveur
+  **/
   parseDatas(datas){
-    // let data = [];
-    // let caissier = {prenom:"",nom:""}
-    // // datas.forEach(element => {
-    // //     caissier = JSON.parse(element.caissier);
-    // //     data.push( 
-    // //       {
+    let data = [];
+    datas.forEach(element => {
+        data.push( 
+          {
 
-    // //         accesslevel: element.accesslevel,
-    // //         adresse: element.adresse,
-    // //         created_at: element.created_at,
-    // //         livreur: element.livreur,
-    // //         deleted_at: element.deleted_at,
-    // //         depends_on:element.depends_on,
-    // //         etat: element.numero_client,
-    // //         first_log:element.first_log,
-    // //         id: element.id,
-    // //         nom: element.nom,
-    // //         password: element.password,
-    // //         telephone: element.telephone,
-    // //         updated_at: element.updated_at,
-    // //     });
-    // // });
-    // console.log(data)
-    return datas;
+            accesslevel: element.accesslevel,
+            adresse: element.adresse,
+            created_at: (new Date(element.created_at)).toLocaleDateString(),
+            livreur: element.livreur,
+            deleted_at: element.deleted_at,
+            depends_on:element.depends_on,
+            etat: element.numero_client,
+            first_log:element.first_log,
+            id: element.id,
+            nom: element.nom,
+            password: element.password,
+            telephone: element.telephone,
+            updated_at: (new Date(element.updated_at)).toLocaleDateString(),
+        });
+    });
+    console.log(data)
+    return data;
+  }
+
+  /**
+   * @param: 0
+   * @return: 0
+   * @function: Rechercher dans le tabeau
+   **/
+  searchAll = () => {
+    let value = this.motcle;
+    console.log("PASS", { value });
+  
+    const filterTable = this.dataSave.filter(o =>
+      Object.keys(o).some(k =>
+        String(o[k])
+          .toLowerCase()
+          .includes(value.toLowerCase())
+      )
+    );
+    this.data = filterTable;
   }
 
   monnairePrpa(mtt1 ,mtt2){
@@ -82,6 +108,11 @@ export class LivreursComponent implements OnInit {
 
 
 
+  /**
+   * @param:0
+   * @return :0 
+   * @function: methode appelé lorsque le compenent est pret
+  **/
   ngOnInit(): void {
     this.configuration = { ...DefaultConfig };
     this.configuration.searchEnabled = true;
@@ -99,10 +130,9 @@ export class LivreursComponent implements OnInit {
 
     this._vendeurService.getLivreurs({}).then(res=>{
       console.log(res.data);
-      this.data = this.dataSave = res.data;
-      // if(res.status==1){
-      //   this.dataSave = this.data = this.parseDatas(res.data);
-      // }
+      
+      //this.data = this.dataSave = res.data;
+        this.dataSave = this.data = this.parseDatas(res.data);
     })
   }
 

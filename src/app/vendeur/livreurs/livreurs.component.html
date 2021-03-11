@@ -5,7 +5,7 @@
                 <form>
                     <div class="form-group">
                       <label for="exampleInputEmail1">Rechercher Dans le tableau</label>
-                      <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="mot clé">
+                      <input [(ngModel)]="this.motcle" [ngModelOptions]="{standalone: true}" (keyup) = "searchAll()" type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="mot clé">
                       <small id="emailHelp" class="form-text text-muted">La recherche s'effectue sur toutes les colonnes du tableau</small>
                     </div>
                 </form>

@@ -30,6 +30,9 @@ export class DashboardComponent implements OnInit {
   showDirectionLinks: boolean = true
   montantTotal = 0;
   public loading = false;
+  motcle = null;
+  debut = null;
+  fin = null;
 
   @ViewChild('panier', { static: true }) panier: TemplateRef<any>;
   @ViewChild('actionTpl', { static: true }) actionTpl: TemplateRef<any>;
@@ -38,6 +41,10 @@ export class DashboardComponent implements OnInit {
 
   }
 
+  /**
+   * @var data: tableau de commandes qui charge par raport aux manipulations faites sur la tableau dataSave
+   * @return dataSave : tableau de livreurs fixe
+   **/
   public data:commandeItem[] = [];
   public dataSave:commandeItem[] = [];
 
@@ -50,21 +57,107 @@ export class DashboardComponent implements OnInit {
   barChartLabels = ['1-5', '5-10', '10-15', '15-20', '20-25', '25-30'];
   barChartType = 'bar';
   barChartLegend = true;
+
   barChartData = [
     {data: [65, 59, 80, 81, 56, 55], label: 'nombre commandes'},
     {data: [28, 48, 40, 19, 86, 27], label: 'montant'}
   ];
 
-  chartDatas(data){
-    console.log('chartData',data);
-    data.array.forEach(element => {
-      console.log(element.created_at);
+
+    /**
+   * @param: 0
+   * @return: 0
+   * @function: Rechercher dans le tabeau
+   **/
+  searchAll = () => {
+    let value = this.motcle;
+    console.log("PASS", { value });
+  
+    const filterTable = this.dataSave.filter(o =>
+      Object.keys(o).some(k =>
+        String(o[k])
+          .toLowerCase()
+          .includes(value.toLowerCase())
+      )
+    );
+    this.data = filterTable;
+  }
+
+  barChartDatas(data){
+    let jour:number;
+    this.barChartData = [
+      {data: [0, 0, 0, 0, 0, 0], label: 'nombre commandes'},
+      {data: [0, 0, 0, 0, 0, 0], label: 'montant'}
+    ];
+    data.forEach(element => {
+      jour = parseInt((new Date(element.created_at).toLocaleDateString().split('/'))[0]) ;
+      if (jour <=5){
+        (this.barChartData[0]).data[0] += 1;
+        (this.barChartData[1]).data[0] += element.montant; 
+      }
+      else if(jour > 5  &&  jour <=10 ){
+        (this.barChartData[0]).data[1] += 1;
+        (this.barChartData[1]).data[1] += element.montant; 
+      }
+      else if(jour > 10  &&  jour <=15 ){
+        (this.barChartData[0]).data[2] += 1;
+        (this.barChartData[1]).data[2] += element.montant; 
+      }
+      else if(jour > 15  &&  jour <=20 ){
+        (this.barChartData[0]).data[3] += 1;
+        (this.barChartData[1]).data[3] += element.montant; 
+      }
+      else if(jour > 20  &&  jour <=25 ){
+        (this.barChartData[0]).data[4] += 1;
+        (this.barChartData[1]).data[4] += element.montant; 
+      }
+      else if(jour > 25  &&  jour <=31){
+        (this.barChartData[0]).data[5] += 1;
+        (this.barChartData[1]).data[5] += element.montant; 
+      }
+    });
+  }
+
+  validerRechercheInterval(){
+    console.log({debut:(new Date(this.debut)).toLocaleDateString(),fin:(new Date(this.fin)).toLocaleDateString()})
+
+    this.loading = true;
+    this._vendeurService.getCommandes({debut:(new Date(this.debut)).toLocaleDateString(),fin:(new Date(this.fin)).toLocaleDateString()}).then(res=>{
+      console.log(res);
+      if(res.status==1){
+        this.dataSave = this.data = this.parseDatas(res.data);
+        if(this.dataSave.length!=0){
+          this.loading = false;
+        }
+      }
+    }).catch(err => {
+      this.loading = false;
+    })
+  }
+
+  oughnutChartDatas(data){
+    let jour:number;
+    this.doughnutChartData = [0, 0, 0, 0];
+    data.forEach(element => {
+      jour = parseInt((new Date(element.created_at).toLocaleDateString().split('/'))[0]) ;
+      if (jour <=7){
+        this.doughnutChartData[0] += element.montant; 
+      }
+      else if(jour > 7  &&  jour <=14 ){
+        this.doughnutChartData[1] += element.montant; 
+      }
+      else if(jour > 14  &&  jour <=23 ){
+        this.doughnutChartData[2] += element.montant; 
+      }
+      else if(jour > 23  &&  jour <=31 ){
+        this.doughnutChartData[3] += element.montant; 
+      }
     });
   }
 
 
 
-  public doughnutChartLabels = ['Sales Q1', 'Sales Q2', 'Sales Q3', 'Sales Q4'];
+  public doughnutChartLabels = ['semaine 1', 'semaine 2', 'semaine 3', 'semaine 4'];
   public doughnutChartData = [120, 150, 180, 90];
   public doughnutChartType = 'doughnut';
 
@@ -82,12 +175,16 @@ export class DashboardComponent implements OnInit {
 
 
 
+  /**
+   * @param datas: tableau de Commandes reçu appret requette sur serveur
+   * @return data : tableau formater pour l'affichage a l'ecran
+   * @function: Formatage des données reçu du serveur
+  **/
   parseDatas(datas){
     let data = [];
-    let caissier = {prenom:"",nom:""}
     datas.forEach(element => {
       if(element.etat==5){
-        caissier = JSON.parse(element.caissier);
+        
         data.push( 
           {
             id:element.id,
@@ -110,10 +207,15 @@ export class DashboardComponent implements OnInit {
           this.montantTotal += element.montant;
       }
     });
-    this.chartDatas(datas)
+    this.barChartDatas(datas)
     return data;
   }
 
+  /**
+   * @param mtt1: montant 
+   * @return mtt2 : frais
+   * @function: calcul de la monnaie
+  **/
   monnairePrpa(mtt1 ,mtt2){
     let somme = parseInt(mtt1)+parseInt(mtt2);
     let temp = somme/10000;
@@ -150,6 +252,11 @@ export class DashboardComponent implements OnInit {
  }
 
 
+   /**
+   * @param:0
+   * @return :0 
+   * @function: methode appelé lorsque le compenent est pret
+  **/
   ngOnInit(): void {
     this.configuration = { ...DefaultConfig };
     this.configuration.searchEnabled = true;

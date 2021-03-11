@@ -34,6 +34,7 @@ export class CommandesComponent implements OnInit {
   showDirectionLinks: boolean = true
   public loading = false;
   loadingStat = 0;
+  motcle = null;
 
 
   @ViewChild('panier', { static: true }) panier: TemplateRef<any>;
@@ -47,11 +48,18 @@ export class CommandesComponent implements OnInit {
   }
 
 
-
+  /**
+   * @var data: tableau de commandes qui charge par raport aux manipulations faites sur la tableau dataSave
+   * @return dataSave : tableau de livreurs fixe
+   **/
   public data:commandeItem[] = [];
   public dataSave:commandeItem[] = [];
 
-
+  /**
+   * @param: 0
+   * @return: 0
+   * @function: permet de pointer un livreur
+   **/
   loger (){
     this.loading = true;
     this._logService.loger({login:this.login,password:sha1(this.password)}).then(res=>{
@@ -59,6 +67,7 @@ export class CommandesComponent implements OnInit {
       if(res.status==1){
         this.loadingStat = 1;
         this.loading = false;
+        sessionStorage.setItem('currentUser',JSON.stringify(res.user))
       }else{
         console.log(res);
         this.loading = false;
@@ -68,7 +77,31 @@ export class CommandesComponent implements OnInit {
   }
 
 
+  /**
+   * @param: 0
+   * @return: 0
+   * @function: Rechercher dans le tabeau
+   **/
+  searchAll = () => {
+    let value = this.motcle;
+    console.log("PASS", { value });
+  
+    const filterTable = this.dataSave.filter(o =>
+      Object.keys(o).some(k =>
+        String(o[k])
+          .toLowerCase()
+          .includes(value.toLowerCase())
+      )
+    );
+    this.data = filterTable;
+  }
 
+
+  /**
+   * @param event: la page en cour dans la pagination
+   * @return: 0
+   * @function: permet de pointer un livreur
+  **/
   pageChanged(event: PageChangedEvent): void {
     const startItem = (event.page - 1) * event.itemsPerPage;
     const endItem = event.page * event.itemsPerPage;
@@ -76,26 +109,39 @@ export class CommandesComponent implements OnInit {
  }
     
 
+   /**
+   * @param:0
+   * @return: 0
+   * @function: Ouvrir le modal de pointage
+  **/
   openPointage() :void{
     (document.getElementById("modalTempmate1")).style.display = "block";
   }
 
+  /**
+   * @param:0
+   * @return: 0
+   * @function: Fermer le modal de  pointage
+  **/
    closePointage():void {
     (document.getElementById("modalTempmate1")).style.display = "none";
   }
 
+  /**
+   * @param datas: tableau de Commandes reçu appret requette sur serveur
+   * @return data : tableau formater pour l'affichage a l'ecran
+   * @function: Formatage des données reçu du serveur
+  **/
   parseDatas(datas){
     let data = [];
-    let caissier = {prenom:"",nom:""}
     datas.forEach(element => {
-        caissier = JSON.parse(element.caissier);
         data.push( 
           {
             id:element.id,
             commande: element.id,
             designation: element.designation,
             livreur: this.prenomComplet(element.livreur),
-            caissier: caissier.prenom + " "+ caissier.nom,
+            caissier: this.prenomComplet(element.caissier),
             adresse:element.adresse,
             client:  element.numero_client,
             vendeuse: this.prenomComplet(element.vendeuse),
@@ -111,6 +157,12 @@ export class CommandesComponent implements OnInit {
     return data;
   }
 
+
+  /**
+   * @param mtt1: montant 
+   * @return mtt2 : frais
+   * @function: calcul de la monnaie
+  **/
   monnairePrpa(mtt1 ,mtt2){
     let somme = parseInt(mtt1)+parseInt(mtt2);
     let temp = somme/10000;
@@ -120,6 +172,11 @@ export class CommandesComponent implements OnInit {
     return monnaie - somme;
   }
 
+  /**
+   * @param objString: Objet JSON qui represent un utilisateur 
+   * @return : renvoi  le nom complet de l'utilisateur
+   * @function: renvoi le nom complet de l'utilisateur  a partir de l'objet
+  **/
   prenomComplet (objString:string){
     let obj:any;
     if(objString.trim()!=''){
@@ -129,6 +186,11 @@ export class CommandesComponent implements OnInit {
     return "";
   }
 
+  /**
+   * @param:0
+   * @return :0 
+   * @function: methode appelé lorsque le compenent est pret
+  **/
   ngOnInit(): void {
     this.configuration = { ...DefaultConfig };
     this.configuration.isLoading = true;

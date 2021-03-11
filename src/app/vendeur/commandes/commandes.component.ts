@@ -30,6 +30,7 @@ export class CommandesComponent implements OnInit {
   showBoundaryLinks: boolean = true;
   showDirectionLinks: boolean = true
   public loading = false;
+  motcle = null;
 
 
 
@@ -37,10 +38,19 @@ export class CommandesComponent implements OnInit {
 
   }
 
+  /**
+   * @var data: tableau de commandes qui charge par raport aux manipulations faites sur la tableau dataSave
+   * @return dataSave : tableau de livreurs fixe
+   **/
   public data:commandeItem[] = [];
   public dataSave:commandeItem[] = [];
 
 
+  /**
+   * @param objString: Objet JSON qui represent un utilisateur 
+   * @return : renvoi  le nom complet de l'utilisateur
+   * @function: renvoi le nom complet de l'utilisateur  a partir de l'objet
+  **/
   prenomComplet (objString:string){
     let obj:any;
     if(objString.trim()!=''){
@@ -48,6 +58,25 @@ export class CommandesComponent implements OnInit {
       return obj.prenom +' '+ obj.nom;
     }
     return "";
+  }
+
+    /**
+   * @param: 0
+   * @return: 0
+   * @function: Rechercher dans le tabeau
+   **/
+  searchAll = () => {
+    let value = this.motcle;
+    console.log("PASS", { value });
+  
+    const filterTable = this.dataSave.filter(o =>
+      Object.keys(o).some(k =>
+        String(o[k])
+          .toLowerCase()
+          .includes(value.toLowerCase())
+      )
+    );
+    this.data = filterTable;
   }
 
   changerEtatCommander(commande:any,etat:string){
@@ -60,11 +89,15 @@ export class CommandesComponent implements OnInit {
       this.getCommandes();
     })
   }
+
+  /**
+   * @param datas: tableau de Commandes reçu appret requette sur serveur
+   * @return data : tableau formater pour l'affichage a l'ecran
+   * @function: Formatage des données reçu du serveur
+  **/
   parseDatas(datas){
     let data = [];
-    let caissier = {prenom:"",nom:""}
     datas.forEach(element => {
-        caissier = JSON.parse(element.caissier);
         data.push( 
           {
             id:element.id,
@@ -88,6 +121,12 @@ export class CommandesComponent implements OnInit {
     return data;
   }
 
+
+    /**
+   * @param mtt1: montant 
+   * @return mtt2 : frais
+   * @function: calcul de la monnaie
+  **/
   monnairePrpa(mtt1 ,mtt2){
     let somme = parseInt(mtt1)+parseInt(mtt2);
     let temp = somme/10000;
@@ -138,6 +177,12 @@ export class CommandesComponent implements OnInit {
  }
     
  
+
+   /**
+   * @param:0
+   * @return :0 
+   * @function: methode appelé lorsque le compenent est pret
+  **/
 
   ngOnInit(): void {
     this.configuration = { ...DefaultConfig };
