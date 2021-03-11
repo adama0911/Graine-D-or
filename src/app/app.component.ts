@@ -86,7 +86,7 @@ const ROUTE_ADMIN_CAISSE: routeItem[] = [
 
 
 export class AppComponent {
-  title = 'angular-router-sample';
+  title = "Graine D'or";
   public login = null;
   public password = null;
   isLogin=0
