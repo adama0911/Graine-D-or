@@ -52,6 +52,7 @@
                                 <p *ngIf="item.recuperation==2" >à livrer</p>
                               </td>
                               <td [ngClass]="{'bg-danger': item.etat==-1,'bg-secondary': item.etat==1,'bg-info': item.etat==2,'bg-warning': item.etat==3,'bg-primary': item.etat==4,'bg-success': item.etat==5}">
+                                <p *ngIf="item.etat==-1">Annuler</p> 
                                 <p *ngIf="item.etat==1">Enregistrer </p>
                                 <p *ngIf="item.etat==2">Valider </p>
                                 <p *ngIf="item.etat==3">Preparer</p>

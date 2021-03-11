@@ -47,13 +47,20 @@ export class DashboardComponent implements OnInit {
   };
 
 
-  barChartLabels = ['2006', '2007', '2008', '2009', '2010', '2011', '2012'];
+  barChartLabels = ['1-5', '5-10', '10-15', '15-20', '20-25', '25-30'];
   barChartType = 'bar';
   barChartLegend = true;
   barChartData = [
-    {data: [65, 59, 80, 81, 56, 55, 40], label: 'nombre commandes'},
-    {data: [28, 48, 40, 19, 86, 27, 90], label: 'montant'}
+    {data: [65, 59, 80, 81, 56, 55], label: 'nombre commandes'},
+    {data: [28, 48, 40, 19, 86, 27], label: 'montant'}
   ];
+
+  chartDatas(data){
+    console.log('chartData',data);
+    data.array.forEach(element => {
+      console.log(element.created_at);
+    });
+  }
 
 
 
@@ -103,7 +110,7 @@ export class DashboardComponent implements OnInit {
           this.montantTotal += element.montant;
       }
     });
-    console.log(data)
+    this.chartDatas(datas)
     return data;
   }
 
