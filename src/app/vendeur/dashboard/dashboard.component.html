@@ -122,7 +122,7 @@
                       </tbody>
                     </table>
                     <div class="list">
-                        <pagination-controls (pageChange)="p = $event"></pagination-controls>  
+                        <pagination-controls (pageChange)="p = $event" previousLabel="précédent" nextLabel="Suivant"></pagination-controls>  
                     </div>
                    <ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px' }" [template]="customLoadingTemplate"></ngx-loading>
                   </div>

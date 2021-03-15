@@ -45,9 +45,9 @@ export class LoginComponent implements OnInit {
               pass.match( /[^a-zA-Z\d]/g) && 
               pass.length >= 8) {   
             this.passwordQuality = 2;
-      }else if ( pass.length  >= 6 && pass.length < 8){
+      }else if ( pass.length  >= 4 && pass.length < 8){
         this.passwordQuality = 1; 
-      }else if(pass.length < 6){
+      }else if(pass.length < 4){
         this.passwordQuality = 0; 
       }
       console.log(this.passwordQuality)
@@ -73,7 +73,7 @@ export class LoginComponent implements OnInit {
         })
         
       }else{
-        this.passError = "Mot de pass très faible";
+        this.passError = "Mot de passe très faible";
       }
     }else{  
       this.passError = "Les mots de passe sont différants";
