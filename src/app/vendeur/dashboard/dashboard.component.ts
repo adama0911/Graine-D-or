@@ -33,6 +33,7 @@ export class DashboardComponent implements OnInit {
   motcle = null;
   debut = null;
   fin = null;
+  p: number = 1;
 
   @ViewChild('panier', { static: true }) panier: TemplateRef<any>;
   @ViewChild('actionTpl', { static: true }) actionTpl: TemplateRef<any>;

@@ -30,7 +30,7 @@
                         </tr>
                       </thead>
                       <tbody>
-                        <tr *ngFor="let item of this.data">
+                        <tr *ngFor="let item of this.data | paginate: { itemsPerPage: 10, currentPage: p }">
                           <td>{{item.prenom}}</td>
                           <td>{{item.nom}}</td>
                           <td>{{item.telephone}}</td>
@@ -44,16 +44,9 @@
                       </tbody>
                     </table>
       
-                    <pagination [boundaryLinks]="showBoundaryLinks" 
-                    [directionLinks]="showDirectionLinks" 
-                    [totalItems]="this.data.length"
-                    [itemsPerPage]="5"
-                    (pageChanged)="pageChanged($event)"></pagination>
-                    <div class="checkbox">
-                      <label><input type="checkbox" [(ngModel)]="showBoundaryLinks">Afficher les liens de délimitation</label>
-                      <br/>
-                      <label><input type="checkbox" [(ngModel)]="showDirectionLinks">Afficher les liens de direction</label>
-                   </div>
+                    <div class="list">
+                      <pagination-controls (pageChange)="p = $event"></pagination-controls>  
+                    </div>
                   </div>
             </div>
         </div>

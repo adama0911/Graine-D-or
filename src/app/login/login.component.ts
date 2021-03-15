@@ -99,7 +99,7 @@ export class LoginComponent implements OnInit {
           }
         }else{
           this.loading = false;
-          this.loginError = "Login  où mot de passe incorrect !!!";
+          this.loginError = "Identifiant  où mot de passe incorrect !!!";
           console.log(res);
         }
          
