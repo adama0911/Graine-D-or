@@ -3,8 +3,9 @@
       <div class="card">
         <ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px' }" [template]="customLoadingTemplate"></ngx-loading>
         <div class="card-header">
-          <h3>S'identifier</h3>
-          <div class="d-flex justify-content-end social_icon">
+          <h3 *ngIf="!isFirstLog">S'identifier</h3>
+          <h3 *ngIf="isFirstLog">Modification mot passe</h3>
+          <div *ngIf="!isFirstLog" class="d-flex justify-content-end social_icon">
             <span><i class="fas fa-desktop"></i></span>
             <span><i class="fas fa-motorcycle" (click)="goToLivreur()"></i></span>
           </div>
@@ -13,7 +14,7 @@
           <div style="text-align: center; width: 100%;font-size: 8rem;">
             <i class="fas fa-user-circle"></i>
           </div>
-          <form>
+          <form *ngIf="!isFirstLog">
             <div class="input-group form-group">
               <div class="input-group-prepend" >
                 <span class="input-group-text"><i class="fas fa-user"></i></span>
@@ -28,7 +29,25 @@
               <input type="password" class="form-control" placeholder="password" [ngModelOptions]="{standalone: true}" [(ngModel)]="this.password" />
             </div>
             <div class="form-group">
-              <input type="submit" value="Login" class="btn float-right login_btn" (click)="loger()" >
+              <input type="submit" value="Login" [disabled]="!login || login =='' || !password || password == '' "  class="btn float-right login_btn" (click)="loger()" >
+            </div>
+          </form>
+           <form *ngIf="isFirstLog">
+            <div class="input-group form-group">
+              <div class="input-group-prepend" >
+                <span class="input-group-text"><i class="fas fa-key"></i></span>
+              </div>
+              <input type="password" class="form-control" placeholder="Mot de passe" [ngModelOptions]="{standalone: true}" [(ngModel)]="this.newpassword" />
+              
+            </div>
+            <div class="input-group form-group">
+              <div class="input-group-prepend">
+                <span class="input-group-text"><i class="fas fa-key"></i></span>
+              </div>
+              <input type="password" class="form-control" placeholder="Confirmer mot de passe" [ngModelOptions]="{standalone: true}" [(ngModel)]="this.confirmpassword" />
+            </div>
+            <div class="form-group">
+              <input type="submit" value="Valider" [disabled]="!newpassword || newpassword =='' || !confirmpassword || confirmpassword == '' "  class="btn float-right login_btn" (click)="firstLog()" >
             </div>
           </form>
         </div>

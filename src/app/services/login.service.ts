@@ -25,6 +25,15 @@ export class LoginService {
     return this.http.post(link,params,{headers:this.header}).toPromise().then( res => {console.log(res); return res} ).catch(error => {console.log(error); return 'bad' });
   } 
 
+  
+  //firstLogin changer mot passe sur le premier login
+  public firstLogin(param): Promise<any>{
+    let params="param="+JSON.stringify(param);
+    console.log(params);
+    let link=this.url+ '/admin/updatePassword';
+    return this.http.post(link,params,{headers:this.header}).toPromise().then( res => {console.log(res); return res} ).catch(error => {console.log(error); return 'bad' });
+  } 
+
   public logout(param): Promise<any>{
     let params="param="+JSON.stringify(param);
     console.log(params);

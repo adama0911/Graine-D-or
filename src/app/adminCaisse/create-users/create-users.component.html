@@ -2,10 +2,10 @@
   
     <div *ngIf="etapeDisplay != 3" nz-row style="text-align: center;">
         <div nz-col nzSpan="12" style="text-align: right;">
-            <button class="btn btn-primary" (click)="etapeDisplay = 1;getUsers()" style="margin-left: 5px;">Liste admin caisse</button>
+            <button class="btn btn-primary" (click)="etapeDisplay = 1;getUsers()" style="margin-left: 5px;">Liste des utilisateurs</button>
         </div>
         <div nz-col nzSpan="12" style="text-align: left;">
-            <button class="btn btn-info" (click)="etapeDisplay = 2" style="margin-left: 5px;">Création admin caisse</button>
+            <button class="btn btn-info" (click)="etapeDisplay = 2" style="margin-left: 5px;">Création d'utilisateur</button>
         </div>
     </div>
     <div *ngIf="etapeDisplay == 1" >
