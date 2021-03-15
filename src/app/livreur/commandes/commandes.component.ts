@@ -174,7 +174,7 @@ export class CommandesComponent implements OnInit {
             break;
         }
 
-        switch (element.paiement) {
+        switch (element.mode_paiement) {
           case 1:
             element.paiementText = 'en ligne'
             break;
