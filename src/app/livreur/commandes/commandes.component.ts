@@ -145,6 +145,8 @@ export class CommandesComponent implements OnInit {
     datas.forEach(element => {
         
         switch (element.etat) {
+          case -1:
+            element.etatText = 'Annuler'
           case 1:
             element.etatText = 'Enregistrer'
             break;
@@ -163,6 +165,24 @@ export class CommandesComponent implements OnInit {
 
         }
 
+        switch (element.recuperation) {
+          case 1:
+            element.recuperationText = 'sur place'
+            break;
+          case 2:
+            element.recuperationText = 'à livrer'
+            break;
+        }
+
+        switch (element.paiement) {
+          case 1:
+            element.paiementText = 'en ligne'
+            break;
+          case 2:
+            element.paiementText = 'à la livraiso'
+            break;
+        }
+
         data.push( 
           {
             id:element.id,
@@ -179,6 +199,8 @@ export class CommandesComponent implements OnInit {
             recuperation: element.recuperation,
             etat: element.etat,
             etatText: element.etatText,
+            recuperationText:element.recuperationText,
+            paiementText:element.paiementText,
             monnaie: this.monnairePrpa(element.montant,element.frais_livraison),
         });
     });

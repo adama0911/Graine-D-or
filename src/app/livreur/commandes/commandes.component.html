@@ -43,20 +43,20 @@
                     <td >{{item.montantCommande}}</td>
                     <td >{{item.montantLivraison}}</td>
                     <td>
-                      <p *ngIf="item.paiement==1" >en ligne </p>
-                      <p *ngIf="item.paiement==2" >à la livraison </p>
+                      <p *ngIf="item.paiement==1" >{{item.paiementText}}</p>
+                      <p *ngIf="item.paiement==2" >{{item.paiementText}}</p>
                     </td>
                     <td>
-                      <p *ngIf="item.recuperation==1" >sur place </p>
-                      <p *ngIf="item.recuperation==2" >à livrer</p>
+                      <p *ngIf="item.recuperation==1" >{{item.recuperationText}}</p>
+                      <p *ngIf="item.recuperation==2" >{{item.recuperationText}}</p>
                     </td>
                     <td [ngClass]="{'bg-danger': item.etat==-1,'bg-secondary': item.etat==1,'bg-info': item.etat==2,'bg-warning': item.etat==3,'bg-primary': item.etat==4,'bg-success': item.etat==5}">
-                      <p *ngIf="item.etat==-1">Annuler</p> 
-                      <p *ngIf="item.etat==1">Enregistrer </p>
-                      <p *ngIf="item.etat==2">Valider </p>
-                      <p *ngIf="item.etat==3">Preparer</p>
-                      <p *ngIf="item.etat==4">En cour de livraison</p> 
-                      <p *ngIf="item.etat==5">Payer</p> 
+                      <p *ngIf="item.etat==-1">{{item.etatText}}</p> 
+                      <p *ngIf="item.etat==1">{{item.etatText}}</p>
+                      <p *ngIf="item.etat==2">{{item.etatText}}</p>
+                      <p *ngIf="item.etat==3">{{item.etatText}}</p>
+                      <p *ngIf="item.etat==4">{{item.etatText}}</p> 
+                      <p *ngIf="item.etat==5">{{item.etatText}}</p> 
                     </td>
                     <td>{{item.monnaie}}</td>
                     <td>{{item.action}}</td>

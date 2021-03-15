@@ -14,4 +14,6 @@ export interface commandeItem {
     etat: number;
     monnaie: number;
     etatText:string;
+    paiementText:string;
+    recuperationText:string;
 }
