@@ -252,10 +252,11 @@ export class DashboardComponent implements OnInit {
  }
 
 
-   /**
+
+  /**
    * @param:0
    * @return :0 
-   * @function: methode appelé lorsque le compenent est pret
+   * @function: methode appelé lorsque le component est pret
   **/
   ngOnInit(): void {
     this.configuration = { ...DefaultConfig };

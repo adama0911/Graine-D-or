@@ -24,6 +24,7 @@ import { LoginService } from 'src/app/services/login.service';
 })
 
 export class CommandesComponent implements OnInit {
+  // declaration et initalisation des variables
   public configuration: Config;
   public columns: Columns[];
   modalRef: BsModalRef;  
@@ -186,10 +187,11 @@ export class CommandesComponent implements OnInit {
     return "";
   }
 
+
   /**
    * @param:0
    * @return :0 
-   * @function: methode appelé lorsque le compenent est pret
+   * @function: methode appelé lorsque le component est pret
   **/
   ngOnInit(): void {
     this.configuration = { ...DefaultConfig };

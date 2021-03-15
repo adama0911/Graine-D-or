@@ -36,12 +36,9 @@
                           <td>{{item.telephone}}</td>
                           <td>{{item.adresse}}</td>
                           <td>{{item.created_at}}</td>
-                          <td>
+                          <td [ngClass]="{bg:true,'bg-success':item.etat==1,'bg-danger':item.etat==0}">
                             <p *ngIf="item.etat==1">Pointé</p>
-                            <p *ngIf="item.etat==1">Non Pointé</p>
-                          </td>
-                          <td>
-                              <button class="btn btn-warning">pointer</button>
+                            <p *ngIf="item.etat==0">Non Pointé</p>
                           </td>
                         </tr>
                       </tbody>

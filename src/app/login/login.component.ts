@@ -21,6 +21,8 @@ export class LoginComponent implements OnInit {
   isFirstLog:boolean = false;
   newpassword;
   confirmpassword;
+  passError = null;
+  loginError = null;
   constructor(private _logService:LoginService,private router:Router) { }
 
   ngOnInit(): void {
@@ -30,20 +32,55 @@ export class LoginComponent implements OnInit {
     this.isLogin = 0;
     this.router.navigate(['/commandesLivreur'])
   }
+
+ 
+
+
+  testPass (pass){
+      console.log(pass)
+      if(pass.trim()==''){
+        this.passwordQuality = null;
+      }else if(pass.match( /[0-9]/g) &&  
+              pass.match( /[A-Z]/g) && pass.match(/[a-z]/g) && 
+              pass.match( /[^a-zA-Z\d]/g) && 
+              pass.length >= 8) {   
+            this.passwordQuality = 2;
+      }else if ( pass.length  >= 6 && pass.length < 8){
+        this.passwordQuality = 1; 
+      }else if(pass.length < 6){
+        this.passwordQuality = 0; 
+      }
+      console.log(this.passwordQuality)
+  }
+
+
   firstLog(){
+    this.passError = null;
     if(this.newpassword == this.confirmpassword){
-      this._logService.firstLogin({login:this.login,password:sha1(this.newpassword)}).then(res=>{
-        console.log(res);
-        if(res.status == 1){
-          this.isFirstLog = false;
-          this.login = undefined;
-          this.password = undefined;
-        }
-      })
+      if(this.passwordQuality!=0){
+        this._logService.firstLogin({login:this.login,password:sha1(this.newpassword)}).then(res=>{
+          console.log(res);
+          if(res.status == 1){
+            this.isFirstLog = false;
+            this.login = undefined;
+            this.password = undefined;
+          }
+          if(res.status == 1){
+            this.isFirstLog = false;
+            this.login = undefined;
+            this.password = undefined;
+          }
+        })
+        
+      }else{
+        this.passError = "Mot de pass très faible";
+      }
     }else{  
-      alert("Les mots de passe sont différants")
+      this.passError = "Les mots de passe sont différants";
     }
   }
+
+  passwordQuality = null;
   loger (){
     this.loading = true;
     this._logService.loger({login:this.login,password:sha1(this.password)}).then(res=>{
@@ -62,7 +99,7 @@ export class LoginComponent implements OnInit {
           }
         }else{
           this.loading = false;
-          alert("Login ou mot de passe incorrect !!!")
+          this.loginError = "Login  où mot de passe incorrect !!!";
           console.log(res);
         }
          

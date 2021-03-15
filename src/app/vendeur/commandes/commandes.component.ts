@@ -39,7 +39,7 @@ export class CommandesComponent implements OnInit {
   }
 
   /**
-   * @var data: tableau de commandes qui charge par raport aux manipulations faites sur la tableau dataSave
+   * @var data: tableau de commandes qui change par raport aux manipulations faites sur la tableau dataSave
    * @return dataSave : tableau de livreurs fixe
    **/
   public data:commandeItem[] = [];
@@ -60,7 +60,7 @@ export class CommandesComponent implements OnInit {
     return "";
   }
 
-    /**
+  /**
    * @param: 0
    * @return: 0
    * @function: Rechercher dans le tabeau
@@ -178,12 +178,12 @@ export class CommandesComponent implements OnInit {
     
  
 
-   /**
+
+  /**
    * @param:0
    * @return :0 
-   * @function: methode appelé lorsque le compenent est pret
+   * @function: methode appelé lorsque le component est pret
   **/
-
   ngOnInit(): void {
     this.configuration = { ...DefaultConfig };
     this.configuration.searchEnabled = true;

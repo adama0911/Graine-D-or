@@ -65,7 +65,7 @@ export class LivreursComponent implements OnInit {
             livreur: element.livreur,
             deleted_at: element.deleted_at,
             depends_on:element.depends_on,
-            etat: element.numero_client,
+            etat: element.etat,
             first_log:element.first_log,
             id: element.id,
             nom: element.nom,
@@ -111,7 +111,7 @@ export class LivreursComponent implements OnInit {
   /**
    * @param:0
    * @return :0 
-   * @function: methode appelé lorsque le compenent est pret
+   * @function: methode appelé lorsque le component est pret
   **/
   ngOnInit(): void {
     this.configuration = { ...DefaultConfig };
@@ -123,8 +123,7 @@ export class LivreursComponent implements OnInit {
       { key: 'telephone', title: 'TELEPHONE' },
       { key: 'adresse', title: 'ADRESSE' },
       { key: 'created_at', title: "DATE D'INCRIPTION" },
-      { key: 'etat', title: "MISE A JOUR" },
-      { key: 'action', title: 'Actions'},
+      { key: 'etat', title: "ETAT" },
     ];
 
 
