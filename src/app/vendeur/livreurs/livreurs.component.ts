@@ -28,6 +28,7 @@ export class LivreursComponent implements OnInit {
   showBoundaryLinks: boolean = true;
   showDirectionLinks: boolean = true
   motcle = null;
+  p: number = 1;
 
   constructor(private _vendeurService:VendeurService) {}
 

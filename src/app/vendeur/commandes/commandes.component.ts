@@ -31,6 +31,7 @@ export class CommandesComponent implements OnInit {
   showDirectionLinks: boolean = true
   public loading = false;
   motcle = null;
+  p: number = 1;
 
 
 

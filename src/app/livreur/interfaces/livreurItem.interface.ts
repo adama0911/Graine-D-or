@@ -6,4 +6,5 @@ export interface livreurItem {
     adresse:string;
     created_at:string;
     updated_at:string;
+    etatText:string;
 }

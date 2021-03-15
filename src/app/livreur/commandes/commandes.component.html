@@ -35,7 +35,7 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr *ngFor="let item of this.data">
+                  <tr *ngFor="let item of this.data | paginate: { itemsPerPage: 10, currentPage: p }">
                     <td >{{item.commande}}</td>
                     <td >{{item.livreur}}</td>
                     <td >{{item.client}}</td>
@@ -43,37 +43,29 @@
                     <td >{{item.montantCommande}}</td>
                     <td >{{item.montantLivraison}}</td>
                     <td>
-                      <p *ngIf="item.paiement==1" >en ligne </p>
-                      <p *ngIf="item.paiement==2" >à la livraison </p>
+                      <p *ngIf="item.paiement==1" >{{item.paiementText}}</p>
+                      <p *ngIf="item.paiement==2" >{{item.paiementText}}</p>
                     </td>
                     <td>
-                      <p *ngIf="item.recuperation==1" >sur place </p>
-                      <p *ngIf="item.recuperation==2" >à livrer</p>
+                      <p *ngIf="item.recuperation==1" >{{item.recuperationText}}</p>
+                      <p *ngIf="item.recuperation==2" >{{item.recuperationText}}</p>
                     </td>
                     <td [ngClass]="{'bg-danger': item.etat==-1,'bg-secondary': item.etat==1,'bg-info': item.etat==2,'bg-warning': item.etat==3,'bg-primary': item.etat==4,'bg-success': item.etat==5}">
-                      <p *ngIf="item.etat==-1">Annuler</p> 
-                      <p *ngIf="item.etat==1">Enregistrer </p>
-                      <p *ngIf="item.etat==2">Valider </p>
-                      <p *ngIf="item.etat==3">Preparer</p>
-                      <p *ngIf="item.etat==4">En cour de livraison</p> 
-                      <p *ngIf="item.etat==5">Payer</p> 
+                      <p *ngIf="item.etat==-1">{{item.etatText}}</p> 
+                      <p *ngIf="item.etat==1">{{item.etatText}}</p>
+                      <p *ngIf="item.etat==2">{{item.etatText}}</p>
+                      <p *ngIf="item.etat==3">{{item.etatText}}</p>
+                      <p *ngIf="item.etat==4">{{item.etatText}}</p> 
+                      <p *ngIf="item.etat==5">{{item.etatText}}</p> 
                     </td>
                     <td>{{item.monnaie}}</td>
                     <td>{{item.action}}</td>
                   </tr>
                 </tbody>
               </table>
-
-              <pagination [boundaryLinks]="showBoundaryLinks" 
-              [directionLinks]="showDirectionLinks" 
-              [totalItems]="this.data.length"
-              [itemsPerPage]="5"
-              (pageChanged)="pageChanged($event)"></pagination>
-              <div class="checkbox">
-                <label><input type="checkbox" [(ngModel)]="showBoundaryLinks">Afficher les liens de délimitation</label>
-                <br/>
-                <label><input type="checkbox" [(ngModel)]="showDirectionLinks">Afficher les liens de direction</label>
-             </div>
+              <div class="list">
+                <pagination-controls (pageChange)="p = $event" previousLabel="précédent" nextLabel="Suivant"></pagination-controls>  
+              </div>
             </div>
 
 
@@ -191,7 +183,7 @@
     </form>
 
   </div>  
-  <div class="modal-footer">  
+  <div class="modal-footer"> 
     <button type="button" class="btn btn-default" (click)="modalRef.hide()">Close</button>  
   </div>  
 </ng-template>  
@@ -209,10 +201,11 @@
           <label for="exampleInputPassword1">Password</label>
           <input [ngModelOptions]="{standalone: true}" [(ngModel)]="this.password" type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
         </div>
+        <small  *ngIf="this.loginError!=null" class="form-text text-muted" ><span style="color: red;font-size: 1.5em;">{{this.loginError}}</span></small> 
+
         <div class="form-group" style="text-align: right;">
-          
           <button type="button" class="btn btn-default" (click)="closePointage()">Annuler</button>
-          <button type="submit" class="btn btn-primary" (click)="loger()">Pointer</button>
+          <button type="submit" class="btn btn-primary" (click)="this.loginError!=null;loger()">Pointer</button>
         </div>
         
       </form>

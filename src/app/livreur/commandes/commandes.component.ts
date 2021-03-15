@@ -36,6 +36,10 @@ export class CommandesComponent implements OnInit {
   public loading = false;
   loadingStat = 0;
   motcle = null;
+  loginError = null;
+  page = 1;
+  pageSize = 10;
+  p: number = 1;
 
 
   @ViewChild('panier', { static: true }) panier: TemplateRef<any>;
@@ -62,6 +66,7 @@ export class CommandesComponent implements OnInit {
    * @function: permet de pointer un livreur
    **/
   loger (){
+    this.loginError = null;
     this.loading = true;
     this._logService.loger({login:this.login,password:sha1(this.password)}).then(res=>{
       console.log(res);
@@ -72,6 +77,8 @@ export class CommandesComponent implements OnInit {
       }else{
         console.log(res);
         this.loading = false;
+        this.loginError = "Login  où mot de passe incorrect !!!";
+        console.log(this.loginError)
       }
     })
   
@@ -136,6 +143,46 @@ export class CommandesComponent implements OnInit {
   parseDatas(datas){
     let data = [];
     datas.forEach(element => {
+        
+        switch (element.etat) {
+          case -1:
+            element.etatText = 'Annuler'
+          case 1:
+            element.etatText = 'Enregistrer'
+            break;
+          case 2:
+            element.etatText = 'Valider'
+            break;
+          case 3:
+            element.etatText = 'Preparer'
+            break;
+          case 4:
+            element.etatText = 'En cour de livraison'
+            break;  
+          case 5:
+            element.etatText = 'Payer'
+            break;  
+
+        }
+
+        switch (element.recuperation) {
+          case 1:
+            element.recuperationText = 'sur place'
+            break;
+          case 2:
+            element.recuperationText = 'à livrer'
+            break;
+        }
+
+        switch (element.mode_paiement) {
+          case 1:
+            element.paiementText = 'en ligne'
+            break;
+          case 2:
+            element.paiementText = 'à la livraiso'
+            break;
+        }
+
         data.push( 
           {
             id:element.id,
@@ -151,6 +198,9 @@ export class CommandesComponent implements OnInit {
             paiement: element.mode_paiement,
             recuperation: element.recuperation,
             etat: element.etat,
+            etatText: element.etatText,
+            recuperationText:element.recuperationText,
+            paiementText:element.paiementText,
             monnaie: this.monnairePrpa(element.montant,element.frais_livraison),
         });
     });
