@@ -1,4 +1,4 @@
-<nz-card style="width:100%;" nzTitle="Gestion des admins caisses" >
+<nz-card style="width:100%;" nzTitle="Gestion des utilisateurs (vendeuse et livreurs)">
   
     <div *ngIf="etapeDisplay != 3" nz-row style="text-align: center;">
         <div nz-col nzSpan="12" style="text-align: right;">
@@ -21,11 +21,15 @@
     </div>
     
     <div *ngIf="etapeDisplay == 2" >
+        
+        <div *ngIf="errorCode == 1" class="alert alert-danger">{{errorMessage}} <span style="float: right; cursor: pointer;" (click)="errorCode = 0">x</span></div>
+        <div *ngIf="errorCode == 2" class="alert alert-success">{{errorMessage}} <span style="float: right; cursor: pointer;" (click)="errorCode = 0">x</span></div>
+
         <form >
-            <div nz-row>
+            <div nz-row >
                 <div nz-col nzSpan="11" style="text-align: center;margin-top: 1rem;">
                     <label for="exampleInputEmail1">Type d'utilisateur</label>
-                    <select type="text" [ngModelOptions]="{standalone: true}" class="form-control" [(ngModel)]="typeUser" id="prenom" aria-describedby="emailHelp" placeholder="Identifiant">
+                    <select style="height: 35px;" type="text" [ngModelOptions]="{standalone: true}" class="form-control" [(ngModel)]="typeUser" id="prenom" aria-describedby="emailHelp" placeholder="Identifiant">
                         <option value="">Choisissez le type d'utilisateur</option>
                         <option value="vendeuse">Vendeuse</option>
                         <option value="livreur">Livreur</option>
@@ -46,7 +50,8 @@
 
                 <div nz-col nzSpan="11" style="margin-top: 1rem;">
                     <label for="exampleInputEmail1">Téléphone</label>
-                    <input type="text" [ngModelOptions]="{standalone: true}" class="form-control" [(ngModel)]="telephone" id="prenom" aria-describedby="emailHelp" placeholder="Téléphone">
+                    <input type="text" (keyup)="badPhoneNumber = false" [ngModelOptions]="{standalone: true}" class="form-control" [(ngModel)]="telephone" id="prenom" aria-describedby="emailHelp" placeholder="Téléphone">
+                    <p *ngIf="badPhoneNumber" class="alert alert-danger">Numéro téléphone non conforme </p>
                 </div>
                 <div nz-col nzSpan="11" style="margin-top: 1rem;margin-left: 5px;" >
                     <label for="exampleInputEmail1">Addresse</label>
@@ -63,8 +68,11 @@
         </form>
     </div>
     <div *ngIf="etapeDisplay == 3">
+        
+        <div *ngIf="errorCode == 1" class="alert alert-danger">{{errorMessage}} <span style="float: right; cursor: pointer;" (click)="errorCode = 0">x</span></div>
+        <div *ngIf="errorCode == 2" class="alert alert-success">{{errorMessage}} <span style="float: right; cursor: pointer;" (click)="errorCode = 0">x</span></div>
         <form >
-            <div nz-row>
+            <div nz-row *ngIf="errorCode < 2">
                 <div nz-col nzSpan="11" style="margin-top: 1rem;">
                     <label for="exampleInputEmail1">Prénom</label>
                     <input type="text" [ngModelOptions]="{standalone: true}" class="form-control" [(ngModel)]="selected.prenom" id="prenom" aria-describedby="emailHelp" placeholder="Prénom">
@@ -76,7 +84,8 @@
 
                 <div nz-col nzSpan="11" style="margin-top: 1rem;">
                     <label for="exampleInputEmail1">Téléphone</label>
-                    <input type="text" [ngModelOptions]="{standalone: true}" class="form-control" [(ngModel)]="selected.telephone" id="prenom" aria-describedby="emailHelp" placeholder="Téléphone">
+                    <input type="text" (keyup)="badPhoneNumber = false" [ngModelOptions]="{standalone: true}" class="form-control" [(ngModel)]="selected.telephone" id="prenom" aria-describedby="emailHelp" placeholder="Téléphone">
+                    <p *ngIf="badPhoneNumber" class="alert alert-danger">Numéro téléphone non conforme </p>
                 </div>
                 <div nz-col nzSpan="11" style="margin-top: 1rem;margin-left: 5px;" >
                     <label for="exampleInputEmail1">Addresse</label>
@@ -86,7 +95,8 @@
               
             </div>
             <div nz-col nzSpan="24" style="text-align: center;margin-top: 1rem;">
-                <button  (click)="updateUser()" class="btn btn-success">Valider</button>
+                <button  (click)="etapeDisplay = 1" style="margin-right: 5px;" class="btn btn-danger">Retour</button>
+                <button  (click)="updateUser()" *ngIf="errorCode < 2" class="btn btn-success">Valider</button>
             </div>
         
         </form>
@@ -94,7 +104,7 @@
   </nz-card>
 <ng-template let-row let-rowIndex="rowIndex" let-column="column" #actionTpl>
     <td>
-        <button class="btn btn-warning" nz-button (click)="selected = row;consolelog();etapeDisplay = 3" style="margin: 2px;">Modifier </button>
+        <button class="btn btn-warning" nz-button (click)="selected = row;errorCode = 0;etapeDisplay = 3" style="margin: 2px;">Modifier </button>
         <button class="btn btn-danger" nz-button (click)="deleteUser(row);"  >Supprimer </button>
     </td>
 </ng-template> 
