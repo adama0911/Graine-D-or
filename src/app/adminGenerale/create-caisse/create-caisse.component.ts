@@ -26,51 +26,109 @@ export class CreateCaisseComponent implements OnInit {
   public configuration: Config;
   public columns: Columns[];
   loading:boolean = false;
-
+  errorCode:number = 0;
+  errorMessage = "";
+  badPhoneNumber:boolean = false;
   @ViewChild('actionTpl', { static: true }) actionTpl: TemplateRef<any>;
   constructor(private _serviceAdmin:AdminGeneralService) { 
    
   }
+  retry($event){
+    this.badPhoneNumber = false;
+  }
   consolelog(){
     console.log(this.selected)
   }
+  checkTelephone(tel){
+    if(tel == null || tel == ""){
+      return false;
+    }
+    let numero=tel.split("");
+    console.log(numero.length);
+    if(numero.length!=parseInt("9")){
+      return false;
+    }
+    if(numero[0] != "7"){
+      return false;
+    }
+
+
+    for(let i=0;i<numero.length;i++){
+      if(!this.isNumber(numero[i])){
+        return false;
+      }
+    }
+    return true;
+  }
+  isNumber(num:string):boolean{
+    let tab=["0","1","2","3","4","5","6","7","8","9"];
+    for(let i=0;i<tab.length;i++){
+      if(num===tab[i]){
+        return true;
+      }
+    }
+    return false;
+  }
   createUser(){
     this.loading = true;
+    this.badPhoneNumber = false;
+    if(!this.checkTelephone(this.telephone)){
+      this.loading = false;
+      this.badPhoneNumber = true
+    }else{
+      
     this._serviceAdmin.createUser({depends_on:JSON.parse(sessionStorage.getItem('currentUser')).id,prenom:this.prenom,nom:this.nom,login:this.identifiant,telephone:this.telephone,adresse:this.adresse,accesslevel:2}).then(res=>{
       if(res['status'] == 1){
-        this._serviceAdmin.getUsers({depends_on:2}).then(res=>{
-          console.log(res)
-          this.data = res['users']
-          this.etapeDisplay = 1;    
-          this.loading = false;
+        this.errorCode = 2;
+        this.errorMessage = "créations effectué avec succés";
+        this.loading = false;
+        this.reinitialiser()
 
-
-        })
       }else{
+        this.errorCode = 1;
+        this.errorMessage = res.message;
         this.loading = false;
 
       }   
      });
+    }
+    this.hideNotifAdd()
     //this.data.push({prenom:this.prenom,nom:this.nom,login:this.identifiant,telephone:this.telephone,adresse:this.adresse,action:"Valider"})
   }
   updateUser(){
     this.loading = true;
-    this._serviceAdmin.updateUser({prenom:this.selected.prenom,nom:this.selected.nom,telephone:this.selected.telephone,adresse:this.selected.adresse,login:this.selected.login}).then(res=>{
-      console.log(res)
-      if(res['status'] == 1){
-        this._serviceAdmin.getUsers({depends_on:2}).then(res=>{
-          console.log(res)
-          this.data = res['users']
-          this.etapeDisplay = 1;
+    this.badPhoneNumber = false;
+    if(!this.checkTelephone(this.selected.telephone)){
+      this.loading = false;
+      this.badPhoneNumber = true
+    }else{
+      this._serviceAdmin.updateUser({prenom:this.selected.prenom,nom:this.selected.nom,telephone:this.selected.telephone,adresse:this.selected.adresse,login:this.selected.login}).then(res=>{
+        console.log(res)
+        if(res['status'] == 1){
+         // this.etapeDisplay = 1;
+          //this.loading = false;
+          this.errorCode = 2;
+          this.errorMessage = "Modification effectué avec succés";
+         
+          //this._serviceAdmin.getUsers({depends_on:2}).then(res=>{
+           // console.log(res)
+            //this.data = res['users']
+            //this.etapeDisplay = 1;
+            this.loading = false;
+            
+            
+           
+          //})
+        }else{
           this.loading = false;
+          this.loading = false;
+          this.errorCode = 1;
+          this.errorMessage = res.message;
+        }
+      })
+    }
 
-        })
-      }else{
-        this.loading = false;
-
-      }
-    })
-    
+    this.hideNotifUpdate()
   }
   deleteUser(arg){
     console.log(arg)
@@ -126,6 +184,24 @@ export class CreateCaisseComponent implements OnInit {
       { key: 'login', title: 'LOGIN' },
       { key: 'action', title: 'Actions', cellTemplate: this.actionTpl },
     ];
+  }
+  reinitialiser(){
+    this.prenom = undefined;
+    this.nom = undefined;
+    this.adresse = undefined;
+    this.telephone = undefined;
+    this.identifiant = undefined;
+    
+  }
+  hideNotifAdd(){
+    setTimeout(()=>{
+      this.errorCode = 0;
+    },5000);
+  }
+  hideNotifUpdate(){
+    setTimeout(()=>{
+      this.errorCode = 3;
+    },5000);
   }
 
 }
