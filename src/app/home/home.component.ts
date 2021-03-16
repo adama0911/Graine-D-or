@@ -97,10 +97,10 @@ export class HomeComponent implements OnInit {
    
   }
   showMoodal(){
-    document.getElementById('id01').style.display = "block";
+    document.getElementById('idLogout').style.display = "block";
   }
   hideMoodal(){
-    document.getElementById('id01').style.display = "none";
+    document.getElementById('idLogout').style.display = "none";
   }
   ngOnInit(): void {
     let user = JSON.parse(sessionStorage.getItem('currentUser'))
