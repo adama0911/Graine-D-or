@@ -148,7 +148,7 @@ export class CommandesComponent implements OnInit {
             livreur: this.prenomComplet(element.livreur),
             caissier: this.prenomComplet(element.caissier),
             adresse:element.adresse,
-            client: element.client,
+            client: element.numero_client,
             vendeuse: this.prenomComplet(element.vendeuse),
             montantCommande: element.montant,
             montantLivraison: element.frais_livraison,
