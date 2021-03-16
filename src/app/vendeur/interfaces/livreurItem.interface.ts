@@ -5,6 +5,7 @@ export interface livreurItem {
     deleted_at: string;
     depends_on: number;
     etat: number;
+    etatText: string;
     first_log: number;
     id: number;
     login: string;
@@ -14,4 +15,5 @@ export interface livreurItem {
     remember_token: string;
     telephone: string;
     updated_at: string;
+    
 }

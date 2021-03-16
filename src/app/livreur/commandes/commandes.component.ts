@@ -77,7 +77,7 @@ export class CommandesComponent implements OnInit {
       }else{
         console.log(res);
         this.loading = false;
-        this.loginError = "Login  où mot de passe incorrect !!!";
+        this.loginError = "Identifiant  où mot de passe incorrect !!!";
         console.log(this.loginError)
       }
     })

@@ -98,7 +98,48 @@ export class CommandesComponent implements OnInit {
   **/
   parseDatas(datas){
     let data = [];
+
     datas.forEach(element => {
+        
+        switch (element.etat) {
+          case -1:
+            element.etatText = 'Annuler'
+          case 1:
+            element.etatText = 'Enregistrer'
+            break;
+          case 2:
+            element.etatText = 'Valider'
+            break;
+          case 3:
+            element.etatText = 'Preparer'
+            break;
+          case 4:
+            element.etatText = 'En cour de livraison'
+            break;  
+          case 5:
+            element.etatText = 'Payer'
+            break;  
+
+        }
+
+        switch (element.recuperation) {
+          case 1:
+            element.recuperationText = 'sur place'
+            break;
+          case 2:
+            element.recuperationText = 'à livrer'
+            break;
+        }
+
+        switch (element.mode_paiement) {
+          case 1:
+            element.paiementText = 'en ligne'
+            break;
+          case 2:
+            element.paiementText = 'à la livraiso'
+            break;
+        }
+
         data.push( 
           {
             id:element.id,
@@ -114,6 +155,9 @@ export class CommandesComponent implements OnInit {
             paiement: element.mode_paiement,
             recuperation: element.recuperation,
             etat: element.etat,
+            etatText: element.etatText,
+            recuperationText:element.recuperationText,
+            paiementText:element.paiementText,
             monnaie: this.monnairePrpa(element.montant,element.frais_livraison),
        
           });

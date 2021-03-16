@@ -57,6 +57,13 @@ export class LivreursComponent implements OnInit {
   parseDatas(datas){
     let data = [];
     datas.forEach(element => {
+        switch(element.etat){
+          case 1:
+            element.etatText = 'pointé';
+            break;
+          case 2:
+            element.etatText = 'non pointé'
+        }
         data.push( 
           {
 
@@ -67,9 +74,11 @@ export class LivreursComponent implements OnInit {
             deleted_at: element.deleted_at,
             depends_on:element.depends_on,
             etat: element.etat,
+            etatText:element.etatText,
             first_log:element.first_log,
             id: element.id,
             nom: element.nom,
+            prenom: element.prenom,
             password: element.password,
             telephone: element.telephone,
             updated_at: (new Date(element.updated_at)).toLocaleDateString(),

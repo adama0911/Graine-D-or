@@ -91,30 +91,32 @@ export class DashboardComponent implements OnInit {
       {data: [0, 0, 0, 0, 0, 0], label: 'montant'}
     ];
     data.forEach(element => {
-      jour = parseInt((new Date(element.created_at).toLocaleDateString().split('/'))[0]) ;
-      if (jour <=5){
-        (this.barChartData[0]).data[0] += 1;
-        (this.barChartData[1]).data[0] += element.montant; 
-      }
-      else if(jour > 5  &&  jour <=10 ){
-        (this.barChartData[0]).data[1] += 1;
-        (this.barChartData[1]).data[1] += element.montant; 
-      }
-      else if(jour > 10  &&  jour <=15 ){
-        (this.barChartData[0]).data[2] += 1;
-        (this.barChartData[1]).data[2] += element.montant; 
-      }
-      else if(jour > 15  &&  jour <=20 ){
-        (this.barChartData[0]).data[3] += 1;
-        (this.barChartData[1]).data[3] += element.montant; 
-      }
-      else if(jour > 20  &&  jour <=25 ){
-        (this.barChartData[0]).data[4] += 1;
-        (this.barChartData[1]).data[4] += element.montant; 
-      }
-      else if(jour > 25  &&  jour <=31){
-        (this.barChartData[0]).data[5] += 1;
-        (this.barChartData[1]).data[5] += element.montant; 
+      if(element.etat==5){
+        jour = parseInt((new Date(element.created_at).toLocaleDateString().split('/'))[0]) ;
+        if (jour <=5){
+          (this.barChartData[0]).data[0] += 1;
+          (this.barChartData[1]).data[0] += element.montant; 
+        }
+        else if(jour > 5  &&  jour <=10 ){
+          (this.barChartData[0]).data[1] += 1;
+          (this.barChartData[1]).data[1] += element.montant; 
+        }
+        else if(jour > 10  &&  jour <=15 ){
+          (this.barChartData[0]).data[2] += 1;
+          (this.barChartData[1]).data[2] += element.montant; 
+        }
+        else if(jour > 15  &&  jour <=20 ){
+          (this.barChartData[0]).data[3] += 1;
+          (this.barChartData[1]).data[3] += element.montant; 
+        }
+        else if(jour > 20  &&  jour <=25 ){
+          (this.barChartData[0]).data[4] += 1;
+          (this.barChartData[1]).data[4] += element.montant; 
+        }
+        else if(jour > 25  &&  jour <=31){
+          (this.barChartData[0]).data[5] += 1;
+          (this.barChartData[1]).data[5] += element.montant; 
+        }
       }
     });
   }
@@ -140,18 +142,20 @@ export class DashboardComponent implements OnInit {
     let jour:number;
     this.doughnutChartData = [0, 0, 0, 0];
     data.forEach(element => {
-      jour = parseInt((new Date(element.created_at).toLocaleDateString().split('/'))[0]) ;
-      if (jour <=7){
-        this.doughnutChartData[0] += element.montant; 
-      }
-      else if(jour > 7  &&  jour <=14 ){
-        this.doughnutChartData[1] += element.montant; 
-      }
-      else if(jour > 14  &&  jour <=23 ){
-        this.doughnutChartData[2] += element.montant; 
-      }
-      else if(jour > 23  &&  jour <=31 ){
-        this.doughnutChartData[3] += element.montant; 
+      if(element.etat==5){
+        jour = parseInt((new Date(element.created_at).toLocaleDateString().split('/'))[0]) ;
+        if (jour <=7){
+          this.doughnutChartData[0] += element.montant; 
+        }
+        else if(jour > 7  &&  jour <=14 ){
+          this.doughnutChartData[1] += element.montant; 
+        }
+        else if(jour > 14  &&  jour <=23 ){
+          this.doughnutChartData[2] += element.montant; 
+        }
+        else if(jour > 23  &&  jour <=31 ){
+          this.doughnutChartData[3] += element.montant; 
+        }
       }
     });
   }
@@ -183,7 +187,47 @@ export class DashboardComponent implements OnInit {
   **/
   parseDatas(datas){
     let data = [];
-    datas.forEach(element => {
+      datas.forEach(element => {
+        
+        switch (element.etat) {
+          case -1:
+            element.etatText = 'Annuler'
+          case 1:
+            element.etatText = 'Enregistrer'
+            break;
+          case 2:
+            element.etatText = 'Valider'
+            break;
+          case 3:
+            element.etatText = 'Preparer'
+            break;
+          case 4:
+            element.etatText = 'En cour de livraison'
+            break;  
+          case 5:
+            element.etatText = 'Payer'
+            break;  
+
+        }
+
+        switch (element.recuperation) {
+          case 1:
+            element.recuperationText = 'sur place'
+            break;
+          case 2:
+            element.recuperationText = 'à livrer'
+            break;
+        }
+
+        switch (element.mode_paiement) {
+          case 1:
+            element.paiementText = 'en ligne'
+            break;
+          case 2:
+            element.paiementText = 'à la livraiso'
+            break;
+        }
+
       if(element.etat==5){
         
         data.push( 
@@ -201,6 +245,9 @@ export class DashboardComponent implements OnInit {
             paiement: element.mode_paiement,
             recuperation: element.recuperation,
             etat: element.etat,
+            etatText: element.etatText,
+            recuperationText:element.recuperationText,
+            paiementText:element.paiementText,
             monnaie: this.monnairePrpa(element.montant,element.frais_livraison),
        
           });
