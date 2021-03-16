@@ -96,7 +96,7 @@
 <ng-template let-row let-rowIndex="rowIndex" let-column="column" #actionTpl>
     <td>
         <button class="btn btn-warning" nz-button (click)="selected = row;errorCode = 0;etapeDisplay = 3" style="margin: 2px;">Modifier </button>
-        <button class="btn btn-danger" nz-button (click)="deleteUser(row);"  >Supprimer </button>
+        <button class="btn btn-danger" nz-button (click)="showMoodal();selected = row;"  >Supprimer </button>
     </td>
 </ng-template> 
 
@@ -111,4 +111,37 @@
     </div>  
     </div>
  </div>
+
+ 
+ <div id="id01" class="w3-modal">
+    <div class="w3-modal-content" style="border-radius: 5px;padding: 3rem;">
+      <div class="w3-container">
+        <span (click)="hideMoodal()" style="font-size: 2rem;" class="w3-button w3-display-topright">&times;</span>
+        <div class="row" style="text-align: center;">
+          
+          <div class="col-12" style="text-align: center;">
+            <h2>Vous voulez supprimé l'utilisateur</h2>
+            <button class="btn btn-danger" style="margin-right: 5px;" (click)="hideMoodal()">Annuler</button>
+            <button class="btn btn-success" style="margin-right: 5px;" (click)="deleteUser();hideMoodal()">Valider</button>
+  
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <div id="id02" class="w3-modal">
+    <div class="w3-modal-content" style="border-radius: 5px;padding: 3rem;">
+      <div class="w3-container">
+        <span (click)="hideMoodalNotif()" style="font-size: 2rem;" class="w3-button w3-display-topright">&times;</span>
+        <div class="row" style="text-align: center;">
+          
+          <div class="col-12" style="text-align: center;">
+            <h2 class="alert alert-success">utilisateur supprimer</h2>
+           
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
   

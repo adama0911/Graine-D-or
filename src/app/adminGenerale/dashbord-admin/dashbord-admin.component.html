@@ -60,7 +60,7 @@
   </div>
 </ng-template>
 <ng-template let-row let-rowIndex="rowIndex" let-column="column" #actionTpl>
-  <button type="button" *ngIf="row.etat==1" class="btn btn-warning" (click)="cancelCommande(row)">Annuler </button>
+  <button type="button" *ngIf="row.etat==1" class="btn btn-warning" (click)="showMoodal();selected = row">Annuler </button>
 </ng-template>
 <ng-template let-row let-rowIndex="rowIndex" let-column="column" #paiementTpl>
     <p *ngIf="row.mode_paiement==1" >en ligne </p>
@@ -102,5 +102,36 @@
       <div></div>
       </div>
   </div>  
+  </div>
+</div>
+ 
+<div id="id01" class="w3-modal">
+  <div class="w3-modal-content" style="border-radius: 5px;padding: 3rem;">
+    <div class="w3-container">
+      <span (click)="hideMoodal()" style="font-size: 2rem;" class="w3-button w3-display-topright">&times;</span>
+      <div class="row" style="text-align: center;">
+        
+        <div class="col-12" style="text-align: center;">
+          <h2>Vous voulez annulé cette commande</h2>
+          <button class="btn btn-danger" style="margin-right: 5px;" (click)="hideMoodal()">Annuler</button>
+          <button class="btn btn-success" style="margin-right: 5px;" (click)="cancelCommande();hideMoodal()">Valider</button>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="id02" class="w3-modal">
+  <div class="w3-modal-content alert alert-success" style="border-radius: 5px;padding: 3rem;">
+    <div class="w3-container">
+      <span (click)="hideMoodalNotif()" style="font-size: 2rem;" class="w3-button w3-display-topright">&times;</span>
+      <div class="row" style="text-align: center;">
+        
+        <div class="col-12" style="text-align: center;">
+          <h2 class="alert alert-success">Commande annulé</h2>
+        </div>
+      </div>
+    </div>
   </div>
 </div>

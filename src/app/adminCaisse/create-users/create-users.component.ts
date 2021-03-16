@@ -106,26 +106,27 @@ export class CreateUsersComponent implements OnInit {
   }
   /**
    * deleteUser permet de supprimer
-   * @param arg  l'obejet à supprimer
+   * @param selected  l'obejet à supprimer
    */
-  deleteUser(arg){
+  deleteUser(){
     
-    if(confirm('Vous allez supprimé cette utilisateur')){
-      this.loading = true;
-      this._serviceAdmin.deleteUser({login:arg.login}).then(res=>{
-        if(res['status'] == 1){
-          this._serviceAdmin.getUsers({depends_on:JSON.parse(sessionStorage.getItem('currentUser')).id}).then(res=>{
-            console.log(res)
-            this.data = res['users']
-            this.loading = false;
-
-          })
-        }else{
+  
+    this.loading = true;
+    this._serviceAdmin.deleteUser({login:this.selected.login}).then(res=>{
+      if(res['status'] == 1){
+        this._serviceAdmin.getUsers({depends_on:JSON.parse(sessionStorage.getItem('currentUser')).id}).then(res=>{
+          console.log(res)
+          this.data = res['users']
           this.loading = false;
+          this.showMoodalNotif()
 
-        }
-      })
-    }
+        })
+      }else{
+        this.loading = false;
+
+      }
+    })
+    this.hideMoodal()
     
   }
   public data = [
@@ -218,5 +219,20 @@ export class CreateUsersComponent implements OnInit {
       this.errorCode = 3;
     },5000);
   }
+  showMoodal(){
+    document.getElementById('id01').style.display = "block";
+  }
+  hideMoodal(){
+    document.getElementById('id01').style.display = "none";
+  }
+  hideMoodalNotif(){
+    document.getElementById('id02').style.display = "none";
 
+  }
+  showMoodalNotif(){
+    document.getElementById('id02').style.display = "block";
+    setTimeout(()=>{
+      document.getElementById('id02').style.display = "none";
+    },5000)
+  }
 }

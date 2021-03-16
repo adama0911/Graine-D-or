@@ -18,7 +18,7 @@ export class DashbordAdminComponent implements OnInit {
   soldeGraineDor = 0;
   soldeCompenseBBS = 0;
   loading:boolean = false;
-
+  selected;
   calculeForBashbord(arg){
     this.nbrCommandes = 0;
     this.soldeGraineDor = 0;
@@ -68,11 +68,10 @@ export class DashbordAdminComponent implements OnInit {
       action:'valider',
     },*/
   ];
-  cancelCommande(arg){
+  cancelCommande(){
     this.loading = true;
     //$param->user,$param->idCommande,$param->oldstate,$param->newstate
-    if(confirm("Voulez-vous annulé cette commande")){
-      this._serviceAdmin.updateEtat({idCommande:arg.id,oldstate:arg.etat,newstate:"-1",user:JSON.parse(sessionStorage.getItem('currentUser')).login}).then(res=>{
+      this._serviceAdmin.updateEtat({idCommande:this.selected.id,oldstate:this.selected.etat,newstate:"-1",user:JSON.parse(sessionStorage.getItem('currentUser')).login}).then(res=>{
         if(res.status == 1){
           this.dd = (new Date().toJSON()).split("T")[0]
           this.df = (new Date().toJSON()).split("T")[0]
@@ -98,6 +97,7 @@ export class DashbordAdminComponent implements OnInit {
                 { key: 'action', title: 'Actions', cellTemplate: this.actionTpl },
               ];
               this.loading = false;
+              this.showMoodalNotif()
             }else{
               this.loading = false;
             }
@@ -107,7 +107,7 @@ export class DashbordAdminComponent implements OnInit {
       
         }
       })
-    }
+    
    
   }
   recherche(){
@@ -198,5 +198,21 @@ export class DashbordAdminComponent implements OnInit {
       return obj;
     }
    
+  }
+  showMoodal(){
+    document.getElementById('id01').style.display = "block";
+  }
+  hideMoodal(){
+    document.getElementById('id01').style.display = "none";
+  }
+  hideMoodalNotif(){
+    document.getElementById('id02').style.display = "none";
+
+  }
+  showMoodalNotif(){
+    document.getElementById('id02').style.display = "block";
+    setTimeout(()=>{
+      document.getElementById('id02').style.display = "none";
+    },5000)
   }
 }

@@ -245,14 +245,12 @@ const routes: Routes = [
    NzProgressModule,
    FontAwesomeModule,
    
-
     NzCardModule,
     NzFormModule,
     NzGridModule,
     FormsModule,
     NzModalModule,
     NgbModule,
-    
   ],
   providers: [ConfigService,BsModalService,PaginationConfig,
 

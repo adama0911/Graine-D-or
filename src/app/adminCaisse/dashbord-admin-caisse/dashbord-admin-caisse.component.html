@@ -56,8 +56,8 @@
     </div>
   </ng-template>
   <ng-template let-row let-rowIndex="rowIndex" let-column="column" #actionTpl>
-    <button type="button" *ngIf="row.etat==3" class="btn btn-warning" (click)="encoursLivraison(row)">En cours de livraison </button>
-    <button type="button" *ngIf="row.etat==4" class="btn btn-warning" (click)="payer(row)">Payer </button>
+    <button type="button" *ngIf="row.etat==3" class="btn btn-warning" (click)="showMoodalEncours();selected = row;">En cours de livraison </button>
+    <button type="button" *ngIf="row.etat==4" class="btn btn-warning" (click)="showMoodalPayer();selected = row;">Payer </button>
   </ng-template>
   <ng-template let-row let-rowIndex="rowIndex" let-column="column" #paiementTpl>
       <p *ngIf="row.mode_paiement==1" >en ligne </p>
@@ -100,5 +100,66 @@
   </div>  
   </div>
 </div>
+<div id="id0Encours" class="w3-modal">
+  <div class="w3-modal-content" style="border-radius: 5px;padding: 3rem;">
+    <div class="w3-container">
+      <span (click)="hideMoodalEncours()" style="font-size: 2rem;" class="w3-button w3-display-topright">&times;</span>
+      <div class="row" style="text-align: center;">
+        
+        <div class="col-12" style="text-align: center;">
+          <h2>Vous voulez mettre en cours de livraison cette commande</h2>
+          <button class="btn btn-danger" style="margin-right: 5px;" (click)="hideMoodalEncours()">Annuler</button>
+          <button class="btn btn-success" style="margin-right: 5px;" (click)="encoursLivraison()">Valider</button>
 
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div id="id0Payer" class="w3-modal">
+  <div class="w3-modal-content" style="border-radius: 5px;padding: 3rem;">
+    <div class="w3-container">
+      <span (click)="hideMoodalPayer()" style="font-size: 2rem;" class="w3-button w3-display-topright">&times;</span>
+      <div class="row" style="text-align: center;">
+        
+        <div class="col-12" style="text-align: center;">
+          <h2>Vous voulez mettre à payer cette commande</h2>
+          <button class="btn btn-danger" style="margin-right: 5px;" (click)="hideMoodalPayer()">Annuler</button>
+          <button class="btn btn-success" style="margin-right: 5px;" (click)="payer()">Valider</button>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="id0NotifEncours" class="w3-modal">
+  <div class="w3-modal-content" style="border-radius: 5px;padding: 3rem;">
+    <div class="w3-container">
+      <span (click)="hideMoodalEncoursNotif()" style="font-size: 2rem;" class="w3-button w3-display-topright">&times;</span>
+      <div class="row" style="text-align: center;">
+        
+        <div class="col-12" style="text-align: center;">
+          <h2 class="alert alert-success">Commande mise en cours avec succés</h2>
+         
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="id0NotifPayer" class="w3-modal">
+  <div class="w3-modal-content" style="border-radius: 5px;padding: 3rem;">
+    <div class="w3-container">
+      <span (click)="hideMoodalPayerNotif()" style="font-size: 2rem;" class="w3-button w3-display-topright">&times;</span>
+      <div class="row" style="text-align: center;">
+        
+        <div class="col-12" style="text-align: center;">
+          <h2 class="alert alert-success">Commande payer avec succés</h2>
+         
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
   

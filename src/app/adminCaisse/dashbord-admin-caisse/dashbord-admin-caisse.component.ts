@@ -13,7 +13,7 @@ export class DashbordAdminCaisseComponent implements OnInit {
   public columns: Columns[];
   dd;
   df;
-
+  selected;
   nbrCommandes = 0;
   soldeGraineDor = 0;
   soldeCompenseBBS = 0;
@@ -54,12 +54,11 @@ export class DashbordAdminCaisseComponent implements OnInit {
     let monnaie = parseInt(temp1) * 10000;
     return monnaie - somme;
   }
-  encoursLivraison(arg){
+  encoursLivraison(){
     this.loading = true;
 
     //$param->user,$param->idCommande,$param->oldstate,$param->newstate
-    if(confirm("Voulez-vous metter en cours de livraison cette commande")){
-      this._serviceAdmin.updateEtat({idCommande:arg.id,oldstate:arg.etat,newstate:"4",user:JSON.parse(sessionStorage.getItem('currentUser')).login}).then(res=>{
+      this._serviceAdmin.updateEtat({idCommande:this.selected.id,oldstate:this.selected.etat,newstate:"4",user:JSON.parse(sessionStorage.getItem('currentUser')).login}).then(res=>{
         if(res.status == 1){
           this.dd = (new Date().toJSON()).split("T")[0]
           this.df = (new Date().toJSON()).split("T")[0]
@@ -85,6 +84,7 @@ export class DashbordAdminCaisseComponent implements OnInit {
                 { key: 'action', title: 'Actions', cellTemplate: this.actionTpl },
               ];
               this.loading = false;
+              this.showMoodalNotifEncours();
 
             }else{
               this.loading = false;
@@ -99,18 +99,17 @@ export class DashbordAdminCaisseComponent implements OnInit {
 
         }
       })
-    }
+    
    
   }
-  payer(arg){
+  payer(){
     this.loading = true;
 
     //$param->user,$param->idCommande,$param->oldstate,$param->newstate
-    if(confirm("Voulez-vous metter à payer  cette commande")){
-      this._serviceAdmin.updateEtat({idCommande:arg.id,oldstate:arg.etat,newstate:"5",user:JSON.parse(sessionStorage.getItem('currentUser')).login}).then(res=>{
+      this._serviceAdmin.updateEtat({idCommande:this.selected.id,oldstate:this.selected.etat,newstate:"5",user:JSON.parse(sessionStorage.getItem('currentUser')).login}).then(res=>{
         if(res.status == 1){
-          if(this.displayData(arg.livreur,'login') != ""){
-            this._serviceAdmin.remiseSurFileDattente({login:this.displayData(arg.livreur,'login')}).then(res=>{
+          if(this.displayData(this.selected.livreur,'login') != ""){
+            this._serviceAdmin.remiseSurFileDattente({login:this.displayData(this.selected.livreur,'login')}).then(res=>{
               console.log(res)
             })
           }
@@ -138,7 +137,7 @@ export class DashbordAdminCaisseComponent implements OnInit {
                 { key: 'action', title: 'Actions', cellTemplate: this.actionTpl },
               ];
               this.loading = false;
-
+              this.showMoodalNotifPayer();
             }else{
               this.loading = false;
 
@@ -152,7 +151,7 @@ export class DashbordAdminCaisseComponent implements OnInit {
 
         }
       })
-    }
+    
    
   }
   recherche(){
@@ -247,5 +246,36 @@ export class DashbordAdminCaisseComponent implements OnInit {
       return obj;
     }
    
+  }
+  showMoodalEncours(){
+    document.getElementById('id0Encours').style.display = "block";
+  }
+  hideMoodalEncours(){
+    document.getElementById('id0Encours').style.display = "none";
+  }
+  showMoodalPayer(){
+    document.getElementById('id0Payer').style.display = "block";
+  }
+  hideMoodalPayer(){
+    document.getElementById('id0Payer').style.display = "none";
+  }
+  
+  showMoodalNotifEncours(){
+    document.getElementById('id0Encours').style.display = "block";
+    setTimeout(()=>{
+      document.getElementById('id0Encours').style.display = "none";
+    },5000)
+  }
+  showMoodalNotifPayer(){
+    document.getElementById('id0Payer').style.display = "block";
+    setTimeout(()=>{
+      document.getElementById('id0Payer').style.display = "none";
+    },5000)
+  }
+  hideMoodalPayerNotif(){
+    document.getElementById('id0Payer').style.display = "none";
+  }
+  hideMoodalEncoursNotif(){
+    document.getElementById('id0Encours').style.display = "none";
   }
 }

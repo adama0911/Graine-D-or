@@ -86,15 +86,21 @@ export class HomeComponent implements OnInit {
   faCoffee = faCoffee;
   constructor(private router:Router,private _serviceLogin:LoginService) { }
   logout(){
-    if(confirm('Voulez-vous vous déconnecté')){
+   
       this._serviceLogin.logout({login:JSON.parse(sessionStorage.getItem('currentUser')).login}).then(res=>{
         if(res.status == 1){
           sessionStorage.clear();
           this.router.navigate(["/login"])
         }
       })
-    }
+  
    
+  }
+  showMoodal(){
+    document.getElementById('id01').style.display = "block";
+  }
+  hideMoodal(){
+    document.getElementById('id01').style.display = "none";
   }
   ngOnInit(): void {
     let user = JSON.parse(sessionStorage.getItem('currentUser'))
