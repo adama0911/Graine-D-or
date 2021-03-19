@@ -71,6 +71,7 @@
     background: linear-gradient(90deg,#7530a6,#333295);
 }
 
+
 .container{
   height: 100%;
   max-width: 100% !important;
@@ -85,7 +86,8 @@
   margin-top: auto;
   margin-bottom: auto;
   width: 400px;
-  background-color: rgba(0,0,0,0.5) !important;
+  background-color: transparent;
+  border: none;
   }
   
   .social_icon span{
@@ -117,7 +119,7 @@
   }
   
   input {
-
+    
   }
   
   input:focus{
@@ -156,3 +158,45 @@
   .links a{
   margin-left: 4px;
   }
+
+fieldset.scheduler-border {
+    border: 5px groove white !important;
+    padding: 0 1.4em 1.4em 1.4em !important;
+}
+
+legend{
+  width: auto;
+  text-align: center;
+  border-bottom: none !important;
+
+  i{
+    font-size: 8rem;
+    border: 1px white;
+    background-color: transparent;
+    text-decoration: none;
+    height: 11rem;
+    padding: 1rem;
+    color: white;
+    width: 11rem;
+    border-radius: 48%;
+    border: 2px solid white;
+  }
+}
+
+
+.themDesign{
+
+  padding: 0 !important;
+  background-color: #c5A57d;
+  
+  min-width: 100vh !important;
+  height: 100vh !important;
+
+  .card-header{
+    background:url('/src/assets/images/entete_desktop.jpg'); 
+    min-height: 10vh; 
+    margin: 0; 
+    min-width: 100vh;
+    padding: 0;
+  }
+}
