@@ -32,8 +32,14 @@ export class CommandesComponent implements OnInit {
   public loading = false;
   motcle = null;
   p: number = 1;
+  currentCom = {};
+  modalEtat = '2';
 
-
+  modalOK(com,etat){
+    this.showMoodal();
+    this.currentCom = com;
+    this.modalEtat = etat;
+  }
 
   constructor (private _vendeurService:VendeurService){
 
@@ -82,7 +88,7 @@ export class CommandesComponent implements OnInit {
 
   changerEtatCommander(commande:any,etat:string){
     this.loading = true;
-
+    this.hideMoodal();
     console.log(commande);
     console.log({user:(JSON.parse(sessionStorage.getItem('currentUser'))).login,idCommande:commande.id,oldstate:commande.etat,newstate:parseInt(etat)});
     this._vendeurService.updateEtat({user:(JSON.parse(sessionStorage.getItem('currentUser'))).login,idCommande:commande.id,oldstate:commande.etat,newstate:parseInt(etat)}).then(res=>{
@@ -166,6 +172,24 @@ export class CommandesComponent implements OnInit {
     return data;
   }
 
+
+  /**
+   * @param: 
+   * @return: frais
+   * @function: Ouvre un modal
+  **/
+  showMoodal(){
+    document.getElementById('idLogout').style.display = "block";
+  }
+
+  /**
+   * @param: 
+   * @return: frais
+   * @function: ferme un modal
+  **/
+  hideMoodal(){
+    document.getElementById('idLogout').style.display = "none";
+  }
 
     /**
    * @param mtt1: montant 

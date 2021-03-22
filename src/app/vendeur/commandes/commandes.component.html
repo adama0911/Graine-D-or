@@ -62,8 +62,8 @@
                               <td>{{item.monnaie}}</td>
                               <td>{{item.action}}</td>
                               <td>
-                                  <button class="btn btn-danger" *ngIf="item.etat==1" (click)="changerEtatCommander(item,'2')">Valider</button>
-                                  <button class="btn btn-danger" *ngIf="item.etat==2" (click)="changerEtatCommander(item,'3')">Preparer</button>
+                                  <button class="btn btn-danger" *ngIf="item.etat==1" (click)="modalOK(item,'2');">Valider</button>
+                                  <button class="btn btn-danger" *ngIf="item.etat==2" (click)="modalOK(item,'3');">Preparer</button>
                                 </td>
                             </tr>
                           </tbody>
@@ -115,3 +115,21 @@
       </h3>
   </div>
 </ng-template>
+
+<div id="idLogout" class="w3-modal" >
+  <div class="w3-modal-content alert-info" style="border-radius: 5px;padding: 3rem;">
+    <div class="w3-container">
+      <span (click)="hideMoodal()" style="font-size: 2rem;" class="w3-button w3-display-topright">&times;</span>
+      <div class="row" style="text-align: center;">
+          <div class="col-12" style="text-align: center;">
+            <h2 *ngIf="this.modalEtat=='2'">Voulez-vous vraiment valider la commande ? </h2>
+            <h2 *ngIf="this.modalEtat=='3'">Êtes-vous entrain de préparer la commande ? </h2>
+            <button class="btn btn-danger" style="margin-right: 5px;" (click)="hideMoodal()">Non</button>
+            <button class="btn btn-success" style="margin-right: 5px;" (click)="changerEtatCommander(this.currentCom,this.modalEtat)">Oui</button>
+          </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
