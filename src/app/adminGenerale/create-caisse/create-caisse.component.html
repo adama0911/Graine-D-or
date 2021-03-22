@@ -1,11 +1,11 @@
-<nz-card style="width:100%;" nzTitle="Gestion des admins caisses" >
+<nz-card style="width:100%;background: #C5A57D;" nzTitle="Gestion des admins caisses" >
   
     <div *ngIf="etapeDisplay != 3" nz-row style="text-align: center;">
         <div nz-col nzSpan="12" style="text-align: right;">
-            <button class="btn btn-primary" (click)="etapeDisplay = 1;getUsers();this.reinitialiser()" style="margin-left: 5px;">Liste admin caisse</button>
+            <button class="btn btn-primary" (click)="etapeDisplay = 1;getUsers();this.reinitialiser()" style="margin-left: 5px;background: #532611;border: 1px solid white;font-size: 1.5rem;">Liste admin caisse</button>
         </div>
         <div nz-col nzSpan="12" style="text-align: left;">
-            <button class="btn btn-info" (click)="etapeDisplay = 2;this.reinitialiser()" style="margin-left: 5px;">Création admin caisse</button>
+            <button class="btn btn-info" (click)="etapeDisplay = 2;this.reinitialiser()" style="margin-left: 5px;background: #532611;border: 1px solid white;font-size: 1.5rem;">Création admin caisse</button>
         </div>
     </div>
     <div *ngIf="etapeDisplay == 1" >
@@ -13,23 +13,81 @@
             <ngx-table [configuration]="configuration"
                     [data]="data"
                     [columns]="columns"
-                    style="overflow:auto"
-                    style="max-width: 100% !important">
+                    style="overflow:auto;color: white;"
+                    >
             </ngx-table>
         </div>
        
     </div>
     
-    <div *ngIf="etapeDisplay == 2" >
+    <div *ngIf="etapeDisplay == 2" class="col-12">
         <div *ngIf="errorCode == 1" class="alert alert-danger">{{errorMessage}} <span style="float: right; cursor: pointer;" (click)="errorCode = 0">x</span></div>
         <div *ngIf="errorCode == 2" class="alert alert-success">{{errorMessage}} <span style="float: right; cursor: pointer;" (click)="errorCode = 0">x</span></div>
-                <form >
-            <div nz-row>
-                <div nz-col nzSpan="11" style="margin-top: 1rem;">
-                    <label for="exampleInputEmail1">Prénom</label>
-                    <input type="text" autocomplete="off" [ngModelOptions]="{standalone: true}" class="form-control" [(ngModel)]="prenom" id="prenom" aria-describedby="emailHelp" placeholder="Prénom">
-                </div>
-                <div nz-col nzSpan="11" style="margin-top: 1rem;margin-left: 5px;" >
+         <form >
+            <div class="row" style="text-align: center;">
+                <div class="col-lg-11 col-md-11 col-sm-11 col-xs-10">
+                    <div class="input-group form-group row" style="padding:5px; margin-top: 1rem;">
+                      <div class="input-group-prepend col-3"  style="padding: 0;margin: 0;">
+                        <label class="input-group-text" style="border: none; background-color: #C5A57D;color: white;font-size: 1.5rem;width: 100%;border: 1px solid white;">Prénom</label>
+                      </div>
+                      <div class="col-8" style="padding: 0;margin: 0;">
+                        <input  type="text" class="form-control" placeholder="Prénom" [ngModelOptions]="{standalone: true}" [(ngModel)]="this.prenom"  />
+                      </div>
+                     
+                     </div>
+                  </div>
+                  
+                <div class="col-lg-11 col-md-11 col-sm-11 col-xs-10">
+                    <div class="input-group form-group row" style="padding:5px; margin-top: 1rem;">
+                      <div class="input-group-prepend col-3"  style="padding: 0;margin: 0;">
+                        <label class="input-group-text" style="border: none; background-color: #C5A57D;color: white;font-size: 1.5rem;width: 100%;border: 1px solid white;">Nom</label>
+                      </div>
+                      <div class="col-8" style="padding: 0;margin: 0;">
+                        <input  type="text" class="form-control" placeholder="Nom" [ngModelOptions]="{standalone: true}" [(ngModel)]="this.nom"  />
+                      </div>
+                     
+                     </div>
+                  </div>
+                  
+                <div class="col-lg-11 col-md-11 col-sm-11 col-xs-10">
+                    <div class="input-group form-group row" style="padding:5px; margin-top: 1rem;">
+                      <div class="input-group-prepend col-3"  style="padding: 0;margin: 0;">
+                        <label class="input-group-text" style="border: none; background-color: #C5A57D;color: white;font-size: 1.5rem;width: 100%;border: 1px solid white;">Téléphone</label>
+                      </div>
+                      <div class="col-8" style="padding: 0;margin: 0;">
+                        <input  type="text" (keyup)="badPhoneNumber = false"  class="form-control" placeholder="Téléphone" [ngModelOptions]="{standalone: true}" [(ngModel)]="this.telephone"  />
+                        <p *ngIf="badPhoneNumber" class="alert alert-danger">Numéro téléphone non conforme </p>
+
+                      </div>
+                     
+                     </div>
+                  </div>
+                  
+                <div class="col-lg-11 col-md-11 col-sm-11 col-xs-10">
+                    <div class="input-group form-group row" style="padding:5px; margin-top: 1rem;">
+                      <div class="input-group-prepend col-3"  style="padding: 0;margin: 0;">
+                        <label class="input-group-text" style="border: none; background-color: #C5A57D;color: white;font-size: 1.5rem;width: 100%;border: 1px solid white;">Adresse</label>
+                      </div>
+                      <div class="col-8" style="padding: 0;margin: 0;">
+                        <input  type="text" class="form-control" placeholder="Adresse" [ngModelOptions]="{standalone: true}" [(ngModel)]="this.adresse"  />
+                      </div>
+                     
+                     </div>
+                  </div>
+                  
+                <div class="col-lg-11 col-md-11 col-sm-11 col-xs-10">
+                    <div class="input-group form-group row" style="padding:5px; margin-top: 1rem;">
+                      <div class="input-group-prepend col-3"  style="padding: 0;margin: 0;">
+                        <label class="input-group-text" style="border: none; background-color: #C5A57D;color: white;font-size: 1.5rem;width: 100%;border: 1px solid white;">Identifiant</label>
+                      </div>
+                      <div class="col-8" style="padding: 0;margin: 0;">
+                        <input  type="text" class="form-control" placeholder="identifiant" [ngModelOptions]="{standalone: true}" [(ngModel)]="this.identifiant"  />
+                      </div>
+                     
+                     </div>
+                  </div>
+
+                <!-- <div nz-col nzSpan="11" style="margin-top: 1rem;margin-left: 5px;" >
                     <label for="exampleInputEmail1">Nom</label>
                     <input type="text" autocomplete="off" [ngModelOptions]="{standalone: true}" class="form-control" [(ngModel)]="nom" id="nom" aria-describedby="emailHelp" placeholder="Nom">
                 </div>
@@ -47,11 +105,11 @@
                 <div nz-col nzSpan="22" style="text-align: center;margin-top: 1rem;">
                     <label for="exampleInputEmail1">Identifiant</label>
                     <input type="text" autocomplete="off" [ngModelOptions]="{standalone: true}" class="form-control" [(ngModel)]="identifiant" id="prenom" aria-describedby="emailHelp" placeholder="Identifiant">
-                </div>
+                </div>-->
               
             </div>
             <div nz-col nzSpan="24" style="text-align: center;margin-top: 1rem;">
-                <button [disabled]="!prenom || !nom || !telephone || !adresse || !identifiant " (click)="createUser()" class="btn btn-success">Valider</button>
+                <button [disabled]="!prenom || !nom || !telephone || !adresse || !identifiant " style="margin-left: 5px;background: #532611;border: 1px solid white;font-size: 1.5rem;" (click)="createUser()" class="btn btn-success">Valider</button>
             </div>
         
         </form>
@@ -62,31 +120,60 @@
         <div *ngIf="errorCode == 2" class="alert alert-success">{{errorMessage}} <span style="float: right; cursor: pointer;" (click)="errorCode = 0">x</span></div>
         
         <form >
-            <div nz-row *ngIf="errorCode < 2">
-                <div nz-col nzSpan="11" style="margin-top: 1rem;">
-                    <label for="exampleInputEmail1">Prénom</label>
-                    <input type="text" [ngModelOptions]="{standalone: true}" class="form-control" [(ngModel)]="selected.prenom" id="prenom" aria-describedby="emailHelp" placeholder="Prénom">
-                </div>
-                <div nz-col nzSpan="11" style="margin-top: 1rem;margin-left: 5px;" >
-                    <label for="exampleInputEmail1">Nom</label>
-                    <input type="text" [ngModelOptions]="{standalone: true}" class="form-control" [(ngModel)]="selected.nom" id="nom" aria-describedby="emailHelp" placeholder="Nom">
-                </div>
+            <div class="row" *ngIf="this.errorCode < 2" style="text-align: center;">
+                <div class="col-lg-11 col-md-11 col-sm-11 col-xs-10">
+                    <div class="input-group form-group row" style="padding:5px; margin-top: 1rem;">
+                      <div class="input-group-prepend col-3"  style="padding: 0;margin: 0;">
+                        <label class="input-group-text" style="border: none; background-color: #C5A57D;color: white;font-size: 1.5rem;width: 100%;border: 1px solid white;">Prénom</label>
+                      </div>
+                      <div class="col-8" style="padding: 0;margin: 0;">
+                        <input  type="text" class="form-control" placeholder="Prénom" [ngModelOptions]="{standalone: true}" [(ngModel)]="this.selected.prenom"  />
+                      </div>
+                     
+                     </div>
+                  </div>
+                  
+                <div class="col-lg-11 col-md-11 col-sm-11 col-xs-10">
+                    <div class="input-group form-group row" style="padding:5px; margin-top: 1rem;">
+                      <div class="input-group-prepend col-3"  style="padding: 0;margin: 0;">
+                        <label class="input-group-text" style="border: none; background-color: #C5A57D;color: white;font-size: 1.5rem;width: 100%;border: 1px solid white;">Nom</label>
+                      </div>
+                      <div class="col-8" style="padding: 0;margin: 0;">
+                        <input  type="text" class="form-control" placeholder="Nom" [ngModelOptions]="{standalone: true}" [(ngModel)]="this.selected.nom"  />
+                      </div>
+                     
+                     </div>
+                  </div>
+                  
+                <div class="col-lg-11 col-md-11 col-sm-11 col-xs-10">
+                    <div class="input-group form-group row" style="padding:5px; margin-top: 1rem;">
+                      <div class="input-group-prepend col-3"  style="padding: 0;margin: 0;">
+                        <label class="input-group-text" style="border: none; background-color: #C5A57D;color: white;font-size: 1.5rem;width: 100%;border: 1px solid white;">Téléphone</label>
+                      </div>
+                      <div class="col-8" style="padding: 0;margin: 0;">
+                        <input  type="text" (keyup)="badPhoneNumber = false"  class="form-control" placeholder="Téléphone" [ngModelOptions]="{standalone: true}" [(ngModel)]="this.selected.telephone"  />
+                        <p *ngIf="badPhoneNumber" class="alert alert-danger">Numéro téléphone non conforme </p>
 
-                <div nz-col nzSpan="11" style="margin-top: 1rem;">
-                    <label for="exampleInputEmail1">Téléphone</label>
-                    <input type="text" (keyup)="badPhoneNumber = false" [ngModelOptions]="{standalone: true}" class="form-control" [(ngModel)]="selected.telephone" id="prenom" aria-describedby="emailHelp" placeholder="Téléphone">
-                    <p *ngIf="badPhoneNumber" class="alert alert-danger">Numéro téléphone non conforme</p>
-
-                </div>
-                <div nz-col nzSpan="11" style="margin-top: 1rem;margin-left: 5px;" >
-                    <label for="exampleInputEmail1">Addresse</label>
-                    <input type="text" [ngModelOptions]="{standalone: true}" class="form-control" [(ngModel)]="selected.adresse" id="nom" aria-describedby="emailHelp" placeholder="Addresse">
-                </div>
-
-              
+                      </div>
+                     
+                     </div>
+                  </div>
+                  
+                <div class="col-lg-11 col-md-11 col-sm-11 col-xs-10">
+                    <div class="input-group form-group row" style="padding:5px; margin-top: 1rem;">
+                      <div class="input-group-prepend col-3"  style="padding: 0;margin: 0;">
+                        <label class="input-group-text" style="border: none; background-color: #C5A57D;color: white;font-size: 1.5rem;width: 100%;border: 1px solid white;">Adresse</label>
+                      </div>
+                      <div class="col-8" style="padding: 0;margin: 0;">
+                        <input  type="text" class="form-control" placeholder="Adresse" [ngModelOptions]="{standalone: true}" [(ngModel)]="this.selected.adresse"  />
+                      </div>
+                     
+                     </div>
+                  </div>
+                  
             </div>
             <div nz-col nzSpan="24" style="text-align: center;margin-top: 1rem;">
-                <button  (click)="etapeDisplay = 1" style="margin-right: 5px;" class="btn btn-danger">Retour</button>
+                <button  (click)="etapeDisplay = 1" style="margin-right: 5px;" class="btn btn-danger"> <i class="fas fa-arrow-left" style="padding-right: 4px;"></i>Retour</button>
                 <button  (click)="updateUser()" *ngIf="errorCode < 2" class="btn btn-success">Valider</button>
             </div>
         
@@ -94,8 +181,8 @@
     </div>
   </nz-card>
 <ng-template let-row let-rowIndex="rowIndex" let-column="column" #actionTpl>
-    <td>
-        <button class="btn btn-warning" nz-button (click)="selected = row;errorCode = 0;etapeDisplay = 3" style="margin: 2px;">Modifier </button>
+    <td style="border: none;">
+        <button class="btn btn-warning" nz-button (click)="selected = row;errorCode = 0;etapeDisplay = 3" >Modifier </button>
         <button class="btn btn-danger" nz-button (click)="showMoodal();selected = row;"  >Supprimer </button>
     </td>
 </ng-template> 

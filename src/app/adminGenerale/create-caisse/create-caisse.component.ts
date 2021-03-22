@@ -80,7 +80,7 @@ export class CreateCaisseComponent implements OnInit {
     this._serviceAdmin.createUser({depends_on:JSON.parse(sessionStorage.getItem('currentUser')).id,prenom:this.prenom,nom:this.nom,login:this.identifiant,telephone:this.telephone,adresse:this.adresse,accesslevel:2}).then(res=>{
       if(res['status'] == 1){
         this.errorCode = 2;
-        this.errorMessage = "créations effectué avec succés";
+        this.errorMessage = "création effectuée avec succés";
         this.loading = false;
         this.reinitialiser()
 

@@ -271,6 +271,9 @@ export class CommandesComponent implements OnInit {
     ];
 
     this.getCommandes();
+    setInterval(()=>{
+      this.getCommandes();
+    },10000)
 
   }
 

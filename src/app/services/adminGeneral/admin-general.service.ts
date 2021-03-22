@@ -24,7 +24,7 @@ export class AdminGeneralService {
      console.log(params);
      
      let link=this.url+"/admin/createUser";
-     return this.http.post(link,params,{headers:this.header}).toPromise().then( res => {console.log(JSON.stringify(res)); return res} ).catch(error => {console.log(error); return 'bad' });
+     return this.http.post(link,params,{headers:this.header}).toPromise().then( res => { return res} ).catch(error => {console.log(error); return 'bad' });
    }
     // getUsers est une fonction pour obtenir la liste des utilisateur
     public getUsers(param): Promise<any>{
@@ -32,7 +32,7 @@ export class AdminGeneralService {
       console.log(params);
       
       let link=this.url+"/admin/getUsersByDependsOn";
-      return this.http.post(link,params,{headers:this.header}).toPromise().then( res => {console.log(JSON.stringify(res)); return res} ).catch(error => {console.log(error); return 'bad' });
+      return this.http.post(link,params,{headers:this.header}).toPromise().then( res => { return res} ).catch(error => {console.log(error); return 'bad' });
     }
     // deleteUser pour supprimer un uttilisateur
     public deleteUser(param): Promise<any>{
@@ -40,7 +40,7 @@ export class AdminGeneralService {
       console.log(params);
       
       let link=this.url+"/admin/deleteUser";
-      return this.http.post(link,params,{headers:this.header}).toPromise().then( res => {console.log(JSON.stringify(res)); return res} ).catch(error => {console.log(error); return 'bad' });
+      return this.http.post(link,params,{headers:this.header}).toPromise().then( res => { return res} ).catch(error => {console.log(error); return 'bad' });
     }
      // updateUser pour modifier un uttilisateur
      public updateUser(param): Promise<any>{
@@ -48,7 +48,7 @@ export class AdminGeneralService {
       console.log(params);
       
       let link=this.url+"/admin/updateUser";
-      return this.http.post(link,params,{headers:this.header}).toPromise().then( res => {console.log(JSON.stringify(res)); return res} ).catch(error => {console.log(error); return 'bad' });
+      return this.http.post(link,params,{headers:this.header}).toPromise().then( res => { return res} ).catch(error => {console.log(error); return 'bad' });
     }
     // getCommande pour obtenir les commandes
     public getCommande(param): Promise<any>{
@@ -56,7 +56,7 @@ export class AdminGeneralService {
       console.log(params);
       
       let link=this.url+"/admin/getCommandes";
-      return this.http.post(link,params,{headers:this.header}).toPromise().then( res => {console.log(JSON.stringify(res)); return res} ).catch(error => {console.log(error); return 'bad' });
+      return this.http.post(link,params,{headers:this.header}).toPromise().then( res => { return res} ).catch(error => {console.log(error); return 'bad' });
     }
      // getCommandeByCaissier pour obtenir les commandes par caissier
      public getCommandeByCaissier(param): Promise<any>{
@@ -64,7 +64,7 @@ export class AdminGeneralService {
       console.log(params);
       
       let link=this.url+"/admin/getCommandesByIdCaissier";
-      return this.http.post(link,params,{headers:this.header}).toPromise().then( res => {console.log(JSON.stringify(res)); return res} ).catch(error => {console.log(error); return 'bad' });
+      return this.http.post(link,params,{headers:this.header}).toPromise().then( res => { return res} ).catch(error => {console.log(error); return 'bad' });
     }
      // updateEtat pour modifier les etats des commandes
      public updateEtat(param): Promise<any>{
@@ -72,7 +72,7 @@ export class AdminGeneralService {
       console.log(params);
       
       let link=this.url+"/service/updateEtat";
-      return this.http.post(link,params,{headers:this.header}).toPromise().then( res => {console.log(JSON.stringify(res)); return res} ).catch(error => {console.log(error); return 'bad' });
+      return this.http.post(link,params,{headers:this.header}).toPromise().then( res => { return res} ).catch(error => {console.log(error); return 'bad' });
     }
     // remiseSurFileDattente pour remettre le livreur sur la fil d'attente
     public remiseSurFileDattente(param): Promise<any>{
@@ -80,6 +80,6 @@ export class AdminGeneralService {
       console.log(params);
       
       let link=this.url+"/service/remiseSurFileDattente";
-      return this.http.post(link,params,{headers:this.header}).toPromise().then( res => {console.log(JSON.stringify(res)); return res} ).catch(error => {console.log(error); return 'bad' });
+      return this.http.post(link,params,{headers:this.header}).toPromise().then( res => { return res} ).catch(error => {console.log(error); return 'bad' });
     }
 }
