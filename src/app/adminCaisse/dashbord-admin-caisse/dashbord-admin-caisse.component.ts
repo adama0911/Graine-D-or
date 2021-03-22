@@ -17,9 +17,32 @@ export class DashbordAdminCaisseComponent implements OnInit {
   nbrCommandes = 0;
   soldeGraineDor = 0;
   soldeCompenseBBS = 0;
-
+  motcle;
  loading:boolean = true;
+  p;
+  listeSave;
+  audio
 
+  displayDate(date){ 
+    if(date != ""){
+      return new Date(date).toLocaleString();
+    }
+    
+  }
+  searchAll = () => {
+    let value = this.motcle;
+    console.log("PASS", { value });
+  
+    const filterTable = this.listeSave.filter(o =>
+      Object.keys(o).some(k =>
+        String(o[k])
+          .toLowerCase()
+          .includes(value.toLowerCase())
+      )
+    );
+    console.log(this.data)
+    this.data = filterTable;
+  }
   calculeForBashbord(arg){
     this.nbrCommandes = 0;
     this.soldeGraineDor = 0;
@@ -190,40 +213,47 @@ export class DashbordAdminCaisseComponent implements OnInit {
   }
   ngOnInit(): void {
     this.loading = true;
-
     console.log(JSON.parse(sessionStorage.getItem('currentUser')).id)
     this.dd = (new Date().toJSON()).split("T")[0]
     this.df = (new Date().toJSON()).split("T")[0]
     let dateDebut = this.dd.split('-')[2]+"/"+this.dd.split('-')[1]+"/"+this.dd.split('-')[0]
     let dateFin = this.df.split('-')[2]+"/"+this.df.split('-')[1]+"/"+this.df.split('-')[0]
-    this._serviceAdmin.getCommandeByCaissier({debut:dateDebut,fin:dateFin,idCaissier:JSON.parse(sessionStorage.getItem('currentUser')).id}).then(res=>{
+    this._serviceAdmin.getCommande({debut:dateDebut,fin:dateFin}).then(res=>{
       console.log(res);
       if(res.status == 1){
         this.calculeForBashbord(res.data)
-        this.data = res.data
-        this.configuration = { ...DefaultConfig };
-        this.configuration.searchEnabled = true;
-        this.columns = [
-          { key: 'commande', title: 'COMMANDE' , cellTemplate: this.panier},
-          { key: 'livreur', title: 'LIVREUR', cellTemplate: this.livreur },
-          { key: 'numero_client', title: 'CLIENT' },
-          { key: 'montant', title: 'MONTANT COMMANDE' },
-          { key: 'frais_livraison', title: 'MONTANT LIVRAISON' },
-          { key: 'mode_paiement', title: 'PAIEMENT' , cellTemplate: this.paiementTpl},
-          { key: 'recuperation', title: 'RÉCUPÉRATION' , cellTemplate: this.recuperationTpl},
-          { key: 'etat', title: 'ETAT COMMANDE' , cellTemplate: this.etatTpl},
-          { key: 'monnaie', title: 'MONNAIE À PRÉPARÉE' , cellTemplate: this.monnaiePrepa },
-          { key: 'action', title: 'Actions', cellTemplate: this.actionTpl },
-        ];
+        this.data = res.data.reverse()
+        this.listeSave = res.data.reverse()
         this.loading = false;
-
       }else{
         this.loading = false;
-
       }
       
       
     })
+    setInterval(()=>{
+      console.log('inside intervalle')
+      let d = (new Date().toJSON()).split("T")[0]
+      let f = (new Date().toJSON()).split("T")[0]
+      let dateDebut = this.dd.split('-')[2]+"/"+this.dd.split('-')[1]+"/"+this.dd.split('-')[0]
+      let dateFin = this.df.split('-')[2]+"/"+this.df.split('-')[1]+"/"+this.df.split('-')[0]
+      this._serviceAdmin.getCommande({debut:dateDebut,fin:dateFin}).then(res=>{
+        console.log(res);
+        if(res.status == 1){
+          this.calculeForBashbord(res.data)
+          this.data = res.data.reverse()
+          this.listeSave = res.data.reverse()
+          this.loading = false;
+          //this.audio = new Audio();
+          //this.audio.src ='../../assets/hangouts_message_1.mp3';
+          //this.audio.play();
+        }else{
+          this.loading = false;
+        }
+        
+        
+      })
+    },10000)
 
   }
   displayData(obj,nom){

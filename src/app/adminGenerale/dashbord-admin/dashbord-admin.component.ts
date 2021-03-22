@@ -19,6 +19,10 @@ export class DashbordAdminComponent implements OnInit {
   soldeCompenseBBS = 0;
   loading:boolean = false;
   selected;
+  motcle;
+  listeSave;
+  p;
+  audio:any;
   calculeForBashbord(arg){
     this.nbrCommandes = 0;
     this.soldeGraineDor = 0;
@@ -43,6 +47,20 @@ export class DashbordAdminComponent implements OnInit {
   @ViewChild('etatTpl', { static: true }) etatTpl: TemplateRef<any>;
   constructor(private _serviceAdmin:AdminGeneralService,) { 
    
+  }
+  searchAll = () => {
+    let value = this.motcle;
+    console.log("PASS", { value });
+  
+    const filterTable = this.listeSave.filter(o =>
+      Object.keys(o).some(k =>
+        String(o[k])
+          .toLowerCase()
+          .includes(value.toLowerCase())
+      )
+    );
+    console.log(this.data)
+    this.data = filterTable;
   }
   monnairePrpa(mtt1 ,mtt2){
     let somme = parseInt(mtt1)+parseInt(mtt2);
@@ -81,21 +99,9 @@ export class DashbordAdminComponent implements OnInit {
             console.log(res);
             if(res.status == 1){
               this.calculeForBashbord(res.data)
-              this.data = res.data
-              this.configuration = { ...DefaultConfig };
-              this.configuration.searchEnabled = true;
-              this.columns = [
-                { key: 'commande', title: 'COMMANDE' , cellTemplate: this.panier},
-                { key: 'livreur', title: 'LIVREUR', cellTemplate: this.livreur },
-                { key: 'numero_client', title: 'CLIENT' },
-                { key: 'montant', title: 'MONTANT COMMANDE' },
-                { key: 'frais_livraison', title: 'MONTANT LIVRAISON' },
-                { key: 'mode_paiement', title: 'PAIEMENT' , cellTemplate: this.paiementTpl},
-                { key: 'recuperation', title: 'RÉCUPÉRATION' , cellTemplate: this.recuperationTpl},
-                { key: 'etat', title: 'ETAT COMMANDE' , cellTemplate: this.etatTpl},
-                { key: 'monnaie', title: 'MONNAIE À PRÉPARÉE' , cellTemplate: this.monnaiePrepa },
-                { key: 'action', title: 'Actions', cellTemplate: this.actionTpl },
-              ];
+              this.data = res.data.reverse()
+              this.listeSave = res.data.reverse()
+
               this.loading = false;
               this.showMoodalNotif()
             }else{
@@ -118,21 +124,9 @@ export class DashbordAdminComponent implements OnInit {
       console.log(res);
       if(res.status == 1){
         this.calculeForBashbord(res.data)
-        this.data = res.data
-        this.configuration = { ...DefaultConfig };
-        this.configuration.searchEnabled = true;
-        this.columns = [
-          { key: 'commande', title: 'COMMANDE' , cellTemplate: this.panier},
-          { key: 'livreur', title: 'LIVREUR', cellTemplate: this.livreur },
-          { key: 'numero_client', title: 'CLIENT' },
-          { key: 'montant', title: 'MONTANT COMMANDE' },
-          { key: 'frais_livraison', title: 'MONTANT LIVRAISON' },
-          { key: 'mode_paiement', title: 'PAIEMENT' , cellTemplate: this.paiementTpl},
-          { key: 'recuperation', title: 'RÉCUPÉRATION' , cellTemplate: this.recuperationTpl},
-          { key: 'etat', title: 'ETAT COMMANDE' , cellTemplate: this.etatTpl},
-          { key: 'monnaie', title: 'MONNAIE À PRÉPARÉE' , cellTemplate: this.monnaiePrepa },
-          { key: 'action', title: 'Actions', cellTemplate: this.actionTpl },
-        ];
+        this.data = res.data.reverse()
+        this.listeSave = res.data.reverse()
+
         this.loading = false;
 
       }else{
@@ -144,6 +138,7 @@ export class DashbordAdminComponent implements OnInit {
     })
   }
   ngOnInit(): void {
+   
     this.loading = true;
     console.log(JSON.parse(sessionStorage.getItem('currentUser')).id)
     this.dd = (new Date().toJSON()).split("T")[0]
@@ -154,21 +149,8 @@ export class DashbordAdminComponent implements OnInit {
       console.log(res);
       if(res.status == 1){
         this.calculeForBashbord(res.data)
-        this.data = res.data
-        this.configuration = { ...DefaultConfig };
-        this.configuration.searchEnabled = true;
-        this.columns = [
-          { key: 'commande', title: 'COMMANDE' , cellTemplate: this.panier},
-          { key: 'livreur', title: 'LIVREUR', cellTemplate: this.livreur },
-          { key: 'numero_client', title: 'CLIENT' },
-          { key: 'montant', title: 'MONTANT COMMANDE' },
-          { key: 'frais_livraison', title: 'MONTANT LIVRAISON' },
-          { key: 'mode_paiement', title: 'PAIEMENT' , cellTemplate: this.paiementTpl},
-          { key: 'recuperation', title: 'RÉCUPÉRATION' , cellTemplate: this.recuperationTpl},
-          { key: 'etat', title: 'ETAT COMMANDE' , cellTemplate: this.etatTpl},
-          { key: 'monnaie', title: 'MONNAIE À PRÉPARÉE' , cellTemplate: this.monnaiePrepa },
-          { key: 'action', title: 'Actions', cellTemplate: this.actionTpl },
-        ];
+        this.data = res.data.reverse()
+        this.listeSave = res.data.reverse()
         this.loading = false;
       }else{
         this.loading = false;
@@ -176,7 +158,38 @@ export class DashbordAdminComponent implements OnInit {
       
       
     })
+    setInterval(()=>{
+      console.log('inside intervalle')
+      let d = (new Date().toJSON()).split("T")[0]
+      let f = (new Date().toJSON()).split("T")[0]
+      let dateDebut = this.dd.split('-')[2]+"/"+this.dd.split('-')[1]+"/"+this.dd.split('-')[0]
+      let dateFin = this.df.split('-')[2]+"/"+this.df.split('-')[1]+"/"+this.df.split('-')[0]
+      this._serviceAdmin.getCommande({debut:dateDebut,fin:dateFin}).then(res=>{
+        console.log(res);
+        if(res.status == 1){
+          this.calculeForBashbord(res.data)
+          this.data = res.data.reverse()
+          this.listeSave = res.data.reverse()
+          this.loading = false;
+          //this.audio = new Audio();
+          //this.audio.src ='../../assets/hangouts_message_1.mp3';
+          //this.audio.play();
+        }else{
+          this.loading = false;
+        }
+        
+        
+      })
+    },10000)
 
+  }
+  
+ 
+  displayDate(date){ 
+    if(date != ""){
+      return new Date(date).toLocaleString();
+    }
+    
   }
   displayData(obj,nom){
     if(obj.includes("{")){

@@ -1,46 +1,160 @@
-<nz-card style="width:100%;" nzTitle="Dashbord des commandes" >
-    <div style="background: #ECECEC;padding:10px;">
-        <div nz-row [nzGutter]="8">
-          <div nz-col [nzSpan]="8">
-            <nz-card nzTitle="Nombre de commandes">
-              <span>{{nbrCommandes}} </span><small>commandes </small>
-            </nz-card>
-          </div>
-          <div nz-col [nzSpan]="8">
-            <nz-card nzTitle="Solde graine d'or">
-              <span>{{soldeGraineDor}} </span><small>FCFA</small>
-            </nz-card>
-          </div>
-          <div nz-col [nzSpan]="8">
-            <nz-card nzTitle="Solde compense BBS">
-              <span>{{soldeCompenseBBS}} </span><small>FCFA</small>
-            </nz-card>
-          </div>
+<nz-card style="width:100%;" style="background: #C5A57D;" nzTitle="Dashbord des commandes" >
+  <div class="col-12" style="background: #C5A57D;padding:10px;">
+
+    <div class="row" style="background-color: #C5A57D;" >
+     
+      <div class="col-lg-4 col-sm-4 col-md-4 col-xs-6"  >
+        <div style="background-color: #C5A57D;color: white;text-align: center;">
+          <h2>Nombre de commande</h2>
+        </div>
+        <div style="background-color: white;color: #532611;text-align: center;height: 5rem;border-radius: 10px;">
+          <h4 style="padding-top: 1rem ;"> <span >{{nbrCommandes}} </span><small>commandes </small>
+          </h4>
         </div>
       </div>
+      <div class="col-lg-4 col-sm-4 col-md-4 col-xs-6"  >
+        <div style="background-color: #C5A57D;color: white;text-align: center;">
+          <h2>Solde Graine d'or</h2>
+        </div>
+        <div style="background-color: white;color: #532611;text-align: center;height: 5rem;border-radius: 10px;">
+          <h4 style="padding-top: 1rem ;"><span >{{soldeGraineDor}} </span><small>FCFA</small></h4>
+        </div>
+      </div>
+      <div class="col-lg-4 col-sm-4 col-md-4 col-xs-6"  >
+        <div style="background-color: #C5A57D;color: white;text-align: center;">
+          <h2>Solde compense BBS</h2>
+        </div>
+        <div style="background-color: white;color: #532611;text-align: center;height: 5rem;border-radius: 10px;">
+          <h4 style="padding-top: 1rem ;"><span >{{soldeCompenseBBS}} </span><small>FCFA</small></h4>
+        </div>
+      </div>
+     
+    </div>
+</div>
     <div  >
-        <div style="background: #ECECEC;padding:10px;">
-            <div nz-row [nzGutter]="8">
-              <div nz-col [nzSpan]="8">
-                <label for="exampleInputEmail1">Date début</label>
-                <input type="date" [ngModelOptions]="{standalone: true}" class="form-control" [(ngModel)]="dd" id="dateD" aria-describedby="emailHelp" placeholder="Prénom">
+      <div class="col-12" style="background: #C5A57D;padding:10px;">
+        <div class="row">
+          <div class="col-lg-3 col-md-3 col-sm-3 col-xs-4">
+            <div class="input-group form-group row" style="padding:5px; margin-top: 1rem;background-color: #532611;">
+              <div class="input-group-prepend col-5"  style="background-color: #532611;padding: 0;margin: 0;">
+                <span class="input-group-text" style="border: none; background-color: #532611;color: white;font-size: 1rem;"><i class="fas fa-calendar" style="padding-top: 5px;background: white;color: #532611;width: 3rem; height: 3rem; font-size: 2rem;margin-right: 7px;"></i>Date debut</span>
               </div>
-              <div nz-col [nzSpan]="8">
-                <label for="exampleInputEmail1">Date fin</label>
-                <input type="date" [ngModelOptions]="{standalone: true}" class="form-control" [(ngModel)]="df" id="dateF" aria-describedby="emailHelp" placeholder="Prénom">
+              <div class="col-7" style="padding: 0;margin: 0;">
+                <input  type="date" style="width: 100%;height: 100%;" placeholder="identifiant" [ngModelOptions]="{standalone: true}" [(ngModel)]="this.dd"  />
               </div>
-              <div nz-col [nzSpan]="8">
-                <button class="btn btn-success" (click)="recherche()" style="margin-top: 3rem;" >Recherche</button>
-              </div>
-            </div>
+             
+             </div>
           </div>
+          <div class="col-lg-3 col-md-3 col-sm-3 col-xs-4">               
+             <div class="input-group form-group row" style="padding:5px; margin-top: 1rem;background-color: #532611;">
+            <div class="input-group-prepend col-5"  style="background-color: #532611;padding: 0;margin: 0;">
+              <span class="input-group-text" style="border: none; background-color: #532611;color: white;font-size: 1rem;"><i class="fas fa-calendar" style="padding-top: 5px;background: white;color: #532611;width: 3rem; height: 3rem; font-size: 2rem;margin-right: 7px;"></i>Date fin</span>
+            </div>
+            <div class="col-7" style="padding: 0;margin: 0;">
+              <input  type="date" style="width: 100%;height: 100%;" placeholder="identifiant" [ngModelOptions]="{standalone: true}" [(ngModel)]="this.df"  />
+            </div>
+           
+           </div>
+          </div>
+          <div class="col-lg-2 col-md-2 col-sm-2 col-xs-4">               
+            <div class="input-group form-group row" style="padding:5px; margin-top: 1rem;background-color: #532611;">
+
+           <div class="col-12" style="padding: 0;margin: 0;text-align: center;">
+              <button class="btn" (click)="recherche()" style="height: 4rem;width: 100%; font-size: 2rem;background: #532611;color: white">Rechercher</button>
+          </div>
+          
+          </div>
+         </div>
+          <div class="col-lg-3 col-md-3 col-sm-3 col-xs-4">               
+            <div class="input-group form-group row" style="padding:5px; margin-top: 1rem;background-color: #532611;">
+              <div class="input-group-prepend col-4"  style="background-color: #532611;padding: 0;margin: 0;">
+                <span class="input-group-text" style="border: none; background-color: #532611;color: white;font-size: 1.5rem;">Recherche </span>
+              </div>
+           <div class="col-6" style="padding: 0;margin: 0;">
+             <input  type="text" style="width: 100%;height: 100%;border: none;" placeholder="Filtrer" [ngModelOptions]="{standalone: true}" (keyup) = "searchAll()" [(ngModel)]="this.motcle"  />
+           </div>
+           <div class="input-group-prepend col-2"  style="background-color: #532611;padding: 0;margin: 0;">
+            <span class="input-group-text" style="border: none; background-color: white;color: white;font-size: 1rem;width: 100%;"><i class="fas fa-search" style="padding-top: 5px;background: white;color: #532611;width: 3rem; height: 3rem; font-size: 2rem;margin-right: 7px;"></i></span>
+          </div>
+          </div>
+         </div>
+        </div>
+      </div>
         <div class="col-12" style="max-width: 100% !important">
-            <ngx-table [configuration]="configuration"
+            <!--<ngx-table [configuration]="configuration"
                     [data]="data"
                     [columns]="columns"
                     style="overflow:auto"
                     style="max-width: 100% !important">
-            </ngx-table>
+            </ngx-table>-->
+            <div class="table-responsive">
+              <table class="table">
+                <thead>
+                  <tr style="text-transform: uppercase;">
+                    <th style="border: 1px solid white;color: black;">Date</th>
+                    <th style="border: 1px solid white;color: black;">commande</th>
+                    <th style="border: 1px solid white;color: black;">livreur</th>
+                    <th style="border: 1px solid white;color: black;">client</th>
+                    <th style="border: 1px solid white;color: black;">montant commande</th>
+                    <th style="border: 1px solid white;color: black;">montant livraison</th>
+                    <th style="border: 1px solid white;color: black;">paiement</th>
+                    <th style="border: 1px solid white;color: black;">recuperation</th>
+                    <th style="border: 1px solid white;color: black;">etat</th>
+                    <th style="border: 1px solid white;color: black;">monnaie</th>
+                    <th style="border: 1px solid white;color: black;">action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let item of this.data | paginate: { itemsPerPage: 10, currentPage: p }">
+                    <td>{{displayDate(item.created_at)}}</td>
+                    <td>
+                      <div class="dropdown">
+                        <span *ngIf="item.refCommande != ''">{{item.refCommande}}</span>
+                        <span *ngIf="item.refCommande == ''">refCommande</span>
+                        <div class="dropdown-content">
+                        <p style="color: black;">{{item.designation}}</p>
+                        </div>
+                      </div>
+                    </td>
+                    <td>
+                      <p *ngIf="item.livreur != ''">{{displayData(item.livreur,'prenom')}} {{displayData(item.livreur,'nom')}}</p>
+                      <p *ngIf="item.livreur == ''">pas de livreur</p>
+                    </td>
+                    <td>{{item.numero_client}}</td>
+                    <td>{{item.montant}}</td>
+                    <td>{{item.frais_livraison}}</td>
+                    <td>
+                      <p *ngIf="item.mode_paiement==1" >en ligne </p>
+                      <p *ngIf="item.mode_paiement==0" >à la livraison </p>
+                    </td>
+                    <td>
+                      <p *ngIf="item.recuperation==1" >sur place </p>
+                      <p *ngIf="item.recuperation==0" >à livrer</p>
+                    </td>
+                    <td >
+                      <div *ngIf="item.etat==-1" class="p-3 mb-2 bg-danger text-white" style="text-align: center;">Annuler </div>
+                      <div *ngIf="item.etat==1" class="p-3 mb-2 bg-secondary text-white" style="text-align: center;">Enregistrer </div>
+                      <div *ngIf="item.etat==2" class="p-3 mb-2 bg-info text-white" style="text-align: center;">Valider </div>
+                      <div *ngIf="item.etat==3" class="p-3 mb-2 bg-warning text-white" style="text-align: center;">Preparer</div>
+                      <div *ngIf="item.etat==4" class="p-3 mb-2 bg-primary text-white" style="text-align: center;">En cour de livraison</div> 
+                      <div *ngIf="item.etat==5" class="p-3 mb-2 bg-success text-white" style="text-align: center;">Payer</div> 
+                    </td>
+                    <td>    
+                      {{monnairePrpa(item.montant,item.frais_livraison)}}
+                    </td>
+                    <td>
+                      <button type="button" *ngIf="item.etat==3" class="btn btn-warning" (click)="showMoodalEncours();selected = item;">En cours de livraison </button>
+                      <button type="button" *ngIf="item.etat==4" class="btn btn-warning" (click)="showMoodalPayer();selected = item;">Payer </button>
+                     </td>
+
+                  </tr>
+                </tbody>
+              </table>
+
+              <div class="list">
+                <pagination-controls (pageChange)="p = $event" previousLabel="Précédent" nextLabel="Suivant"></pagination-controls>  
+              </div>
+            </div>
         </div>
        
     </div>

@@ -13,22 +13,24 @@
     </ul>
   </nz-sider>
   <nz-layout>
-    <nz-header>
-      <div class="row">
-        <div class="col-lg-8">
+    <nz-header style="background-color: #532611;height: 87px;">
+      <div class="row" >
+
+        <div class="col-lg-10 col-sm-10 col-md-10 col-sx-10">
+          <img  style="width: 100%;height: 10rem;"  src="../../assets/images/entete_desktop_Plan_de_travail_1.jpg" alt="" srcset="">
 
         </div>
-        <div class="col-lg-4">
+        <div class="col-lg-2 col-sm-2 col-md-2 col-sx-2">
           <button  (click)="showMoodal();" style="float: right; margin-right: 1rem;    margin-bottom: 0;padding: 0;margin-top: 1.5rem;" nz-button nzType="primary"  nzShape="circle"><fa-icon [icon]="faCoffee"></fa-icon></button>
         </div>
       </div>
     </nz-header>
-    <nz-content>
-      <div class="inner-content" style="width: 100% !important; padding: 0 !important;margin: 0 !important;">
+    <nz-content style="margin: 0;background-color: #C5A57D;">
+      <div class="inner-content" style="padding: 0; width: 100% !important; padding: 0 !important;margin: 0 !important;background-color: #C5A57D;">
         <router-outlet></router-outlet>
      </div> 
     </nz-content>
-    <nz-footer>Copy right ©2021 Implémenter par BBSTech</nz-footer>
+    <nz-footer style="background-color: #C5A57D;">Copy right ©2021 Implémenter par BBSTech</nz-footer>
   </nz-layout>
 </nz-layout>
 <div id="idLogout" class="w3-modal" >

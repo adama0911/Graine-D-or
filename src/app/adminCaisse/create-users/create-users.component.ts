@@ -61,8 +61,8 @@ export class CreateUsersComponent implements OnInit {
          //this.etapeDisplay = 1;
             this.loading = false;
             this.errorCode = 2;
-            this.errorMessage = "créations effectué avec succés";
-            this.reinitialiser()
+            this.errorMessage = "création effectuée avec succés";
+           this.reinitialiser()
         }else{
           this.loading = false;
           this.errorCode = 1;
@@ -91,7 +91,7 @@ export class CreateUsersComponent implements OnInit {
           
             this.loading = false;
             this.errorCode = 2;
-            this.errorMessage = "Modification effectué avec succés";
+            this.errorMessage = "Modification effectuée avec succés";
           
         }else{
           this.loading = false;
