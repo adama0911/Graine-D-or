@@ -183,7 +183,21 @@ export class DashbordAdminComponent implements OnInit {
     },10000)
 
   }
-  
+  displayPanier(arg){
+    console.log(arg)
+    if(arg != null || arg != undefined || arg != ""){
+      let panier = JSON.parse(arg);
+      let toDisplay = ""
+      for(let i of panier){
+        toDisplay = toDisplay+"\n"+i.qte+" "+i.article+",\n"
+      }
+      console.log(toDisplay)
+      return toDisplay
+    }else{
+      return "";
+    }
+    
+  }
  
   displayDate(date){ 
     if(date != ""){

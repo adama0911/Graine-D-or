@@ -34,7 +34,7 @@ export class DashbordAdminCaisseComponent implements OnInit {
       let panier = JSON.parse(arg);
       let toDisplay = ""
       for(let i of panier){
-        toDisplay = toDisplay+"\n"+i.qte+" "+i.article
+        toDisplay = toDisplay+"\n"+i.qte+" "+i.article+", "
       }
       return toDisplay
     }else{
