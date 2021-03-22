@@ -29,6 +29,19 @@ export class DashbordAdminCaisseComponent implements OnInit {
     }
     
   }
+  displayPanier(arg){
+    if(arg != null || arg != undefined || arg != ""){
+      let panier = JSON.parse(arg);
+      let toDisplay = ""
+      for(let i of panier){
+        toDisplay = toDisplay+"\n"+i.qte+" "+i.article
+      }
+      return toDisplay
+    }else{
+      return "";
+    }
+    
+  }
   searchAll = () => {
     let value = this.motcle;
     console.log("PASS", { value });

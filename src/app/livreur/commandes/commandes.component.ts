@@ -272,7 +272,16 @@ export class CommandesComponent implements OnInit {
       }
     })
 
-
+    setInterval(()=>{
+      let dateDebut = dd.split('-')[2]+"/"+dd.split('-')[1]+"/"+dd.split('-')[0]
+        let dateFin = df.split('-')[2]+"/"+df.split('-')[1]+"/"+df.split('-')[0]
+        this._livreurService.getCommandes({debut:"01/01/2019",fin:dateFin}).then(res=>{
+          console.log(res);
+          if(res.status==1){
+            this.dataSave = this.data = this.parseDatas(res.data);
+          }
+        })
+    },10000)
   }
 
 }

@@ -13,8 +13,8 @@
             <ngx-table [configuration]="configuration"
                     [data]="data"
                     [columns]="columns"
-                    style="overflow:auto"
-                    style="max-width: 100% !important">
+                    style="overflow:auto;color: white;"
+                    >
             </ngx-table>
         </div>
        
@@ -181,7 +181,7 @@
     </div>
   </nz-card>
 <ng-template let-row let-rowIndex="rowIndex" let-column="column" #actionTpl>
-    <td>
+    <td style="border: none;">
         <button class="btn btn-warning" nz-button (click)="selected = row;errorCode = 0;etapeDisplay = 3" >Modifier </button>
         <button class="btn btn-danger" nz-button (click)="showMoodal();selected = row;"  >Supprimer </button>
     </td>
