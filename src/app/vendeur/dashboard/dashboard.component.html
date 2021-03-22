@@ -1,5 +1,5 @@
 <div class="container" style="min-width: 100%;">
-    <div nz-row [nzGutter]="{ xs: 24, sm: 24, md: 24, lg: 24 }" style="margin-bottom: 1rem;">
+    <div nz-row [nzGutter]="{ xs: 24, sm: 24, md: 24, lg: 24 }" style="margin-bottom: 1rem;margin-top: 2rem;">
         <div nz-col class="gutter-row" [nzSpan]="8">
             <div class="inner-box totalVente">
                 Total : {{this.montantTotal}} cfa
@@ -35,27 +35,33 @@
     <div nz-row [nzGutter]="{ xs: 24, sm: 24, md: 24, lg: 24 }">
         <div nz-col class="gutter-row" [nzSpan]="10">
             <div class="inner-box">
-                <form>
-                    <div class="form-group">
-                      <input [(ngModel)]="this.debut" [ngModelOptions]="{standalone: true}" type="date" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
+                <div class="input-group form-group row" style="margin-left:1rem;padding:5px; margin-top: 1rem;background-color: #532611;">
+                    <div class="input-group-prepend col-5"  style="margin-left:1rem;background-color: #532611;padding: 0;margin: 0;">
+                      <span class="input-group-text" style="border: none; background-color: #532611;color: white;font-size: 1rem;"><i class="fas fa-calendar" style="padding-top: 5px;background: white;color: #532611;width: 3rem; height: 3rem; font-size: 2rem;margin-right: 7px;"></i>Date debut</span>
                     </div>
-                </form>
+                    <div class="col-7" style="padding: 0;margin: 0;">
+                      <input  type="date" style="width: 100%;height: 100%;" placeholder="identifiant" [(ngModel)]="this.debut" [ngModelOptions]="{standalone: true}"  />
+                    </div>
+                </div>
             </div>
         </div>
         <div nz-col class="gutter-row" [nzSpan]="10">
             <div class="inner-box">
-                <form>
-                    <div class="form-group">
-                      <input [(ngModel)]="this.fin" [ngModelOptions]="{standalone: true}"  type="date" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
+                <div class="input-group form-group row" style="margin-left:1rem;padding:5px; margin-top: 1rem;background-color: #532611;">
+                    <div class="input-group-prepend col-5"  style="background-color: #532611;padding: 0;margin: 0;">
+                      <span class="input-group-text" style="border: none; background-color: #532611;color: white;font-size: 1rem;"><i class="fas fa-calendar" style="padding-top: 5px;background: white;color: #532611;width: 3rem; height: 3rem; font-size: 2rem;margin-right: 7px;"></i>Date debut</span>
                     </div>
-                </form>
+                    <div class="col-7" style="padding: 0;margin: 0;">
+                      <input  type="date" style="width: 100%;height: 100%;" placeholder="identifiant" [(ngModel)]="this.fin" [ngModelOptions]="{standalone: true}"  />
+                    </div>
+                </div>
             </div>
         </div>
         <div nz-col class="gutter-row" [nzSpan]="4">
             <div class="inner-box">
-                <form>
-                    <button  class="btn btn-default" (click)="validerRechercheInterval()">valider</button>
-                </form>
+                <div class="input-group form-group row" style="margin-left:1rem;padding:5px; margin-top: 1.5rem;">
+                    <button  class="btn btn-warning" (click)="validerRechercheInterval()">valider</button>
+                </div>
             </div>
         </div>
     </div>
