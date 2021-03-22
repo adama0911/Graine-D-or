@@ -29,12 +29,15 @@ export class DashbordAdminCaisseComponent implements OnInit {
     }
     
   }
+  currencyFormat(somme) : String{
+    return Number(somme).toLocaleString() ;
+  }
   displayPanier(arg){
     if(arg != null || arg != undefined || arg != ""){
       let panier = JSON.parse(arg);
       let toDisplay = ""
       for(let i of panier){
-        toDisplay = toDisplay+"\n"+i.qte+" "+i.article+", "
+        toDisplay = toDisplay+""+i.qte+" "+i.article+" ,"
       }
       return toDisplay
     }else{
@@ -199,21 +202,9 @@ export class DashbordAdminCaisseComponent implements OnInit {
       console.log(res);
       if(res.status == 1){
         this.calculeForBashbord(res.data)
-        this.data = res.data
-        this.configuration = { ...DefaultConfig };
-        this.configuration.searchEnabled = true;
-        this.columns = [
-          { key: 'commande', title: 'COMMANDE' , cellTemplate: this.panier},
-          { key: 'livreur', title: 'LIVREUR', cellTemplate: this.livreur },
-          { key: 'numero_client', title: 'CLIENT' },
-          { key: 'montant', title: 'MONTANT COMMANDE' },
-          { key: 'frais_livraison', title: 'MONTANT LIVRAISON' },
-          { key: 'mode_paiement', title: 'PAIEMENT' , cellTemplate: this.paiementTpl},
-          { key: 'recuperation', title: 'RÉCUPÉRATION' , cellTemplate: this.recuperationTpl},
-          { key: 'etat', title: 'ETAT COMMANDE' , cellTemplate: this.etatTpl},
-          { key: 'monnaie', title: 'MONNAIE À PRÉPARÉE' , cellTemplate: this.monnaiePrepa },
-          { key: 'action', title: 'Actions', cellTemplate: this.actionTpl },
-        ];
+        let d = res.data.reverse()
+        this.data = d
+        this.listeSave = d
         this.loading = false;
 
       }else{
@@ -235,8 +226,9 @@ export class DashbordAdminCaisseComponent implements OnInit {
       console.log(res);
       if(res.status == 1){
         this.calculeForBashbord(res.data)
-        this.data = res.data.reverse()
-        this.listeSave = res.data.reverse()
+        let d = res.data.reverse()
+        this.data = d
+        this.listeSave = d
         this.loading = false;
       }else{
         this.loading = false;
@@ -254,8 +246,9 @@ export class DashbordAdminCaisseComponent implements OnInit {
         console.log(res);
         if(res.status == 1){
           this.calculeForBashbord(res.data)
-          this.data = res.data.reverse()
-          this.listeSave = res.data.reverse()
+          let d = res.data.reverse()
+          this.data = d
+          this.listeSave = d
           this.loading = false;
           //this.audio = new Audio();
           //this.audio.src ='../../assets/hangouts_message_1.mp3';

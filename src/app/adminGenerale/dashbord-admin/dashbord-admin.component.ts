@@ -116,6 +116,9 @@ export class DashbordAdminComponent implements OnInit {
     
    
   }
+  currencyFormat(somme) : String{
+    return Number(somme).toLocaleString() ;
+  }
   recherche(){
     this.loading = true;
     let dateDebut = this.dd.split('-')[2]+"/"+this.dd.split('-')[1]+"/"+this.dd.split('-')[0]
@@ -124,8 +127,9 @@ export class DashbordAdminComponent implements OnInit {
       console.log(res);
       if(res.status == 1){
         this.calculeForBashbord(res.data)
-        this.data = res.data.reverse()
-        this.listeSave = res.data.reverse()
+        let d = res.data.reverse()
+        this.data = d
+        this.listeSave = d
 
         this.loading = false;
 
@@ -149,8 +153,9 @@ export class DashbordAdminComponent implements OnInit {
       console.log(res);
       if(res.status == 1){
         this.calculeForBashbord(res.data)
-        this.data = res.data.reverse()
-        this.listeSave = res.data.reverse()
+        let d = res.data.reverse()
+        this.data = d
+        this.listeSave = d
         this.loading = false;
       }else{
         this.loading = false;
@@ -165,11 +170,13 @@ export class DashbordAdminComponent implements OnInit {
       let dateDebut = this.dd.split('-')[2]+"/"+this.dd.split('-')[1]+"/"+this.dd.split('-')[0]
       let dateFin = this.df.split('-')[2]+"/"+this.df.split('-')[1]+"/"+this.df.split('-')[0]
       this._serviceAdmin.getCommande({debut:dateDebut,fin:dateFin}).then(res=>{
-        console.log(res);
+        //console.log(res.data);
+       
         if(res.status == 1){
           this.calculeForBashbord(res.data)
-          this.data = res.data.reverse()
-          this.listeSave = res.data.reverse()
+          let d = res.data.reverse()
+          this.data = d
+          this.listeSave = d
           this.loading = false;
           //this.audio = new Audio();
           //this.audio.src ='../../assets/hangouts_message_1.mp3';
@@ -184,14 +191,12 @@ export class DashbordAdminComponent implements OnInit {
 
   }
   displayPanier(arg){
-    console.log(arg)
     if(arg != null || arg != undefined || arg != ""){
       let panier = JSON.parse(arg);
       let toDisplay = ""
       for(let i of panier){
-        toDisplay = toDisplay+"\n"+i.qte+" "+i.article+",\n"
+        toDisplay = toDisplay+" "+i.qte+" "+i.article+" ,"
       }
-      console.log(toDisplay)
       return toDisplay
     }else{
       return "";

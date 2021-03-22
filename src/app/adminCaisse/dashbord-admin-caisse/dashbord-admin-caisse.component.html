@@ -17,7 +17,7 @@
           <h2>Solde Graine d'or</h2>
         </div>
         <div style="background-color: white;color: #532611;text-align: center;height: 5rem;border-radius: 10px;">
-          <h4 style="padding-top: 1rem ;"><span >{{soldeGraineDor}} </span><small>FCFA</small></h4>
+          <h4 style="padding-top: 1rem ;"><span >{{currencyFormat(soldeGraineDor)}} </span><small>FCFA</small></h4>
         </div>
       </div>
       <div class="col-lg-4 col-sm-4 col-md-4 col-xs-6"  >
@@ -25,7 +25,7 @@
           <h2>Solde compense BBS</h2>
         </div>
         <div style="background-color: white;color: #532611;text-align: center;height: 5rem;border-radius: 10px;">
-          <h4 style="padding-top: 1rem ;"><span >{{soldeCompenseBBS}} </span><small>FCFA</small></h4>
+          <h4 style="padding-top: 1rem ;"><span >{{currencyFormat(soldeCompenseBBS)}} </span><small>FCFA</small></h4>
         </div>
       </div>
      
@@ -91,17 +91,17 @@
               <table class="table">
                 <thead>
                   <tr style="text-transform: uppercase;">
-                    <th style="border: 1px solid white;color: black;">Date</th>
-                    <th style="border: 1px solid white;color: black;">commande</th>
-                    <th style="border: 1px solid white;color: black;">livreur</th>
-                    <th style="border: 1px solid white;color: black;">client</th>
-                    <th style="border: 1px solid white;color: black;">montant commande</th>
-                    <th style="border: 1px solid white;color: black;">montant livraison</th>
-                    <th style="border: 1px solid white;color: black;">paiement</th>
-                    <th style="border: 1px solid white;color: black;">recuperation</th>
-                    <th style="border: 1px solid white;color: black;">etat</th>
-                    <th style="border: 1px solid white;color: black;">monnaie</th>
-                    <th style="border: 1px solid white;color: black;">action</th>
+                    <th style="border: 1px solid white;color: white;">Date</th>
+                    <th style="border: 1px solid white;color: white;">commande</th>
+                    <th style="border: 1px solid white;color: white;">livreur</th>
+                    <th style="border: 1px solid white;color: white;">client</th>
+                    <th style="border: 1px solid white;color: white;">montant commande</th>
+                    <th style="border: 1px solid white;color: white;">montant livraison</th>
+                    <th style="border: 1px solid white;color: white;">paiement</th>
+                    <th style="border: 1px solid white;color: white;">recuperation</th>
+                    <th style="border: 1px solid white;color: white;">etat</th>
+                    <th style="border: 1px solid white;color: white;">monnaie</th>
+                    <th style="border: 1px solid white;color: white;">action</th>
                   </tr>
                 </thead>
                 <tbody>
