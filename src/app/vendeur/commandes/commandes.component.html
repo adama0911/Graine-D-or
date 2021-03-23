@@ -63,7 +63,7 @@
                               <td>{{item.action}}</td>
                               <td>
                                   <button class="btn btn-danger" *ngIf="item.etat==1" (click)="modalOK(item,'2');">Valider</button>
-                                  <button class="btn btn-danger" *ngIf="item.etat==2" (click)="modalOK(item,'3');">Preparer</button>
+                                  <button class="btn btn-info" *ngIf="item.etat==2" (click)="modalOK(item,'3');">Preparer</button>
                                 </td>
                             </tr>
                           </tbody>

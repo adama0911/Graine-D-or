@@ -1,34 +1,33 @@
 
         
 <nz-layout class="layout"  >
-  <nz-sider class="SamaTheme4" style="background: #532611;" nzCollapsible nzBreakpoint="lg" [nzCollapsedWidth]="0" *ngIf="this.isLivreur==0">
-    <div class="logo" style="height: 54px;text-align: center;color: white;padding-top: 5px;float: none;">
-      <img  style="width: 46%;float: none;"  src="../assets/images/logo-grainedor.png" alt="" srcset="">
-    </div>
-    <ul nz-menu style="background: transparent" nzMode="inline">
-      <li nz-menu-item *ngFor='let item of this.menu'>
-        <i nz-icon nzType="user"></i>
-        <span><a style="color: white;" class="button" routerLink="{{item.path}}" routerLinkActive="activebutton">{{item.titre}}</a></span>
-      </li>
-    </ul>
-  </nz-sider>
-  <nz-layout>
+    <nz-layout>
     <nz-header style="background-color: #532611;height: 87px;">
       <div class="row" >
-
-        <div class="col-lg-10 col-sm-10 col-md-10 col-sx-10">
+        <div class="col-lg-10 col-sm-10 col-md-10 col-sx-10" style="min-width: 100% !important;">
           <img  style="width: 100%;height: 10rem;"  src="../../assets/images/entete_desktop.jpg" alt="" srcset="">
-
         </div>
-        <div class="col-lg-2 col-sm-2 col-md-2 col-sx-2">
+        <div style="position: fixed;right: 2rem;">
           <button  (click)="showMoodal();" style="float: right; margin-right: 1rem;    margin-bottom: 0;padding: 0;margin-top: 1.5rem;" nz-button nzType="primary"  nzShape="circle"><fa-icon [icon]="faCoffee"></fa-icon></button>
         </div>
       </div>
     </nz-header>
     <nz-content style="margin: 0;background-color: #C5A57D;">
-      <div class="inner-content" style="padding: 0; width: 100% !important; padding: 0 !important;margin: 0 !important;background-color: #C5A57D;">
-        <router-outlet></router-outlet>
-     </div> 
+      <nz-layout class="layout">
+        <nz-sider class="SamaTheme4" style="margin-top:1.1rem;border: 2px solid white; padding: 1rem; background: #532611" nzCollapsible nzBreakpoint="lg" [nzCollapsedWidth]="0" *ngIf="this.isLivreur==0">
+          <ul nz-menu style="background: transparent ;border: none;" nzMode="inline">
+            <li nz-menu-item *ngFor='let item of this.menu' style="background-color:  #C5A57D !important;">
+              <i nz-icon nzType="user"></i>
+              <span><a style="color: white;" class="button" routerLink="{{item.path}}" routerLinkActive="activebutton">{{item.titre}}</a></span>
+            </li>
+          </ul>
+        </nz-sider>
+        <nz-layout>
+          <div class="inner-content" style="padding: 0; width: 100% !important; padding: 0 !important;margin: 0 !important;background-color: #C5A57D;">
+            <router-outlet></router-outlet>
+         </div> 
+        </nz-layout>
+      </nz-layout>
     </nz-content>
     <nz-footer style="background-color: #C5A57D;">Copy right ©2021 Implémenter par BBSTech</nz-footer>
   </nz-layout>
