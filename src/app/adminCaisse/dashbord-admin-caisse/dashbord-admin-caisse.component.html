@@ -20,14 +20,14 @@
           <h4 style="padding-top: 1rem ;"><span >{{currencyFormat(soldeGraineDor)}} </span><small>FCFA</small></h4>
         </div>
       </div>
-      <div class="col-lg-4 col-sm-4 col-md-4 col-xs-6"  >
+      <!--<div class="col-lg-4 col-sm-4 col-md-4 col-xs-6"  >
         <div style="background-color: #C5A57D;color: white;text-align: center;">
           <h2>Solde compense BBS</h2>
         </div>
         <div style="background-color: white;color: #532611;text-align: center;height: 5rem;border-radius: 10px;">
           <h4 style="padding-top: 1rem ;"><span >{{currencyFormat(soldeCompenseBBS)}} </span><small>FCFA</small></h4>
         </div>
-      </div>
+      </div>-->
      
     </div>
 </div>
@@ -120,7 +120,7 @@
                       <p *ngIf="item.livreur != ''">{{displayData(item.livreur,'prenom')}} {{displayData(item.livreur,'nom')}}</p>
                       <p *ngIf="item.livreur == ''">pas de livreur</p>
                     </td>
-                    <td>{{item.numero_client}}</td>
+                    <td>{{formateNumClient(item.numero_client)}}</td>
                     <td>{{item.montant}}</td>
                     <td>{{item.frais_livraison}}</td>
                     <td>
@@ -128,8 +128,8 @@
                       <p *ngIf="item.mode_paiement==0" >à la livraison </p>
                     </td>
                     <td>
-                      <p *ngIf="item.recuperation==1" >sur place </p>
-                      <p *ngIf="item.recuperation==0" >à livrer</p>
+                      <p *ngIf="item.recuperation==0" >sur place </p>
+                      <p *ngIf="item.recuperation==1" >à livrer</p>
                     </td>
                     <td >
                       <div *ngIf="item.etat==-1" class="p-3 mb-2 bg-danger text-white" style="text-align: center;">Annuler </div>

@@ -122,15 +122,15 @@
                       <p *ngIf="item.livreur != ''">{{displayData(item.livreur,'prenom')}} {{displayData(item.livreur,'nom')}}</p>
                       <p *ngIf="item.livreur == ''">pas de livreur</p>
                     </td>
-                    <td>{{item.numero_client}}</td>
+                    <td>{{formateNumClient(item.numero_client)}}</td>
                     <td>{{item.montant}}</td>
                     <td>{{item.frais_livraison}}</td>
                     <td>
-                      <p *ngIf="item.mode_paiement==2" >en ligne </p>
-                      <p *ngIf="item.mode_paiement==1" >à la livraison </p>
+                      <p *ngIf="item.mode_paiement==1" >en ligne </p>
+                      <p *ngIf="item.mode_paiement==0" >à la livraison </p>
                     </td>
                     <td>
-                      <p *ngIf="item.recuperation==2" >sur place </p>
+                      <p *ngIf="item.recuperation==0" >sur place </p>
                       <p *ngIf="item.recuperation==1" >à livrer</p>
                     </td>
                     <td >

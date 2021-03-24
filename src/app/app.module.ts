@@ -66,6 +66,7 @@ import { NgxLoadingModule } from 'ngx-loading';
 
 import { LoginComponent } from './login/login.component';
 import { HomeComponent } from './home/home.component';
+import { DashbordEcranComponent } from './ecran/dashbord-ecran/dashbord-ecran.component';
 
 
 const routes: Routes = [
@@ -129,6 +130,10 @@ const routes: Routes = [
         {
           path:"dashboardVendeur",
           component:DashboardComponent
+        },
+        {
+          path:"dashboardEcran",
+          component:DashbordEcranComponent
         },
         {
           path: "**",
@@ -220,6 +225,7 @@ const routes: Routes = [
     DashbordAdminCaisseComponent,
     LoginComponent,
     HomeComponent,
+    DashbordEcranComponent,
   ],
   imports: [
     BrowserModule,

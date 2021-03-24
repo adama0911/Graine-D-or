@@ -63,12 +63,21 @@ export class DashbordAdminComponent implements OnInit {
     this.data = filterTable;
   }
   monnairePrpa(mtt1 ,mtt2){
+    console.log(mtt1+" "+mtt2)
     let somme = parseInt(mtt1)+parseInt(mtt2);
     let temp = somme/10000;
     let temp1 = temp.toString().split('.')[0];
-    temp1 = temp1 + 1;
-    let monnaie = parseInt(temp1) * 10000;
+    let temp3 = parseInt(temp1) + 1;
+    let monnaie = temp3 * 10000;
     return monnaie - somme;
+  }
+  formateNumClient(arg){
+    if(arg.includes("+")){
+      return arg.split("+")[1]
+    } else{
+      return arg
+    }
+    
   }
   public data = [
    /* {

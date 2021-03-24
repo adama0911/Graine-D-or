@@ -1,0 +1,91 @@
+<nz-card style="width:100%;background: #C5A57D;margin-top: 1.2rem;" nzTitle="" >
+
+        <div class="col-12" style="max-width: 100% !important;padding: 0;">
+            <!--<ngx-table [configuration]="configuration"
+                    [data]="data"
+                    [columns]="columns"
+                    style="overflow:auto"
+                    style="max-width: 100% !important"
+                    class="table-responsive">
+            </ngx-table>-->
+            <div class="table-responsive">
+              <table class="table">
+                <thead>
+                  <tr style="text-transform: uppercase;">
+
+                    <th style="border: 1px solid white;color: white;">Date</th>
+                    <th style="border: 1px solid white;color: white;">commande</th>
+                    <th style="border: 1px solid white;color: white;">livreur</th>
+                    <th style="border: 1px solid white;color: white;">client</th>
+                    <th style="border: 1px solid white;color: white;">montant commande</th>
+                    <th style="border: 1px solid white;color: white;">montant livraison</th>
+                    <th style="border: 1px solid white;color: white;">paiement</th>
+                    <th style="border: 1px solid white;color: white;">recuperation</th>
+                    <th style="border: 1px solid white;color: white;">etat</th>
+                    <th style="border: 1px solid white;color: white;">monnaie</th>
+                </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let item of this.data | paginate: { itemsPerPage: 10, currentPage: p }">
+                    <td>{{displayDate(item.created_at)}}</td>
+                    <td>
+                      <div class="dropdown">
+                        <span *ngIf="item.refCommande != ''">{{item.refCommande}}</span>
+                        <span *ngIf="item.refCommande == ''">refCommande</span>
+                        <div class="dropdown-content">
+                        <p style="color: black;">{{displayPanier(item.designation)}}</p>
+                        </div>
+                      </div>
+                    </td>
+                    <td>
+                      <p *ngIf="item.livreur != ''">{{displayData(item.livreur,'prenom')}} {{displayData(item.livreur,'nom')}}</p>
+                      <p *ngIf="item.livreur == ''">pas de livreur</p>
+                    </td>
+                    <td>{{formateNumClient(item.numero_client)}}</td>
+                    <td>{{item.montant}}</td>
+                    <td>{{item.frais_livraison}}</td>
+                    <td>
+                      <p *ngIf="item.mode_paiement==1" >en ligne </p>
+                      <p *ngIf="item.mode_paiement==0" >à la livraison </p>
+                    </td>
+                    <td>
+                      <p *ngIf="item.recuperation==0" >sur place </p>
+                      <p *ngIf="item.recuperation==1" >à livrer</p>
+                    </td>
+                    <td >
+                      <div *ngIf="item.etat==-1" class="p-3 mb-2 bg-danger text-white" style="text-align: center;">Annuler </div>
+                      <div *ngIf="item.etat==1" class="p-3 mb-2 bg-secondary text-white" style="text-align: center;">Enregistrer </div>
+                      <div *ngIf="item.etat==2" class="p-3 mb-2 bg-info text-white" style="text-align: center;">Valider </div>
+                      <div *ngIf="item.etat==3" class="p-3 mb-2 bg-warning text-white" style="text-align: center;">Preparer</div>
+                      <div *ngIf="item.etat==4" class="p-3 mb-2 bg-primary text-white" style="text-align: center;">En cour de livraison</div> 
+                      <div *ngIf="item.etat==5" class="p-3 mb-2 bg-success text-white" style="text-align: center;">Payer</div> 
+                    </td>
+                    <td>    
+                      {{monnairePrpa(item.montant,item.frais_livraison)}}
+                    </td>
+                    
+
+                  </tr>
+                </tbody>
+              </table>
+
+              <div class="list">
+                <pagination-controls (pageChange)="p = $event" previousLabel="Précédent" nextLabel="Suivant"></pagination-controls>  
+              </div>
+            </div>
+        </div>
+       
+  
+</nz-card>
+
+<div *ngIf="loading">
+  <div style="position: absolute ; left: 15%; top:25%; min-width: 100rem ; min-height: 40rem ;text-align: -webkit-center; padding-top: 10%; z-index:1000; background-color: white; opacity: 0.4;">
+  <div class="loader">
+      <div class="ball-pulse">
+      <div></div>
+      <div></div>
+      <div></div>
+      </div>
+  </div>  
+  </div>
+</div>

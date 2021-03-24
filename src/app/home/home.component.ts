@@ -103,7 +103,7 @@ export class HomeComponent implements OnInit {
     document.getElementById('idLogout').style.display = "none";
   }
   ngOnInit(): void {
-    let user = JSON.parse(sessionStorage.getItem('currentUser'))
+     let user = JSON.parse(sessionStorage.getItem('currentUser'))
     if(user.accesslevel==1){
       this.isLivreur=0;
       this.menu = ROUTE_ADMIN;
@@ -123,6 +123,9 @@ export class HomeComponent implements OnInit {
       this.menu = ROUTE_LIVREUR;
       this.isLivreur = 1;
       this.router.navigate(['/commandesLivreur'])
+    }else if(user.accesslevel==5){
+      this.isLivreur = 1;
+      this.router.navigate(['/dashboardEcran'])
     }
   }
 
