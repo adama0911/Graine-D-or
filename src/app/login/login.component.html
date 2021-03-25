@@ -2,7 +2,7 @@
     <div class="card-header" >
       <img src="./../../assets/images/entete_desktop.jpg" alt="" srcset="" style="max-width: 100%;min-width: 100%; height: 20vh;">
     </div>
-    <div style="width: 100%; !important">
+    <div style="width: 100% !important">
 
       <div class="card" style="width: 100% !important;">
         <ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px' }" [template]="customLoadingTemplate"></ngx-loading>
@@ -47,36 +47,35 @@
                     </div>
       
                 </form>
+
+                <form *ngIf="isFirstLog">
+                  <div class="input-group form-group">
+                    <div class="input-group-prepend" >
+                      <span class="input-group-text"><i class="fas fa-key"></i></span>
+                    </div>
+                    <input type="password" class="form-control" placeholder="Mot de passe" [ngModelOptions]="{standalone: true}" [(ngModel)]="this.newpassword"  (ngModelChange)="testPass(this.newpassword);this.confirmpassword=null;"/>
+                    <div style="min-width:100%">
+                        <small  class="form-text text-muted" *ngIf="this.passwordQuality==0" ><span [ngClass]="{'text-danger':true}"> mot de passe très faible</span></small>
+                        <small  class="form-text text-muted" *ngIf="this.passwordQuality==1" ><span [ngClass]="{'text-warning':true}">mot de passe faible</span></small>
+                        <small  class="form-text text-muted" *ngIf="this.passwordQuality==2" ><span [ngClass]="{'text-success':true}"> mot de passe fort</span></small> 
+                  </div>
+                  </div>
+                  <div class="input-group form-group">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text"><i class="fas fa-key"></i></span>
+                    </div>
+                    <input (click)="this.passError=null;this.confirmpassword=null" type="password" class="form-control" placeholder="Confirmer mot de passe" [ngModelOptions]="{standalone: true}" [(ngModel)]="this.confirmpassword" />
+                  </div>
+                  <div class="form-group">
+                    <br>
+                    <small  class="form-text text-muted" *ngIf="this.passError!=null;" ><span [ngClass]="{'text-danger':true}" style="font-size:1.3em">{{this.passError}}</span></small>
+                    <input type="submit" value="Valider" [disabled]="!newpassword || newpassword =='' || !confirmpassword || confirmpassword == '' "  class="btn float-right login_btn" (click)="firstLog()" >
+                  </div>
+                </form>
                 </div>
              </fieldset>
             </div>
           </div>
-
-
-           <form *ngIf="isFirstLog">
-            <div class="input-group form-group">
-              <div class="input-group-prepend" >
-                <span class="input-group-text"><i class="fas fa-key"></i></span>
-              </div>
-              <input type="password" class="form-control" placeholder="Mot de passe" [ngModelOptions]="{standalone: true}" [(ngModel)]="this.newpassword"  (ngModelChange)="testPass(this.newpassword);this.confirmpassword=null;"/>
-              <div style="min-width:100%">
-                  <small  class="form-text text-muted" *ngIf="this.passwordQuality==0" ><span [ngClass]="{'text-danger':true}"> mot de passe très faible</span></small>
-                  <small  class="form-text text-muted" *ngIf="this.passwordQuality==1" ><span [ngClass]="{'text-warning':true}">mot de passe faible</span></small>
-                  <small  class="form-text text-muted" *ngIf="this.passwordQuality==2" ><span [ngClass]="{'text-success':true}"> mot de passe fort</span></small> 
-            </div>
-            </div>
-            <div class="input-group form-group">
-              <div class="input-group-prepend">
-                <span class="input-group-text"><i class="fas fa-key"></i></span>
-              </div>
-              <input (click)="this.passError=null;this.confirmpassword=null" type="password" class="form-control" placeholder="Confirmer mot de passe" [ngModelOptions]="{standalone: true}" [(ngModel)]="this.confirmpassword" />
-            </div>
-            <div class="form-group">
-              <br>
-              <small  class="form-text text-muted" *ngIf="this.passError!=null;" ><span [ngClass]="{'text-danger':true}" style="font-size:1.3em">{{this.passError}}</span></small>
-              <input type="submit" value="Valider" [disabled]="!newpassword || newpassword =='' || !confirmpassword || confirmpassword == '' "  class="btn float-right login_btn" (click)="firstLog()" >
-            </div>
-          </form>
         </div>
         <div class="card-footer" style="background-color: transparent; border: none;">
           <div class="d-flex justify-content-center">

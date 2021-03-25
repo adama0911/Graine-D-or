@@ -7,14 +7,14 @@ import { routeItem } from '../interfaces/routeItem.interface';
 import { LoginService } from '../services/login.service';
 const ROUTE_VENDEUR: routeItem[] = [
   {
-    path:'/livreurs',
-    titre: 'Livreurs',
+    path:'/commandes',
+    titre: 'Commandes',
     description:'',
     icon:''
   },
   {
-    path:'/commandes',
-    titre: 'Commandes',
+    path:'/livreurs',
+    titre: 'Livreurs',
     description:'',
     icon:''
   },
@@ -116,7 +116,7 @@ export class HomeComponent implements OnInit {
     } else if(user.accesslevel==3){
       this.isLivreur=0;
       this.menu = ROUTE_VENDEUR;
-      this.router.navigate(['/livreurs'])
+      this.router.navigate(['/commandes'])
     }
     else if(user.accesslevel==4){
       this.isLivreur=1;

@@ -84,6 +84,10 @@ export class DashboardComponent implements OnInit {
     this.data = filterTable;
   }
 
+  currencyFormat(somme) : String{
+    return Number(somme).toLocaleString() ;
+  }
+
   barChartDatas(data){
     let jour:number;
     this.barChartData = [

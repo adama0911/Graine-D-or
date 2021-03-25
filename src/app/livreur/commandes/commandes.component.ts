@@ -117,6 +117,28 @@ export class CommandesComponent implements OnInit {
  }
     
 
+ currencyFormat(somme) : String{
+  return Number(somme).toLocaleString() ;
+}
+
+displayPanier(arg){
+  if(arg.includes('[{')){
+    if(arg != null || arg != undefined || arg != ""){
+      let panier = JSON.parse(arg);
+      let toDisplay = ""
+      for(let i of panier){
+        toDisplay = toDisplay+" "+i.qte+" "+i.article+" ,"
+      }
+      return toDisplay
+    }else{
+      return "";
+    }
+  }else{
+    return arg
+  }
+  
+}
+
    /**
    * @param:0
    * @return: 0
@@ -140,73 +162,77 @@ export class CommandesComponent implements OnInit {
    * @return data : tableau formater pour l'affichage a l'ecran
    * @function: Formatage des données reçu du serveur
   **/
-  parseDatas(datas){
-    let data = [];
-    datas.forEach(element => {
-        
-        switch (element.etat) {
-          case -1:
-            element.etatText = 'Annuler'
-          case 1:
-            element.etatText = 'Enregistrer'
-            break;
-          case 2:
-            element.etatText = 'Valider'
-            break;
-          case 3:
-            element.etatText = 'Preparer'
-            break;
-          case 4:
-            element.etatText = 'En cour de livraison'
-            break;  
-          case 5:
-            element.etatText = 'Payer'
-            break;  
+ parseDatas(datas){
+  let data = [];
 
-        }
+  (datas).forEach(element => {
+      
+      switch (element.etat) {
+        case -1:
+          element.etatText = 'Annuler'
+        case 1:
+          element.etatText = 'Enregistrer'
+          break;
+        case 2:
+          element.etatText = 'Valider'
+          break;
+        case 3:
+          element.etatText = 'Preparer'
+          break;
+        case 4:
+          element.etatText = 'En cour de livraison'
+          break;  
+        case 5:
+          element.etatText = 'Payer'
+          break;  
 
-        switch (element.recuperation) {
-          case 1:
-            element.recuperationText = 'sur place'
-            break;
-          case 2:
-            element.recuperationText = 'à livrer'
-            break;
-        }
+      }
 
-        switch (element.mode_paiement) {
-          case 1:
-            element.paiementText = 'en ligne'
-            break;
-          case 2:
-            element.paiementText = 'à la livraiso'
-            break;
-        }
+      switch (element.recuperation) {
+        case 0:
+          element.recuperationText = 'sur place'
+          break;
+        case 1:
+          element.recuperationText = 'à livrer'
+          break;
+      }
 
-        data.push( 
-          {
-            id:element.id,
-            commande: element.id,
-            designation: element.designation,
-            livreur: this.prenomComplet(element.livreur),
-            caissier: this.prenomComplet(element.caissier),
-            adresse:element.adresse,
-            client:  element.numero_client,
-            vendeuse: this.prenomComplet(element.vendeuse),
-            montantCommande: element.montant,
-            montantLivraison: element.frais_livraison,
-            paiement: element.mode_paiement,
-            recuperation: element.recuperation,
-            etat: element.etat,
-            etatText: element.etatText,
-            recuperationText:element.recuperationText,
-            paiementText:element.paiementText,
-            monnaie: this.monnairePrpa(element.montant,element.frais_livraison),
+      switch (element.mode_paiement) {
+        case 1:
+          element.paiementText = 'en ligne'
+          break;
+        case 2:
+          element.paiementText = 'à la livraiso'
+          break;
+      }
+
+      data.push( 
+        {
+          id:element.id,
+          commande: element.refCommande,
+          designation: element.designation,
+          livreur: this.prenomComplet(element.livreur),
+          caissier: this.prenomComplet(element.caissier),
+          adresse:element.adresse,
+          client: element.numero_client,
+          vendeuse: this.prenomComplet(element.vendeuse),
+          montantCommande: element.montant,
+          montantLivraison: element.frais_livraison,
+          paiement: element.mode_paiement,
+          recuperation: element.recuperation,
+          etat: element.etat,
+          etatText: element.etatText,
+          recuperationText:element.recuperationText,
+          paiementText:element.paiementText,
+          monnaie: this.monnairePrpa(element.montant,element.frais_livraison),
+     
         });
-    });
-    console.log(data)
-    return data;
-  }
+  });
+
+  console.log(data)
+  return data;
+}
+
 
 
   /**

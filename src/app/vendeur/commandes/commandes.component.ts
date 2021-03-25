@@ -33,7 +33,9 @@ export class CommandesComponent implements OnInit {
   motcle = null;
   p: number = 1;
   currentCom = {};
+  currentLivreur:any;
   modalEtat = '2';
+  listLivreurs = [];
 
   modalOK(com,etat){
     this.showMoodal();
@@ -97,6 +99,11 @@ export class CommandesComponent implements OnInit {
     })
   }
 
+  assignerCommande(currentCom,currentLivreur){
+    console.log(currentCom)
+    console.log(currentLivreur)
+  }
+
   /**
    * @param datas: tableau de Commandes reçu appret requette sur serveur
    * @return data : tableau formater pour l'affichage a l'ecran
@@ -105,7 +112,7 @@ export class CommandesComponent implements OnInit {
   parseDatas(datas){
     let data = [];
 
-    datas.forEach(element => {
+    (datas).forEach(element => {
         
         switch (element.etat) {
           case -1:
@@ -129,10 +136,10 @@ export class CommandesComponent implements OnInit {
         }
 
         switch (element.recuperation) {
-          case 1:
+          case 0:
             element.recuperationText = 'sur place'
             break;
-          case 2:
+          case 1:
             element.recuperationText = 'à livrer'
             break;
         }
@@ -149,7 +156,7 @@ export class CommandesComponent implements OnInit {
         data.push( 
           {
             id:element.id,
-            commande: element.id,
+            commande: element.refCommande,
             designation: element.designation,
             livreur: this.prenomComplet(element.livreur),
             caissier: this.prenomComplet(element.caissier),
@@ -168,10 +175,28 @@ export class CommandesComponent implements OnInit {
        
           });
     });
+
     console.log(data)
     return data;
   }
 
+  displayPanier(arg){
+    if(arg.includes('[{')){
+      if(arg != null || arg != undefined || arg != ""){
+        let panier = JSON.parse(arg);
+        let toDisplay = ""
+        for(let i of panier){
+          toDisplay = toDisplay+" "+i.qte+" "+i.article+" ,"
+        }
+        return toDisplay
+      }else{
+        return "";
+      }
+    }else{
+      return arg
+    }
+    
+  }
 
   /**
    * @param: 
@@ -189,6 +214,10 @@ export class CommandesComponent implements OnInit {
   **/
   hideMoodal(){
     document.getElementById('idLogout').style.display = "none";
+  }
+
+  currencyFormat(somme) : String{
+    return Number(somme).toLocaleString() ;
   }
 
     /**
@@ -277,6 +306,44 @@ export class CommandesComponent implements OnInit {
 
   }
 
+  parseDatasLivreurs(datas){
+    let data = [];
+    datas.forEach(element => {
+        switch(element.etat){
+          case 1:
+            element.etatText = 'pointé';
+            break;
+          case 2:
+            element.etatText = 'non pointé'
+        }
+
+        if(element.etat==1){
+            data.push( 
+              {
+
+                accesslevel: element.accesslevel,
+                adresse: element.adresse,
+                created_at: (new Date(element.created_at)).toLocaleDateString(),
+                livreur: element.livreur,
+                deleted_at: element.deleted_at,
+                depends_on:element.depends_on,
+                etat: element.etat,
+                etatText:element.etatText,
+                first_log:element.first_log,
+                id: element.id,
+                nom: element.nom,
+                prenom: element.prenom,
+                password: element.password,
+                telephone: element.telephone,
+                updated_at: (new Date(element.updated_at)).toLocaleDateString(),
+            });
+        }
+    });
+    console.log(data)
+    return data;
+  }
+
+
   getCommandes(){
     this.loading = true;
     let dd = (new Date().toJSON()).split("T")[0]
@@ -286,9 +353,16 @@ export class CommandesComponent implements OnInit {
     this._vendeurService.getCommandes({debut:"01/01/2019",fin:dateFin}).then(res=>{
       console.log(res);
       if(res.status==1){
-        this.dataSave = this.data = this.parseDatas(res.data);
+        this.dataSave = this.data = (this.parseDatas(res.data)).reverse();
         this.loading = false;
       }
+    })
+
+    this._vendeurService.getLivreurs({}).then(res=>{
+      console.log(res.data);
+      
+      //this.data = this.dataSave = res.data;
+       this.listLivreurs = this.parseDatasLivreurs(res.data);
     })
   }
 

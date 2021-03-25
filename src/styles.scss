@@ -8,5 +8,9 @@
     flex: auto;
     flex-direction: column;
     min-height: 0;
-    background: #C5A57D !important;
+    background: transparent;
+}
+
+body{
+    background-image: url(./assets/images/fond_Plan_de_travail_1.jpg);
 }

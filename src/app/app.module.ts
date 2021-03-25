@@ -273,7 +273,8 @@ const routes: Routes = [
             return en_US;
         }
       },
-      deps: [LOCALE_ID]
+      deps: [LOCALE_ID],
+      useValue: 'fr'
     }],
   bootstrap: [AppComponent]
 })

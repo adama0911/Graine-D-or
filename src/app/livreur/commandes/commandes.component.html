@@ -36,12 +36,20 @@
                 </thead>
                 <tbody>
                   <tr *ngFor="let item of this.data | paginate: { itemsPerPage: 10, currentPage: p }">
-                    <td >{{item.commande}}</td>
+                    <td>
+                      <div class="dropdown">
+                        <span *ngIf="item.refCommande != ''">{{item.commande}}</span>
+                        <span *ngIf="item.refCommande == ''">refCommande</span>
+                        <div class="dropdown-content">
+                          <p style="color: black;">{{displayPanier(item.designation)}}</p>
+                        </div>
+                      </div>
+                    </td>
                     <td >{{item.livreur}}</td>
                     <td >{{item.client}}</td>
                     <td >{{item.vendeuse}}</td>
-                    <td >{{item.montantCommande}}</td>
-                    <td >{{item.montantLivraison}}</td>
+                    <td >{{currencyFormat(item.montantCommande)}}</td>
+                    <td >{{currencyFormat(item.montantLivraison)}}</td>
                     <td>
                       <p *ngIf="item.paiement==1" >{{item.paiementText}}</p>
                       <p *ngIf="item.paiement==2" >{{item.paiementText}}</p>
@@ -58,7 +66,7 @@
                       <p *ngIf="item.etat==4">{{item.etatText}}</p> 
                       <p *ngIf="item.etat==5">{{item.etatText}}</p> 
                     </td>
-                    <td>{{item.monnaie}}</td>
+                    <td>{{currencyFormat(item.monnaie)}}</td>
                     <td>{{item.action}}</td>
                   </tr>
                 </tbody>
@@ -195,17 +203,25 @@
       <form style="background-color:white; padding: 2rem;" *ngIf="this.loadingStat==0">
         <div class="form-group">
           <label for="exampleInputEmail1">Login</label>
-          <input [ngModelOptions]="{standalone: true}" [(ngModel)]="this.login" type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
+          <div class="input-group form-group row" style="margin-left:1rem;padding:5px; margin-top: 1rem;background-color: #532611;">
+              <div class="col-12" style="padding: 0;margin: 0;">
+                <input [ngModelOptions]="{standalone: true}" [(ngModel)]="this.login" type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="login">
+              </div>
+          </div>
         </div>
         <div class="form-group">
           <label for="exampleInputPassword1">Password</label>
-          <input [ngModelOptions]="{standalone: true}" [(ngModel)]="this.password" type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+          <div class="input-group form-group row" style="margin-left:1rem;padding:5px; margin-top: 1rem;background-color: #532611;">
+              <div class="col-12" style="padding: 0;margin: 0;">
+                <input [ngModelOptions]="{standalone: true}" [(ngModel)]="this.password" type="password" class="form-control" id="exampleInputPassword1" placeholder="mot de passe">
+              </div>
+          </div>
         </div>
         <small  *ngIf="this.loginError!=null" class="form-text text-muted" ><span style="color: red;font-size: 1.5em;">{{this.loginError}}</span></small> 
 
         <div class="form-group" style="text-align: right;">
-          <button type="button" class="btn btn-default" (click)="closePointage()">Annuler</button>
-          <button type="submit" class="btn btn-primary" (click)="this.loginError!=null;loger()">Pointer</button>
+          <button type="button" class="btn btn-default" (click)="closePointage()" style="background-color: #532611; color:white ;background-color: #532611;padding: 0.7rem;"><b>Annuler</b></button>
+          <button type="submit" class="btn btn-primary" (click)="this.loginError!=null;loger()" style="margin-left: 2rem;background-color: #532611; color:white ;    background-color: #532611;padding: 0.7rem;"><b>Pointer</b></button>
         </div>
         
       </form>
@@ -228,5 +244,13 @@
       <h3>
           Chargement en cour...
       </h3>
+  </div>
+</ng-template>
+<ng-template let-row let-rowIndex="rowIndex" let-column="column" #panier>
+  <div class="dropdown">
+    <span>{{row.commande}}</span>
+    <div class="dropdown-content">
+    <p style="color: black;">{{row.designation}}</p>
+    </div>
   </div>
 </ng-template>
