@@ -319,15 +319,20 @@ export class DashbordAdminCaisseComponent implements OnInit {
       this._serviceAdmin.getCommande({debut:dateDebut,fin:dateFin}).then(res=>{
         console.log(res)
         if(res.status == 1){
-          this.calculeForBashbord(res.data)
-          let d = res.data.reverse()
-          this.data = d
-          this.listeSave = d
-          this.formateData(d)
-          this.loading = false;
-          //this.audio = new Audio();
-          //this.audio.src ='../../assets/hangouts_message_1.mp3';
-          //this.audio.play();
+          console.log(this.listeSave.length+" "+res.data.length)
+         
+            this.calculeForBashbord(res.data)
+            let d = res.data.reverse()
+            this.data = d
+            this.listeSave = d
+            this.formateData(d)
+          if(this.listeSave.length < res.data.length){
+            this.loading = false;
+            this.audio = new Audio();
+            this.audio.src ='../../assets/hangouts_message_1.mp3';
+            this.audio.play();
+          }
+         
         }else{
           this.loading = false;
         }

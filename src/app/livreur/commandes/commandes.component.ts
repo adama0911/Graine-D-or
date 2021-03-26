@@ -269,6 +269,7 @@ displayPanier(arg){
    * @return :0 
    * @function: methode appelé lorsque le component est pret
   **/
+   audio
   ngOnInit(): void {
     this.configuration = { ...DefaultConfig };
     this.configuration.isLoading = true;
@@ -305,6 +306,12 @@ displayPanier(arg){
           console.log(res);
           if(res.status==1){
             this.dataSave = this.data = this.parseDatas(res.data);
+            if(this.dataSave.length < res.data.length){
+              this.loading = false;
+              this.audio = new Audio();
+              this.audio.src ='../../assets/hangouts_message_1.mp3';
+              this.audio.play();
+            }
           }
         })
     },10000)

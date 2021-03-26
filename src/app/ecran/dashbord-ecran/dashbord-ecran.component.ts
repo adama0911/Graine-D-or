@@ -98,9 +98,12 @@ export class DashbordEcranComponent implements OnInit {
           this.data = d
           this.listeSave = d
           this.loading = false;
-          //this.audio = new Audio();
-          //this.audio.src ='../../assets/hangouts_message_1.mp3';
-          //this.audio.play();
+          if(this.listeSave.length < res.data.length){
+            this.loading = false;
+            this.audio = new Audio();
+            this.audio.src ='../../assets/hangouts_message_1.mp3';
+            this.audio.play();
+          }
         }else{
           this.loading = false;
         }
