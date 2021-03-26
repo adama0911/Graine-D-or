@@ -204,7 +204,7 @@ export class CommandesComponent implements OnInit {
    * @function: Ouvre un modal
   **/
   showMoodal(){
-    document.getElementById('idLogout').style.display = "block";
+    document.getElementById('idModal').style.display = "block";
   }
 
   /**
@@ -213,7 +213,7 @@ export class CommandesComponent implements OnInit {
    * @function: ferme un modal
   **/
   hideMoodal(){
-    document.getElementById('idLogout').style.display = "none";
+    document.getElementById('idModal').style.display = "none";
   }
 
   currencyFormat(somme) : String{

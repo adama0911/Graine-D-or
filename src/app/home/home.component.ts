@@ -85,23 +85,26 @@ export class HomeComponent implements OnInit {
   public isLivreur = 0;
   faCoffee = faCoffee;
   constructor(private router:Router,private _serviceLogin:LoginService) { }
+
+
   logout(){
-   
       this._serviceLogin.logout({login:JSON.parse(sessionStorage.getItem('currentUser')).login}).then(res=>{
+        console.log(res)
         if(res.status == 1){
           sessionStorage.clear();
           this.router.navigate(["/login"])
         }
       })
-  
-   
   }
+
   showMoodal(){
     document.getElementById('idLogout').style.display = "block";
   }
+
   hideMoodal(){
     document.getElementById('idLogout').style.display = "none";
   }
+  
   ngOnInit(): void {
      let user = JSON.parse(sessionStorage.getItem('currentUser'))
     if(user.accesslevel==1){

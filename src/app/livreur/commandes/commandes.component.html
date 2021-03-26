@@ -29,12 +29,12 @@
             </ngx-table> -->
             <div class="table-responsive">
               <table class="table">
-                <thead>
+                <thead style="text-align: center;">
                   <tr>
                     <th *ngFor="let item of this.columns">{{item.title}}</th>
                   </tr>
                 </thead>
-                <tbody>
+                <tbody style="text-align: center;">
                   <tr *ngFor="let item of this.data | paginate: { itemsPerPage: 10, currentPage: p }">
                     <td>
                       <div class="dropdown">
@@ -187,12 +187,12 @@
           <label for="exampleInputPassword1">Mot de passe</label>
           <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
         </div>
-        <button type="submit" class="btn btn-primary" style="float: right;">Pointer</button>
+        <button type="submit" class="btn btn-primary btn-lg" style="float: right;">Pointer</button>
     </form>
 
   </div>  
   <div class="modal-footer"> 
-    <button type="button" class="btn btn-default" (click)="modalRef.hide()">Close</button>  
+    <button type="button" class="btn btn-default btn-lg" (click)="modalRef.hide()">Close</button>  
   </div>  
 </ng-template>  
 
@@ -220,8 +220,8 @@
         <small  *ngIf="this.loginError!=null" class="form-text text-muted" ><span style="color: red;font-size: 1.5em;">{{this.loginError}}</span></small> 
 
         <div class="form-group" style="text-align: right;">
-          <button type="button" class="btn btn-default" (click)="closePointage()" style="background-color: #532611; color:white ;background-color: #532611;padding: 0.7rem;"><b>Annuler</b></button>
-          <button type="submit" class="btn btn-primary" (click)="this.loginError!=null;loger()" style="margin-left: 2rem;background-color: #532611; color:white ;    background-color: #532611;padding: 0.7rem;"><b>Pointer</b></button>
+          <button type="button" class="btn btn-default btn-lg" (click)="closePointage()" style="background-color: #532611; color:white ;background-color: #532611;padding: 0.7rem;"><b>Annuler</b></button>
+          <button type="submit" class="btn btn-primary btn-lg" (click)="this.loginError!=null;loger()" style="margin-left: 2rem;background-color: #532611; color:white ;    background-color: #532611;padding: 0.7rem;"><b>Pointer</b></button>
         </div>
         
       </form>
@@ -230,7 +230,7 @@
           <h3 >
             <i class="fas fa-check" style="font-size: 8em;color: green;"></i>
           </h3>
-          <button class="btn btn-info" (click)="this.closePointage()">Fermer</button>
+          <button class="btn btn-info btn-lg" (click)="this.closePointage()">Fermer</button>
         </div>
       </div>
       <ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px' }" [template]="customLoadingTemplate"></ngx-loading>
