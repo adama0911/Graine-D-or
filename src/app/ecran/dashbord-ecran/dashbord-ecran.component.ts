@@ -59,6 +59,10 @@ export class DashbordEcranComponent implements OnInit {
   currencyFormat(somme) : String{
     return Number(somme).toLocaleString() ;
   }
+  periodiqueChecker:any;
+  ngOnDestroy(){
+    clearInterval(this.periodiqueChecker);
+  }
   ngOnInit(): void {
    
     this.loading = true;
@@ -80,7 +84,7 @@ export class DashbordEcranComponent implements OnInit {
       
       
     })
-    setInterval(()=>{
+    this.periodiqueChecker = setInterval(()=>{
       console.log('inside intervalle')
       let d = (new Date().toJSON()).split("T")[0]
       let f = (new Date().toJSON()).split("T")[0]

@@ -104,47 +104,42 @@
                     <th style="border: 1px solid white;color: white;">action</th>
                   </tr>
                 </thead>
-                <tbody>
-                  <tr *ngFor="let item of this.data | paginate: { itemsPerPage: 10, currentPage: p }">
-                    <td>{{displayDate(item.created_at)}}</td>
-                    <td>
-                      <div class="dropdown">
-                        <span *ngIf="item.refCommande != ''">{{item.refCommande}}</span>
-                        <span *ngIf="item.refCommande == ''">refCommande</span>
-                        <div class="dropdown-content">
-                        <p  style="color: black;"> {{displayPanier(item.designation)}}</p>
-                        </div>
+                <tbody>                  
+                  <tr *ngFor="let item of this.dataToDisplay | paginate: { itemsPerPage: 10, currentPage: p }">
+                  <td>{{displayDate(item.date)}}</td>
+                  <td>
+                    <div class="dropdown">
+                      <span *ngIf="item.refCommande != ''">{{item.commande}}</span>
+                      <span *ngIf="item.refCommande == ''">refCommande</span>
+                      <div class="dropdown-content">
+                      <p style="color: black;">{{displayPanier(item.panier)}}</p>
                       </div>
-                    </td>
-                    <td>
-                      <p *ngIf="item.livreur != ''">{{displayData(item.livreur,'prenom')}} {{displayData(item.livreur,'nom')}}</p>
-                      <p *ngIf="item.livreur == ''">pas de livreur</p>
-                    </td>
-                    <td>{{formateNumClient(item.numero_client)}}</td>
-                    <td>{{item.montant}}</td>
-                    <td>{{item.frais_livraison}}</td>
-                    <td>
-                      <p *ngIf="item.mode_paiement==1" >en ligne </p>
-                      <p *ngIf="item.mode_paiement==0" >à la livraison </p>
-                    </td>
-                    <td>
-                      <p *ngIf="item.recuperation==0" >sur place </p>
-                      <p *ngIf="item.recuperation==1" >à livrer</p>
-                    </td>
-                    <td >
-                      <div *ngIf="item.etat==-1" class="p-3 mb-2 bg-danger text-white" style="text-align: center;">Annuler </div>
-                      <div *ngIf="item.etat==1" class="p-3 mb-2 bg-secondary text-white" style="text-align: center;">Enregistrer </div>
-                      <div *ngIf="item.etat==2" class="p-3 mb-2 bg-info text-white" style="text-align: center;">Valider </div>
-                      <div *ngIf="item.etat==3" class="p-3 mb-2 bg-warning text-white" style="text-align: center;">Preparer</div>
-                      <div *ngIf="item.etat==4" class="p-3 mb-2 bg-primary text-white" style="text-align: center;">En cour de livraison</div> 
-                      <div *ngIf="item.etat==5" class="p-3 mb-2 bg-success text-white" style="text-align: center;">Payer</div> 
-                    </td>
-                    <td>    
-                      {{monnairePrpa(item.montant,item.frais_livraison)}}
-                    </td>
+                    </div>
+                  </td>
+                  <td>
+                    <p *ngIf="item.livreur != ''">{{displayData(item.livreur,'prenom')}} {{displayData(item.livreur,'nom')}}</p>
+                    <p *ngIf="item.livreur == ''">pas de livreur</p>
+                  </td>
+                 
+                  <td>{{formateNumClient(item.client)}}</td>
+                  <td style="text-align: center;">{{currencyFormat(item.montant)}}</td>
+                  <td style="text-align: center;">{{currencyFormat(item.fraisLivraison)}}</td>
+                  <td>{{item.paiement}} </td>
+                  <td>{{item.recuperation}}</td>
+                  <td >
+                    <div *ngIf="item.etat==-1" class="p-3 mb-2 bg-danger text-white" style="text-align: center;">Annuler </div>
+                    <div *ngIf="item.etat==1" class="p-3 mb-2 bg-secondary text-white" style="text-align: center;">Enregistrer </div>
+                    <div *ngIf="item.etat==2" class="p-3 mb-2 bg-info text-white" style="text-align: center;">Valider </div>
+                    <div *ngIf="item.etat==3" class="p-3 mb-2 bg-warning text-white" style="text-align: center;">Preparer</div>
+                    <div *ngIf="item.etat==4" class="p-3 mb-2 bg-primary text-white" style="text-align: center;">En cour de livraison</div> 
+                    <div *ngIf="item.etat==5" class="p-3 mb-2 bg-success text-white" style="text-align: center;">Payer</div> 
+                  </td>
+                  <td style="text-align: center;">{{currencyFormat(item.monnaiePrepa)}}</td>
                     <td>
                       <button type="button" *ngIf="item.etat==3" class="btn btn-warning" (click)="showMoodalEncours();selected = item;">En cours de livraison </button>
                       <button type="button" *ngIf="item.etat==4" class="btn btn-warning" (click)="showMoodalPayer();selected = item;">Payer </button>
+                      <button type="button"  class="btn btn-warning" (click)="requestUsb()">Connect </button>
+                      <button type="button"  class="btn btn-warning" (click)="print()" [disabled]="status === false">print </button>
                      </td>
 
                   </tr>

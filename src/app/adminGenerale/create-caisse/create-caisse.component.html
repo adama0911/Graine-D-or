@@ -173,8 +173,10 @@
                   
             </div>
             <div nz-col nzSpan="24" style="text-align: center;margin-top: 1rem;">
-                <button  (click)="etapeDisplay = 1" style="margin-right: 5px;" class="btn btn-danger"> <i class="fas fa-arrow-left" style="padding-right: 4px;"></i>Retour</button>
-                <button  (click)="updateUser()" *ngIf="errorCode < 2" class="btn btn-success">Valider</button>
+                <button  (click)="etapeDisplay = 1" style="margin-left: 5px;background: #532611;border: 1px solid white;font-size: 1.5rem;"  class="btn btn-danger"> <i class="fas fa-arrow-left" style="padding-right: 4px;"></i>Retour</button>
+                <button  (click)="updateUser()" *ngIf="errorCode < 2" style="margin-left: 5px;background: #532611;border: 1px solid white;font-size: 1.5rem;"  class="btn btn-success">Valider</button>
+                <button  (click)="showMoodalReset()"  style="margin-left: 5px;background: #532611;border: 1px solid white;font-size: 1.5rem;float: right;" class="btn btn-success">Réinitialiser mot de passe</button>
+
             </div>
         
         </form>
@@ -232,3 +234,34 @@
     </div>
   </div>
   
+<div id="resetPassword" class="w3-modal">
+  <div class="w3-modal-content" style="border-radius: 5px;padding: 3rem;">
+    <div class="w3-container">
+      <span (click)="hideMoodalReset()" style="font-size: 2rem;" class="w3-button w3-display-topright">&times;</span>
+      <div class="row" style="text-align: center;">
+        
+        <div class="col-12" style="text-align: center;">
+          <h2>Vous voulez reinitialisé le mot de passe de l'utilisateur</h2>
+          <button class="btn btn-danger" style="margin-right: 5px;" (click)="hideMoodalReset()">Annuler</button>
+          <button class="btn btn-success" style="margin-right: 5px;" (click)="resetPassword();hideMoodalReset()">Valider</button>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="resetPasswordNotif" class="w3-modal">
+  <div class="w3-modal-content" style="border-radius: 5px;padding: 3rem;">
+    <div class="w3-container">
+      <span (click)="hideMoodalResetNotif()" style="font-size: 2rem;" class="w3-button w3-display-topright">&times;</span>
+      <div class="row" style="text-align: center;">
+        
+        <div class="col-12" style="text-align: center;">
+          <h2 class="alert alert-success">{{eMessage}}</h2>
+         
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

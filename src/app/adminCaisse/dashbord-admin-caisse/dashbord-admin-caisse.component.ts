@@ -2,6 +2,9 @@ import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { Columns, DefaultConfig } from 'ngx-easy-table';
 import { Config } from 'protractor';
 import { AdminGeneralService } from 'src/app/services/adminGeneral/admin-general.service';
+import { PrintDriver } from 'ng-thermal-print/lib/drivers/PrintDriver';
+import { PrintService, UsbDriver, WebPrintDriver } from 'ng-thermal-print';
+
 @Component({
   selector: 'app-dashbord-admin-caisse',
   templateUrl: './dashbord-admin-caisse.component.html',
@@ -22,7 +25,44 @@ export class DashbordAdminCaisseComponent implements OnInit {
   p;
   listeSave;
   audio
+  dataToDisplay = [];
+  formateData(arg){
+  this.dataToDisplay = [];
 
+    for(let i of arg){
+      let paiement = "";
+      let recuperation = ""
+      if(i.mode_paiement == 1){
+        paiement = "en ligne"
+      }else{
+        paiement = "à la livaison"
+      }
+      if(i.recuperation == 1){
+        recuperation = "à livrer"
+      }else{
+        recuperation = "sur place"
+      }
+      let mtt = parseInt(i.montant)-parseInt(i.frais_livraison)
+      this.dataToDisplay.push({
+        id:i.id,
+        date:i.created_at,
+        commande:i.refCommande,
+        livreur:i.livreur,
+        client:i.numero_client,
+        vendeuse:i.vendeuse,
+        montant:parseInt(i.montant)-parseInt(i.frais_livraison),
+        fraisLivraison:parseInt(i.frais_livraison),
+        paiement:paiement,
+        recuperation:recuperation,
+        etat:i.etat,
+        panier:i.designation,
+        monnaiePrepa:this.monnairePrpa(mtt,i.frais_livraison)
+      })
+
+    }
+    console.log(this.dataToDisplay)
+    this.listeSave = this.dataToDisplay
+  }
   displayDate(date){ 
     if(date != ""){
       return new Date(date).toLocaleString();
@@ -33,21 +73,25 @@ export class DashbordAdminCaisseComponent implements OnInit {
     return Number(somme).toLocaleString() ;
   }
   displayPanier(arg){
-    if(arg != null || arg != undefined || arg != ""){
-      let panier = JSON.parse(arg);
-      let toDisplay = ""
-      for(let i of panier){
-        toDisplay = toDisplay+""+i.qte+" "+i.article+" ,"
+    if(arg.includes("[{")){
+      if(arg != null || arg != undefined || arg != ""){
+        let panier = JSON.parse(arg);
+        let toDisplay = ""
+        for(let i of panier){
+          toDisplay = toDisplay+""+i.qte+" "+i.article+" ,"
+        }
+        return toDisplay
+      }else{
+        return "";
       }
-      return toDisplay
     }else{
-      return "";
+      return arg;
     }
+    
     
   }
   searchAll = () => {
     let value = this.motcle;
-    console.log("PASS", { value });
   
     const filterTable = this.listeSave.filter(o =>
       Object.keys(o).some(k =>
@@ -56,8 +100,7 @@ export class DashbordAdminCaisseComponent implements OnInit {
           .includes(value.toLowerCase())
       )
     );
-    console.log(this.data)
-    this.data = filterTable;
+    this.dataToDisplay = filterTable;
   }
   calculeForBashbord(arg){
     this.nbrCommandes = 0;
@@ -74,9 +117,40 @@ export class DashbordAdminCaisseComponent implements OnInit {
       }
     }
   }
-  constructor(private _serviceAdmin:AdminGeneralService) { 
-   
+  status: boolean = false;
+  usbPrintDriver: UsbDriver;
+  webPrintDriver: WebPrintDriver;
+  ip: string = '';
+  constructor(private _serviceAdmin:AdminGeneralService,private printService: PrintService) { 
+    this.usbPrintDriver = new UsbDriver();
+        this.printService.isConnected.subscribe(result => {
+          console.log(result)
+            this.status = result;
+            if (result) {
+                console.log('Connected to printer!!!');
+            } else {
+            console.log('Not connected to printer.');
+            }
+        });
   }
+  requestUsb() {
+    this.usbPrintDriver.requestUsb().subscribe(result => {
+        this.printService.setDriver(this.usbPrintDriver, 'ESC/POS');
+    });
+}
+
+print(driver: PrintDriver) {
+  this.printService.init()
+      .setBold(true)
+      .writeLine('Hello World!')
+      .setBold(false)
+      .feed(4)
+      .cut('full')
+      .flush();
+}
+
+
+
   @ViewChild('panier', { static: true }) panier: TemplateRef<any>;
   @ViewChild('monnaiePrepa', { static: true }) monnaiePrepa: TemplateRef<any>;
   @ViewChild('livreur', { static: true }) livreur: TemplateRef<any>;
@@ -86,7 +160,6 @@ export class DashbordAdminCaisseComponent implements OnInit {
   @ViewChild('etatTpl', { static: true }) etatTpl: TemplateRef<any>;  
   public data = [ ];
   monnairePrpa(mtt1 ,mtt2){
-    console.log(mtt1+" "+mtt2)
     let somme = parseInt(mtt1)+parseInt(mtt2);
     let temp = somme/10000;
     let temp1 = temp.toString().split('.')[0];
@@ -113,7 +186,6 @@ export class DashbordAdminCaisseComponent implements OnInit {
           let dateDebut = this.dd.split('-')[2]+"/"+this.dd.split('-')[1]+"/"+this.dd.split('-')[0]
           let dateFin = this.df.split('-')[2]+"/"+this.df.split('-')[1]+"/"+this.df.split('-')[0]
           this._serviceAdmin.getCommande({debut:dateDebut,fin:dateFin}).then(res=>{
-            console.log(res);
             if(res.status == 1){
               this.calculeForBashbord(res.data)
               this.data = res.data
@@ -166,24 +238,12 @@ export class DashbordAdminCaisseComponent implements OnInit {
           let dateDebut = this.dd.split('-')[2]+"/"+this.dd.split('-')[1]+"/"+this.dd.split('-')[0]
           let dateFin = this.df.split('-')[2]+"/"+this.df.split('-')[1]+"/"+this.df.split('-')[0]
           this._serviceAdmin.getCommande({debut:dateDebut,fin:dateFin}).then(res=>{
-            console.log(res);
             if(res.status == 1){
               this.calculeForBashbord(res.data)
-              this.data = res.data
-              this.configuration = { ...DefaultConfig };
-              this.configuration.searchEnabled = true;
-              this.columns = [
-                { key: 'commande', title: 'COMMANDE' , cellTemplate: this.panier},
-                { key: 'livreur', title: 'LIVREUR', cellTemplate: this.livreur },
-                { key: 'numero_client', title: 'CLIENT' },
-                { key: 'montant', title: 'MONTANT COMMANDE' },
-                { key: 'frais_livraison', title: 'MONTANT LIVRAISON' },
-                { key: 'mode_paiement', title: 'PAIEMENT' , cellTemplate: this.paiementTpl},
-                { key: 'recuperation', title: 'RÉCUPÉRATION' , cellTemplate: this.recuperationTpl},
-                { key: 'etat', title: 'ETAT COMMANDE' , cellTemplate: this.etatTpl},
-                { key: 'monnaie', title: 'MONNAIE À PRÉPARÉE' , cellTemplate: this.monnaiePrepa },
-                { key: 'action', title: 'Actions', cellTemplate: this.actionTpl },
-              ];
+              let d = res.data.reverse()
+              this.data = d
+              this.listeSave = d
+              this.formateData(d)
               this.loading = false;
               this.showMoodalNotifPayer();
             }else{
@@ -208,12 +268,13 @@ export class DashbordAdminCaisseComponent implements OnInit {
     let dateDebut = this.dd.split('-')[2]+"/"+this.dd.split('-')[1]+"/"+this.dd.split('-')[0]
     let dateFin = this.df.split('-')[2]+"/"+this.df.split('-')[1]+"/"+this.df.split('-')[0]
     this._serviceAdmin.getCommandeByCaissier({debut:dateDebut,fin:dateFin,idCaissier:JSON.parse(sessionStorage.getItem('currentUser')).id}).then(res=>{
-      console.log(res);
       if(res.status == 1){
         this.calculeForBashbord(res.data)
         let d = res.data.reverse()
         this.data = d
         this.listeSave = d
+        this.formateData(d)
+
         this.loading = false;
 
       }else{
@@ -224,20 +285,23 @@ export class DashbordAdminCaisseComponent implements OnInit {
       
     })
   }
+  periodiqueChecker:any;
+  ngOnDestroy(){
+    clearInterval(this.periodiqueChecker);
+  }
   ngOnInit(): void {
     this.loading = true;
-    console.log(JSON.parse(sessionStorage.getItem('currentUser')).id)
     this.dd = (new Date().toJSON()).split("T")[0]
     this.df = (new Date().toJSON()).split("T")[0]
     let dateDebut = this.dd.split('-')[2]+"/"+this.dd.split('-')[1]+"/"+this.dd.split('-')[0]
     let dateFin = this.df.split('-')[2]+"/"+this.df.split('-')[1]+"/"+this.df.split('-')[0]
     this._serviceAdmin.getCommande({debut:dateDebut,fin:dateFin}).then(res=>{
-      console.log(res);
       if(res.status == 1){
         this.calculeForBashbord(res.data)
         let d = res.data.reverse()
         this.data = d
         this.listeSave = d
+        this.formateData(d)
         this.loading = false;
       }else{
         this.loading = false;
@@ -245,19 +309,19 @@ export class DashbordAdminCaisseComponent implements OnInit {
       
       
     })
-    setInterval(()=>{
-      console.log('inside intervalle')
+    this.periodiqueChecker = setInterval(()=>{
       let d = (new Date().toJSON()).split("T")[0]
       let f = (new Date().toJSON()).split("T")[0]
       let dateDebut = this.dd.split('-')[2]+"/"+this.dd.split('-')[1]+"/"+this.dd.split('-')[0]
       let dateFin = this.df.split('-')[2]+"/"+this.df.split('-')[1]+"/"+this.df.split('-')[0]
       this._serviceAdmin.getCommande({debut:dateDebut,fin:dateFin}).then(res=>{
-        console.log(res);
+        console.log(res)
         if(res.status == 1){
           this.calculeForBashbord(res.data)
           let d = res.data.reverse()
           this.data = d
           this.listeSave = d
+          this.formateData(d)
           this.loading = false;
           //this.audio = new Audio();
           //this.audio.src ='../../assets/hangouts_message_1.mp3';

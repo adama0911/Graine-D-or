@@ -4,11 +4,11 @@ import { Columns, DefaultConfig } from 'ngx-easy-table';
 import { Config } from 'protractor';
 import { AdminGeneralService } from 'src/app/services/adminGeneral/admin-general.service';
 @Component({
-  selector: 'app-dashbord-admin',
-  templateUrl: './dashbord-admin.component.html',
-  styleUrls: ['./dashbord-admin.component.scss']
+  selector: 'app-statistique',
+  templateUrl: './statistique.component.html',
+  styleUrls: ['./statistique.component.scss']
 })
-export class DashbordAdminComponent implements OnInit {
+export class StatistiqueComponent implements OnInit {
 
   public configuration: Config;
   public columns: Columns[];
@@ -24,6 +24,11 @@ export class DashbordAdminComponent implements OnInit {
   p;
   audio:any;
   dataToDisplay = [];
+  userFiltre;
+  listLivreur;
+  listCaisse;
+  listVendeuse;
+  
   formateData(arg){
   this.dataToDisplay = [];
 
@@ -46,6 +51,8 @@ export class DashbordAdminComponent implements OnInit {
         date:i.created_at,
         commande:i.refCommande,
         livreur:i.livreur,
+        caissier:i.caissier,
+        vendeuse:i.vendeuse,
         client:i.numero_client,
         montant:parseInt(i.montant)-parseInt(i.frais_livraison),
         fraisLivraison:parseInt(i.frais_livraison),
@@ -55,7 +62,7 @@ export class DashbordAdminComponent implements OnInit {
         panier:i.designation,
         monnaiePrepa:this.monnairePrpa(mtt,i.frais_livraison)
       })
-
+      this.calculeForBashbord(this.dataToDisplay)
     }
     console.log(this.dataToDisplay)
     this.listeSave = this.dataToDisplay
@@ -67,10 +74,10 @@ export class DashbordAdminComponent implements OnInit {
 
     this.nbrCommandes = arg.length;
     for(let i of arg){
-      let somme =  parseInt(i.montant) + parseInt(i.frais_livraison);
+      let somme =  parseInt(i.montant);
       this.soldeGraineDor = this.soldeGraineDor + somme;
       if(i.mode_paiement == 1){
-        let somme =  parseInt(i.montant) + parseInt(i.frais_livraison);
+        let somme =  parseInt(i.montant);
         this.soldeCompenseBBS = this.soldeCompenseBBS + somme;     
       }
     }
@@ -84,6 +91,49 @@ export class DashbordAdminComponent implements OnInit {
   @ViewChild('etatTpl', { static: true }) etatTpl: TemplateRef<any>;
   constructor(private _serviceAdmin:AdminGeneralService,) { 
    
+  }
+
+  onChange(arg){
+    if(arg == ""){
+      this.dataToDisplay = this.listeSave
+    }else{
+      this.dataToDisplay =[]
+      for(let i of this.listeSave){
+        if(this.displayData(i.livreur,'login') == arg){
+          this.dataToDisplay.push(i)
+        }
+      }
+      this.calculeForBashbord(this.dataToDisplay)
+
+    }
+  }
+  onChange1(arg){
+    if(arg == ""){
+      this.dataToDisplay = this.listeSave
+    }else{
+      this.dataToDisplay =[]
+      for(let i of this.listeSave){
+        if(this.displayData(i.vendeuse,'login') == arg){
+          this.dataToDisplay.push(i)
+        }
+      }
+      this.calculeForBashbord(this.dataToDisplay)
+
+    }
+  }
+  onChange2(arg){
+    if(arg == ""){
+      this.dataToDisplay = this.listeSave
+    }else{
+      this.dataToDisplay =[]
+      for(let i of this.listeSave){
+        if(this.displayData(i.caissier,'login') == arg){
+          this.dataToDisplay.push(i)
+        }
+      }
+      this.calculeForBashbord(this.dataToDisplay)
+
+    }
   }
   searchAll = () => {
     let value = this.motcle;
@@ -157,7 +207,6 @@ export class DashbordAdminComponent implements OnInit {
     this._serviceAdmin.getCommande({debut:dateDebut,fin:dateFin}).then(res=>{
       console.log(res);
       if(res.status == 1){
-        this.calculeForBashbord(res.data)
         let d = res.data.reverse()
         this.data = d
         this.listeSave = d
@@ -172,10 +221,6 @@ export class DashbordAdminComponent implements OnInit {
       
       
     })
-  }
-  periodiqueChecker:any;
-  ngOnDestroy(){
-    clearInterval(this.periodiqueChecker);
   }
   ngOnInit(): void {
    
@@ -188,7 +233,7 @@ export class DashbordAdminComponent implements OnInit {
     this._serviceAdmin.getCommande({debut:dateDebut,fin:dateFin}).then(res=>{
       console.log(res);
       if(res.status == 1){
-        this.calculeForBashbord(res.data)
+        
         let d = res.data.reverse()
         this.data = d
         this.listeSave = d
@@ -200,32 +245,23 @@ export class DashbordAdminComponent implements OnInit {
       
       
     })
-     this.periodiqueChecker = setInterval(()=>{
-      let d = (new Date().toJSON()).split("T")[0]
-      let f = (new Date().toJSON()).split("T")[0]
-      let dateDebut = this.dd.split('-')[2]+"/"+this.dd.split('-')[1]+"/"+this.dd.split('-')[0]
-      let dateFin = this.df.split('-')[2]+"/"+this.df.split('-')[1]+"/"+this.df.split('-')[0]
-      this._serviceAdmin.getCommande({debut:dateDebut,fin:dateFin}).then(res=>{
-        //console.log(res.data);
-       
-        if(res.status == 1){
-          this.calculeForBashbord(res.data)
-          let d = res.data.reverse()
-          this.data = d
-          this.listeSave = d
-          this.formateData(d)
-          this.loading = false;
-          //this.audio = new Audio();
-          //this.audio.src ='../../assets/hangouts_message_1.mp3';
-          //this.audio.play();
-        }else{
-          this.loading = false;
-        }
-        
-        
-      })
-    },10000)
+    this._serviceAdmin.getUsersByAccessLevel({accesslevel:2}).then(res =>{
+      console.log(res);
+      this.listCaisse = res.status
+    })
+    this._serviceAdmin.getUsersByAccessLevel({accesslevel:3}).then(res =>{
+      console.log(res);
+      this.listVendeuse = res.status
 
+      
+    })
+    this._serviceAdmin.getUsersByAccessLevel({accesslevel:4}).then(res =>{
+      console.log(res);
+      this.listLivreur = res.status
+
+      
+    })
+  
   }
   displayPanier(arg){
     if(arg.includes("[{")){
@@ -262,11 +298,11 @@ export class DashbordAdminComponent implements OnInit {
       if(nom =="prenom"){
         return ob.prenom;
       }
-          if(nom =="identifiant"){
+      if(nom =="id"){
         return ob.identifiant;
       }
-      if(nom =="accesslevel"){
-        return ob.accesslevel;
+      if(nom =="login"){
+        return ob.login;
       }
       return "";
     }else{
@@ -290,6 +326,5 @@ export class DashbordAdminComponent implements OnInit {
       document.getElementById('id02').style.display = "none";
     },5000)
   }
-  
-  
+
 }

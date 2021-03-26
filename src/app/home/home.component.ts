@@ -52,10 +52,17 @@ const ROUTE_ADMIN: routeItem[] = [
   },
   {
     path:'/createCaisse',
-    titre: 'Création caisse',
+    titre: 'Gestion caisse',
+    description:'',
+    icon:''
+  },
+  {
+    path:'/statistiques',
+    titre: 'statistiques',
     description:'',
     icon:''
   }
+  
 ];
 
 const ROUTE_ADMIN_CAISSE: routeItem[] = [
@@ -67,7 +74,7 @@ const ROUTE_ADMIN_CAISSE: routeItem[] = [
     },
     {
       path:'/createUsers',
-      titre: 'Création utilisateur',
+      titre: 'Gestion utilisateur',
       description:'',
       icon:''
     }

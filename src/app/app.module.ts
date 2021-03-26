@@ -67,6 +67,8 @@ import { NgxLoadingModule } from 'ngx-loading';
 import { LoginComponent } from './login/login.component';
 import { HomeComponent } from './home/home.component';
 import { DashbordEcranComponent } from './ecran/dashbord-ecran/dashbord-ecran.component';
+import { StatistiqueComponent } from './adminGenerale/statistique/statistique.component';
+import { ThermalPrintModule } from 'ng-thermal-print';
 
 
 const routes: Routes = [
@@ -134,6 +136,10 @@ const routes: Routes = [
         {
           path:"dashboardEcran",
           component:DashbordEcranComponent
+        },
+        {
+          path:"statistiques",
+          component:StatistiqueComponent
         },
         {
           path: "**",
@@ -226,6 +232,8 @@ const routes: Routes = [
     LoginComponent,
     HomeComponent,
     DashbordEcranComponent,
+    StatistiqueComponent,
+    
   ],
   imports: [
     BrowserModule,
@@ -257,6 +265,7 @@ const routes: Routes = [
     FormsModule,
     NzModalModule,
     NgbModule,
+    ThermalPrintModule
   ],
   providers: [ConfigService,BsModalService,PaginationConfig,
 
