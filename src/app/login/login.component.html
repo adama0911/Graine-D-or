@@ -16,7 +16,9 @@
 
             </div>
             <div class="col-lg-8 col-md-10 col-sm-12 col-xs-12">
-              <h3><span style="color: white; font-weight: normal;background-color: #532611; font-size: 1.5em; padding: 0.5rem;padding-left: 4rem;padding-right: 4rem; border-radius: 2rem;  width: 60%;"><b> Identification</b></span></h3>
+              <h3 *ngIf="isFirstLog"><span style="color: white; font-weight: normal;background-color: #532611; font-size: 1.5em; padding: 0.5rem;padding-left: 4rem;padding-right: 4rem; border-radius: 2rem;  width: 60%;"><b> Modification de mot de passe</b></span></h3>
+              <h3 *ngIf="!isFirstLog"><span style="color: white; font-weight: normal;background-color: #532611; font-size: 1.5em; padding: 0.5rem;padding-left: 4rem;padding-right: 4rem; border-radius: 2rem;  width: 60%;"><b> Identification</b></span></h3>
+
             </div>
           </div>
           <div class="row">
@@ -49,9 +51,9 @@
                 </form>
 
                 <form *ngIf="isFirstLog">
-                  <div class="input-group form-group">
+                  <div class="input-group form-group" style="border: 1px solid white;">
                     <div class="input-group-prepend" >
-                      <span class="input-group-text"><i class="fas fa-key"></i></span>
+                       <span class="input-group-text" style="background-color: #c5A57d !important;"><i class="fas fa-key"  style="color: white; font-size: 1.8em;"></i></span>
                     </div>
                     <input type="password" class="form-control" placeholder="Mot de passe" [ngModelOptions]="{standalone: true}" [(ngModel)]="this.newpassword"  (ngModelChange)="testPass(this.newpassword);this.confirmpassword=null;"/>
                     <div style="min-width:100%">
@@ -60,16 +62,15 @@
                         <small  class="form-text text-muted" *ngIf="this.passwordQuality==2" ><span [ngClass]="{'text-success':true}"> mot de passe fort</span></small> 
                   </div>
                   </div>
-                  <div class="input-group form-group">
+                  <div class="input-group form-group" style="border: 1px solid white;">
                     <div class="input-group-prepend">
-                      <span class="input-group-text"><i class="fas fa-key"></i></span>
-                    </div>
+                    <span class="input-group-text" style="background-color: #c5A57d !important;"><i class="fas fa-key"  style="color: white; font-size: 1.8em;"></i></span>                    </div>
                     <input (click)="this.passError=null;this.confirmpassword=null" type="password" class="form-control" placeholder="Confirmer mot de passe" [ngModelOptions]="{standalone: true}" [(ngModel)]="this.confirmpassword" />
                   </div>
                   <div class="form-group">
                     <br>
                     <small  class="form-text text-muted" *ngIf="this.passError!=null;" ><span [ngClass]="{'text-danger':true}" style="font-size:1.3em">{{this.passError}}</span></small>
-                    <input type="submit" value="Valider" [disabled]="!newpassword || newpassword =='' || !confirmpassword || confirmpassword == '' "  class="btn float-right login_btn" (click)="firstLog()" >
+                    <input style="background-color: #532611;color:white;width: 100%; font-size: 2em; " type="submit" value="Modifier" [disabled]="!newpassword || newpassword =='' || !confirmpassword || confirmpassword == '' "  class="btn float-right login_btn" (click)="firstLog()" >
                   </div>
                 </form>
                 </div>
