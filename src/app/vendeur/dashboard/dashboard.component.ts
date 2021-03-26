@@ -34,6 +34,8 @@ export class DashboardComponent implements OnInit {
   debut = null;
   fin = null;
   p: number = 1;
+  dataChart = [];
+  refSetInterval:any;
 
   @ViewChild('panier', { static: true }) panier: TemplateRef<any>;
   @ViewChild('actionTpl', { static: true }) actionTpl: TemplateRef<any>;
@@ -86,6 +88,10 @@ export class DashboardComponent implements OnInit {
 
   currencyFormat(somme) : String{
     return Number(somme).toLocaleString() ;
+  }
+
+  beforeDestroy() {
+    clearInterval(this.refSetInterval);
   }
 
   barChartDatas(data){
@@ -291,7 +297,7 @@ export class DashboardComponent implements OnInit {
   let dateDebut = dd.split('-')[2]+"/"+dd.split('-')[1]+"/"+dd.split('-')[0]
   let dateFin = df.split('-')[2]+"/"+df.split('-')[1]+"/"+df.split('-')[0]
   this.loading = true;
-  this._vendeurService.getCommandes({debut:"01/01/2019",fin:dateFin}).then(res=>{
+  this._vendeurService.getCommandes({debut:dateDebut,fin:dateFin}).then(res=>{
     console.log(res);
     if(res.status==1){
       this.dataSave = this.data = this.parseDatas(res.data);
@@ -304,6 +310,59 @@ export class DashboardComponent implements OnInit {
   })
  }
 
+ monthFirstLastDay(month):any{
+  let obj= {firstday:'',lastday:''};
+  switch(month){
+    case "01":
+      obj.firstday = '01'
+      obj.lastday = '31'
+      break; 
+    case "02":
+      obj.firstday = '01'
+      obj.lastday = '28'
+      break; 
+    case "03":
+      obj.firstday = '01'
+      obj.lastday = '31'
+      break; 
+    case "04":
+      obj.firstday = '01'
+      obj.lastday = '30'
+      break;
+    case "05":
+      obj.firstday = '01'
+      obj.lastday = '31'
+      break; 
+    case "06":
+      obj.firstday = '01'
+      obj.lastday = '30'
+      break; 
+    case "07":
+      obj.firstday = '01'
+      obj.lastday = '31'
+      break; 
+    case "08":
+      obj.firstday = '01'
+      obj.lastday = '31'
+      break; 
+    case "09":
+      obj.firstday = '01'
+      obj.lastday = '30'
+      break; 
+    case "10":
+      obj.firstday = '01'
+      obj.lastday = '31'
+      break;
+    case "11":
+      obj.firstday = '01'
+      obj.lastday = '30'
+      break; 
+    case "12":
+      obj.firstday = '01'
+      obj.lastday = '31'
+      break; 
+  }
+}
 
 
   /**
@@ -328,6 +387,46 @@ export class DashboardComponent implements OnInit {
     ];
 
     this.getCommandes()
+
+    let dd = (new Date().toJSON()).split("T")[0]
+    let df = (new Date().toJSON()).split("T")[0]
+    
+    let firstLast = {firstday:'',lastday:''};
+
+    firstLast = this.monthFirstLastDay(dd.split('-')[1]);
+    
+    let dateDebut = firstLast.firstday +dd.split('-')[1]+"/"+dd.split('-')[0]
+    let dateFin = firstLast.lastday+ df.split('-')[1]+"/"+df.split('-')[0]
+    this._vendeurService.getCommandes({debut:dateDebut,fin:dateFin}).then(res=>{
+      console.log(res);
+      if(res.status==1){
+        this.dataChart =  this.parseDatas(res.data);
+      }
+    }).catch(err => {
+      this.loading = false;
+    })
+
+
+    this.refSetInterval = setInterval(()=>{
+      let dd = (new Date().toJSON()).split("T")[0]
+      let df = (new Date().toJSON()).split("T")[0]
+      let dateDebut = dd.split('-')[2]+"/"+dd.split('-')[1]+"/"+dd.split('-')[0]
+      let dateFin = df.split('-')[2]+"/"+df.split('-')[1]+"/"+df.split('-')[0]
+      this.loading = true;
+      this._vendeurService.getCommandes({debut:dateDebut,fin:dateFin}).then(res=>{
+        console.log(res);
+        if(res.status==1){
+          this.dataSave = this.data = this.parseDatas(res.data);
+          if(this.dataSave.length!=0){
+            this.loading = false;
+          }
+        }
+      }).catch(err => {
+        this.loading = false;
+      })
+    },10000)
   }
+
+
 
 }
