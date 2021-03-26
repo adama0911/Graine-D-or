@@ -68,7 +68,6 @@ import { LoginComponent } from './login/login.component';
 import { HomeComponent } from './home/home.component';
 import { DashbordEcranComponent } from './ecran/dashbord-ecran/dashbord-ecran.component';
 import { StatistiqueComponent } from './adminGenerale/statistique/statistique.component';
-import { ThermalPrintModule } from 'ng-thermal-print';
 
 
 const routes: Routes = [
@@ -148,72 +147,6 @@ const routes: Routes = [
       ]
   }
 ];
-/*const routes: Routes = [
-  {
-    path: "",
-    redirectTo: "/login",
-    pathMatch: "full"
-  },
-  {
-    path:"login",
-    component:LoginComponent
-  },
-  {
-    path:"home",
-    component:HomeComponent
-  },
-  
-  {
-    path:"createCaisse",
-    component:CreateCaisseComponent
-  },
-  {
-    path:"dashbordAdmin",
-    component:DashbordAdminComponent
-  },
-  {
-    path:"createUsers",
-    component:CreateUsersComponent
-  },
-  {
-    path: "dashbordAdminCaisse",
-    component: DashbordAdminCaisseComponent,
-    // children: [
-    //   {
-    //     path: "",
-    //     loadChildren:
-    //       "./layouts/admin-layout/admin-layout.module#AdminLayoutModule"
-    //   }
-    // ]
-  }, 
-  {
-    path: 'livreurs',
-    component: LivreursComponent,
-
-  },
-  {
-    path:"commandes",
-    component:CommandesComponent
-  },
-  {
-    path:"commandesLivreur",
-    component:LivreurCommandesComponent
-  },
-  {
-    path:"historiqueLivreur",
-    component:HistoriqueComponent
-  },
-  {
-    path:"dashboardVendeur",
-    component:DashboardComponent
-  },
-  {
-    path: "**",
-    redirectTo: "/"
-  }
-];*/
-
-
 
 @NgModule({
   declarations: [
@@ -265,7 +198,7 @@ const routes: Routes = [
     FormsModule,
     NzModalModule,
     NgbModule,
-    ThermalPrintModule
+    
   ],
   providers: [ConfigService,BsModalService,PaginationConfig,
 
@@ -282,7 +215,8 @@ const routes: Routes = [
             return en_US;
         }
       },
-      deps: [LOCALE_ID]
+      deps: [LOCALE_ID],
+      useValue: 'fr'
     }],
   bootstrap: [AppComponent]
 })

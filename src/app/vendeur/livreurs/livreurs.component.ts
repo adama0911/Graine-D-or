@@ -12,13 +12,13 @@ import { livreurItem } from '../interfaces/livreurItem.interface';
 import { VendeurService } from 'src/app/services/vendeur.service';
 import { PageChangedEvent } from 'ngx-bootstrap/pagination';
 
-
-
 @Component({
   selector: 'app-livreurs',
   templateUrl: './livreurs.component.html',
   styleUrls: ['./livreurs.component.scss']
 })
+
+
 export class LivreursComponent implements OnInit {
   public configuration: Config;
   public columns: Columns[];
@@ -29,7 +29,7 @@ export class LivreursComponent implements OnInit {
   showDirectionLinks: boolean = true
   motcle = null;
   p: number = 1;
-
+  entete_desktop= require("../../../assets/images/entete_desktop.jpg");
   constructor(private _vendeurService:VendeurService) {}
 
   @ViewChild('actionTpl', { static: true }) actionTpl: TemplateRef<any>;

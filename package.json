@@ -30,7 +30,6 @@
     "export-to-csv": "^0.2.1",
     "jquery": "^3.6.0",
     "js-sha1": "^0.6.0",
-    "ng-thermal-print": "^1.0.3",
     "ng-zorro-antd": "^11.1.0",
     "ng2-charts": "^2.4.2",
     "ngx-bootstrap": "^6.2.0",

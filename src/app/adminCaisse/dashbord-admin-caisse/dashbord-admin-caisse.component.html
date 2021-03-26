@@ -136,10 +136,8 @@
                   </td>
                   <td style="text-align: center;">{{currencyFormat(item.monnaiePrepa)}}</td>
                     <td>
-                      <button type="button" *ngIf="item.etat==3" class="btn btn-warning" (click)="showMoodalEncours();selected = item;">En cours de livraison </button>
+                      <button type="button" *ngIf="item.etat==3" class="btn btn-warning" (click)="showMoodalEncours();selected = item;handlePanier(item.panier);">En cours de livraison </button>
                       <button type="button" *ngIf="item.etat==4" class="btn btn-warning" (click)="showMoodalPayer();selected = item;">Payer </button>
-                      <button type="button"  class="btn btn-warning" (click)="requestUsb()">Connect </button>
-                      <button type="button"  class="btn btn-warning" (click)="print()" [disabled]="status === false">print </button>
                      </td>
 
                   </tr>
@@ -271,4 +269,81 @@
     </div>
   </div>
 </div>
-  
+
+<div id="print" class="w3-modal">
+  <div class="w3-modal-content" style="border-radius: 5px;padding: 3rem;">
+    <div class="w3-container">
+      <span (click)="hideMoodalprint()" style="font-size: 2rem;" class="w3-button w3-display-topright">&times;</span>
+      <div class="row" style="text-align: center;">
+        
+        <div class="col-12" style="text-align: center;">
+         
+                             
+          <div id="invoice" *ngIf="selected" >
+            <div class="panel-heading" >
+              <div class="panel panel-default"  id="tntrecuimpressionabonnement">
+                <div class="panel-heading">
+                  <div style="text-align: center;">
+                    <img src="https://rapidos.sn/wp-content/uploads/2020/04/graine-d-or.jpg" class="img-rounded" style="width: 70%;height: 5rem;"   height="100"/>
+                  
+                  </div>
+                  <div style="text-align: center;">
+                    <h3>Almadies</h3>
+                    <h5>Tel : 33 820 85 73</h5>
+                  </div>
+                  <p align="left"  >
+                    <strong style="font-size: 0.8rem !important;">N° commande:</strong> <span style="font-size: 0.8rem !important;"> {{selected.commande}}</span><br>
+                    <strong style="font-size: 0.8rem !important;">Caissier(e):</strong><span style="font-size: 0.8rem !important;">{{displayData(selected.caissier,'prenom')}} {{displayData(selected.caissier,'nom')}} Le {{displayDate1()}}</span><br>
+                    <strong style="font-size: 0.8rem !important;">Vendeuse:</strong><span style="font-size: 0.8rem !important;">{{displayData(selected.vendeuse,'prenom')}} {{displayData(selected.vendeuse,'nom')}}</span><br>
+                    <strong style="font-size: 0.8rem !important;">Livreur:</strong><span style="font-size: 0.8rem !important;">{{displayData(selected.livreur,'prenom')}} {{displayData(selected.livreur,'nom')}}</span><br>
+                    <strong style="font-size: 0.8rem !important;">Whatsapp:</strong> <span style="font-size: 0.8rem !important;">{{selected.client}}</span>
+                  </p>
+                </div>
+                <div class="panel-body" style="font-size: 0.7rem !important;">
+                  <table class="table" style="font-size: 0.7rem !important;">
+                    <hr>
+                    <tr style="border-top: 2px solide black;border-bottom: 2px solide black;">
+                      <th>Qte</th>
+                      <th>Produit</th>
+                      <th>Prix TTC</th>
+                    </tr>
+                    <tr class="text-uppercase" *ngFor="let i of listPanierToPrint">
+                      <td>{{i.qte}}</td>
+                      <td>{{i.article}}</td>
+                      <td>{{i.prix}} Fcfa</td>
+                      <!--<td>
+                      <b align="left"> Numéro commande:</b>  {{selected.id}}<br>
+                      <b align="left"> Désignation:</b> <span style="text-align: right;"> {{selected.designation}}</span><br>
+                      <b align="left">Montant: </b>{{selected.montant}} fcfa<br>
+                      <b style="text-align: center;"> Total: {{getTotal(selected.montant,selected.frais_livraison)}} fcfa</b> <br>
+                      </td>-->
+                    
+                    </tr>
+                  
+                  </table>
+                  <hr>
+                  <div style="text-align: center;">
+                    <b >Frais de livraison:</b>{{selected.fraisLivraison}} fcfa<br>
+                    <b > Total TTC: {{selected.montant}} fcfa</b> <br>
+                  </div>
+                  <hr>
+                  <br><br>
+                  <div style="text-align: center;">
+                    <b>Ouvert de 6h30 à 20h30</b><br>
+                    <b > Merci de votre visite - A très bientôt</b> <br>
+                  </div>
+
+                </div>
+                <div class="panel-footer">
+                </div>
+              </div>
+            </div>
+          </div>
+          <div>
+            <button class="btn btn-primary" (click)="hideMoodalprint();print()">Imprimer</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

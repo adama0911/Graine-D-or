@@ -1,4 +1,5 @@
 <div class="container" style="min-width:100%">
+
     <div nz-row [nzGutter]="{ xs: 24, sm: 24, md: 24, lg: 24 }" style="margin-top: 2rem;">
         <div nz-col class="gutter-row" [nzSpan]="24">
             <div class="inner-box">
@@ -12,6 +13,7 @@
             </div>
         </div>
     </div>
+
     <div nz-row [nzGutter]="{ xs: 24, sm: 24, md: 24, lg: 24 }" style="margin-top: 2rem;">
         <div nz-col class="gutter-row" [nzSpan]="24">
             <div class="inner-box">
@@ -24,12 +26,12 @@
                 </ngx-table> -->
                 <div class="table-responsive">
                     <table class="table">
-                      <thead>
+                      <thead style="text-align: center;">
                         <tr >
                             <th *ngFor="let item of this.columns">{{item.title}}</th>
                         </tr>
                       </thead>
-                      <tbody>
+                      <tbody style="text-align: center;">
                         <tr *ngFor="let item of this.data | paginate: { itemsPerPage: 10, currentPage: p }">
                           <td>{{item.prenom}}</td>
                           <td>{{item.nom}}</td>
@@ -51,6 +53,7 @@
             </div>
         </div>
     </div>
+  
 </div>
 <ng-template let-row let-rowIndex="rowIndex" let-column="column" #actionTpl>
 <td>

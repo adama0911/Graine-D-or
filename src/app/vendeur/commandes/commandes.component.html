@@ -31,18 +31,28 @@
                     </ngx-table> -->
                     <div class="table-responsive">
                         <table class="table">
-                          <thead>
+                          <thead style="text-align: center;">
                             <tr>
                               <th *ngFor="let item of this.columns">{{item.title}}</th>
                             </tr>
                           </thead>
-                          <tbody>
+                          <tbody style="text-align: center;">
                             <tr *ngFor="let item of this.data | paginate: { itemsPerPage: 10, currentPage: p }">
-                              <td>{{item.commande}}</td>
+
+                              <td>
+                                <div class="dropdown">
+                                  <span *ngIf="item.refCommande != ''">{{item.commande}}</span>
+                                  <span *ngIf="item.refCommande == ''">refCommande</span>
+                                  <div class="dropdown-content">
+                                    <p style="color: black;">{{displayPanier(item.designation)}}</p>
+                                  </div>
+                                </div>
+                              </td>
+
                               <td>{{item.livreur}}</td>
                               <td>{{item.client}}</td>
-                              <td>{{item.montantCommande}}</td>
-                              <td>{{item.montantLivraison}}</td>
+                              <td>{{currencyFormat(item.montantCommande)}}</td>
+                              <td>{{currencyFormat(item.montantLivraison)}}</td>
                               <td>
                                 <p *ngIf="item.paiement==1" >{{item.paiementText}}</p>
                                 <p *ngIf="item.paiement==2" >{{item.paiementText}}</p>
@@ -59,11 +69,12 @@
                                 <p *ngIf="item.etat==4">{{item.etatText}}</p> 
                                 <p *ngIf="item.etat==5">{{item.etatText}}</p> 
                               </td>
-                              <td>{{item.monnaie}}</td>
-                              <td>{{item.action}}</td>
+                              <td>{{currencyFormat(item.monnaie)}}</td>
                               <td>
-                                  <button class="btn btn-danger" *ngIf="item.etat==1" (click)="modalOK(item,'2');">Valider</button>
-                                  <button class="btn btn-info" *ngIf="item.etat==2" (click)="modalOK(item,'3');">Preparer</button>
+                                  <button class="btn btn-danger btn-lg" *ngIf="item.etat==1 && item.livreur!=''" (click)="modalOK(item,'2');">Valider</button>
+                                  <button class="btn btn-warning btn-lg" *ngIf="item.etat==1 && item.livreur==''" (click)="modalOK(item,'0');">Assigner</button>
+                                  <button class="btn btn-info btn-lg" *ngIf="item.etat==2" (click)="modalOK(item,'3');">Preparer</button>
+                               
                                 </td>
                             </tr>
                           </tbody>
@@ -116,7 +127,7 @@
   </div>
 </ng-template>
 
-<div id="idLogout" class="w3-modal" >
+<div id="idModal" class="w3-modal" >
   <div class="w3-modal-content alert-info" style="border-radius: 5px;padding: 3rem;">
     <div class="w3-container">
       <span (click)="hideMoodal()" style="font-size: 2rem;" class="w3-button w3-display-topright">&times;</span>
@@ -124,8 +135,19 @@
           <div class="col-12" style="text-align: center;">
             <h2 *ngIf="this.modalEtat=='2'">Voulez-vous vraiment valider la commande ? </h2>
             <h2 *ngIf="this.modalEtat=='3'">Êtes-vous entrain de préparer la commande ? </h2>
-            <button class="btn btn-danger" style="margin-right: 5px;" (click)="hideMoodal()">Non</button>
-            <button class="btn btn-success" style="margin-right: 5px;" (click)="changerEtatCommander(this.currentCom,this.modalEtat)">Oui</button>
+            <div *ngIf="this.modalEtat=='0'">
+              <h2>Assignement de la commande</h2>
+              <div class="form-group">
+                <label for="exampleFormControlSelect1">Liste des livreurs pointés</label>
+                <select class="form-control" id="exampleFormControlSelect1" [(ngModel)]="this.currentLivreur" [ngModelOptions]="{standalone: true}">
+                  <option *ngFor="let item of listLivreurs" value="{{item.id}}">{{item.prenom}} {{item.nom}}</option>
+                </select>
+              </div>
+            </div>
+            <button *ngIf="this.modalEtat!='0'" class="btn btn-danger btn-lg" style="margin-right: 5px;" (click)="hideMoodal()">Non</button>
+            <button *ngIf="this.modalEtat!='0'" class="btn btn-success btn-lg" style="margin-right: 5px;" (click)="changerEtatCommander(this.currentCom,this.modalEtat)">Oui</button>
+            <button *ngIf="this.modalEtat=='0'" class="btn btn-danger btn-lg" style="margin-right: 5px;" (click)="hideMoodal()">Annuler</button>
+            <button *ngIf="this.modalEtat=='0'" class="btn btn-success btn-lg" style="margin-right: 5px;" (click)="assignerCommande(this.currentCom,this.currentLivreur)">Assigner</button>
           </div>
       </div>
     </div>

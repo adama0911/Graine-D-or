@@ -2,8 +2,6 @@ import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { Columns, DefaultConfig } from 'ngx-easy-table';
 import { Config } from 'protractor';
 import { AdminGeneralService } from 'src/app/services/adminGeneral/admin-general.service';
-import { PrintDriver } from 'ng-thermal-print/lib/drivers/PrintDriver';
-import { PrintService, UsbDriver, WebPrintDriver } from 'ng-thermal-print';
 
 @Component({
   selector: 'app-dashbord-admin-caisse',
@@ -26,6 +24,14 @@ export class DashbordAdminCaisseComponent implements OnInit {
   listeSave;
   audio
   dataToDisplay = [];
+  listPanierToPrint =[]
+  handlePanier(arg){
+    console.log(arg)
+    this.listPanierToPrint = [] 
+    this.listPanierToPrint = JSON.parse(arg);
+    console.log(this.listPanierToPrint)
+    //this.print()
+  }
   formateData(arg){
   this.dataToDisplay = [];
 
@@ -50,6 +56,7 @@ export class DashbordAdminCaisseComponent implements OnInit {
         livreur:i.livreur,
         client:i.numero_client,
         vendeuse:i.vendeuse,
+        caissier:i.caissier,
         montant:parseInt(i.montant)-parseInt(i.frais_livraison),
         fraisLivraison:parseInt(i.frais_livraison),
         paiement:paiement,
@@ -117,38 +124,13 @@ export class DashbordAdminCaisseComponent implements OnInit {
       }
     }
   }
-  status: boolean = false;
-  usbPrintDriver: UsbDriver;
-  webPrintDriver: WebPrintDriver;
-  ip: string = '';
-  constructor(private _serviceAdmin:AdminGeneralService,private printService: PrintService) { 
-    this.usbPrintDriver = new UsbDriver();
-        this.printService.isConnected.subscribe(result => {
-          console.log(result)
-            this.status = result;
-            if (result) {
-                console.log('Connected to printer!!!');
-            } else {
-            console.log('Not connected to printer.');
-            }
-        });
+
+  constructor(private _serviceAdmin:AdminGeneralService) { 
+    
   }
-  requestUsb() {
-    this.usbPrintDriver.requestUsb().subscribe(result => {
-        this.printService.setDriver(this.usbPrintDriver, 'ESC/POS');
-    });
-}
-
-print(driver: PrintDriver) {
-  this.printService.init()
-      .setBold(true)
-      .writeLine('Hello World!')
-      .setBold(false)
-      .feed(4)
-      .cut('full')
-      .flush();
-}
-
+  displayDate1(){
+    return new Date().toLocaleString()
+  }
 
 
   @ViewChild('panier', { static: true }) panier: TemplateRef<any>;
@@ -188,24 +170,13 @@ print(driver: PrintDriver) {
           this._serviceAdmin.getCommande({debut:dateDebut,fin:dateFin}).then(res=>{
             if(res.status == 1){
               this.calculeForBashbord(res.data)
-              this.data = res.data
-              this.configuration = { ...DefaultConfig };
-              this.configuration.searchEnabled = true;
-              this.columns = [
-                { key: 'commande', title: 'COMMANDE' , cellTemplate: this.panier},
-                { key: 'livreur', title: 'LIVREUR', cellTemplate: this.livreur },
-                { key: 'numero_client', title: 'CLIENT' },
-                { key: 'montant', title: 'MONTANT COMMANDE' },
-                { key: 'frais_livraison', title: 'MONTANT LIVRAISON' },
-                { key: 'mode_paiement', title: 'PAIEMENT' , cellTemplate: this.paiementTpl},
-                { key: 'recuperation', title: 'RÉCUPÉRATION' , cellTemplate: this.recuperationTpl},
-                { key: 'etat', title: 'ETAT COMMANDE' , cellTemplate: this.etatTpl},
-                { key: 'monnaie', title: 'MONNAIE À PRÉPARÉE' , cellTemplate: this.monnaiePrepa },
-                { key: 'action', title: 'Actions', cellTemplate: this.actionTpl },
-              ];
+              let d = res.data.reverse()
+              this.data = d
+              this.listeSave = d
+              this.formateData(d)
               this.loading = false;
-              this.showMoodalNotifEncours();
-
+              this.hideMoodalEncours();
+              this.showMoodalprint();
             }else{
               this.loading = false;
 
@@ -262,6 +233,37 @@ print(driver: PrintDriver) {
     
    
   }
+  print() {
+    /* this.printService.init()
+             .setBold(true)
+             .writeLine('Hello World!')
+             .setBold(false)
+             .feed(4)
+             .cut('full')
+             .flush();
+             console.log(this.printService)*/
+             let printContents, popupWin;
+             printContents = document.getElementById("invoice").innerHTML;
+             for(let i = 0;i<3;i++){
+              
+                let w =window.open();
+                 w.document.write(`
+                 <html>
+                     <head>
+                         <style>
+                             //........Customized style.......
+                            
+                         </style>
+                     </head>
+                     <body onload="window.print();window.close()">${printContents} <br/><br/><br/><br/></body>
+                 </html>`);
+                 w.print();
+                 w.close();
+             }
+    
+ 
+   }
+ 
   recherche(){
     this.loading = true;
 
@@ -336,6 +338,8 @@ print(driver: PrintDriver) {
 
   }
   displayData(obj,nom){
+    if(obj != ""){
+      
     if(obj.includes("{")){
       let ob = JSON.parse(obj);
       if(nom =="nom"){
@@ -353,6 +357,7 @@ print(driver: PrintDriver) {
       return "";
     }else{
       return obj;
+    }
     }
    
   }
@@ -373,18 +378,25 @@ print(driver: PrintDriver) {
     document.getElementById('id0Encours').style.display = "block";
     setTimeout(()=>{
       document.getElementById('id0Encours').style.display = "none";
-    },5000)
+    },1000)
   }
   showMoodalNotifPayer(){
     document.getElementById('id0Payer').style.display = "block";
     setTimeout(()=>{
       document.getElementById('id0Payer').style.display = "none";
-    },5000)
+    },1000)
   }
   hideMoodalPayerNotif(){
     document.getElementById('id0Payer').style.display = "none";
   }
   hideMoodalEncoursNotif(){
     document.getElementById('id0Encours').style.display = "none";
+  }
+  
+  showMoodalprint(){
+    document.getElementById('print').style.display = "block";
+  }
+  hideMoodalprint(){
+    document.getElementById('print').style.display = "none";
   }
 }
