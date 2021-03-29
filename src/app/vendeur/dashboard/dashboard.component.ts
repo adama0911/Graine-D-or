@@ -267,6 +267,7 @@ export class DashboardComponent implements OnInit {
     });
     
     this.barChartDatas(datas)
+    this.oughnutChartDatas(datas);
     return data;
   }
 
