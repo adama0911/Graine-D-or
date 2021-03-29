@@ -138,6 +138,7 @@
                     <td>
                       <button type="button" *ngIf="item.etat==3" class="btn btn-warning" (click)="showMoodalEncours();selected = item;handlePanier(item.panier);">En cours de livraison </button>
                       <button type="button" *ngIf="item.etat==4" class="btn btn-warning" (click)="showMoodalPayer();selected = item;">Payer </button>
+                      <button type="button" *ngIf="item.etat==3 || item.etat==4 || item.etat==5" class="btn btn-warning" (click)=" this.showMoodalprint();selected = item;">Imprimer </button>
                      </td>
 
                   </tr>
