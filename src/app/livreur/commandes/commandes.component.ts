@@ -292,7 +292,7 @@ displayPanier(arg){
     let df = (new Date().toJSON()).split("T")[0]
     let dateDebut = dd.split('-')[2]+"/"+dd.split('-')[1]+"/"+dd.split('-')[0]
     let dateFin = df.split('-')[2]+"/"+df.split('-')[1]+"/"+df.split('-')[0]
-    this._livreurService.getCommandes({debut:"01/01/2019",fin:dateFin}).then(res=>{
+    this._livreurService.getCommandes({debut:dateDebut,fin:dateFin}).then(res=>{
       console.log(res);
       if(res.status==1){
         this.dataSave = this.data = this.parseDatas(res.data);
@@ -302,10 +302,10 @@ displayPanier(arg){
     setInterval(()=>{
       let dateDebut = dd.split('-')[2]+"/"+dd.split('-')[1]+"/"+dd.split('-')[0]
         let dateFin = df.split('-')[2]+"/"+df.split('-')[1]+"/"+df.split('-')[0]
-        this._livreurService.getCommandes({debut:"01/01/2019",fin:dateFin}).then(res=>{
+        this._livreurService.getCommandes({debut:dateDebut,fin:dateFin}).then(res=>{
           console.log(res);
           if(res.status==1){
-            this.dataSave = this.data = this.parseDatas(res.data);
+            this.dataSave = this.data = (this.parseDatas(res.data)).reverse();
             if(this.dataSave.length < res.data.length){
               this.loading = false;
               this.audio = new Audio();
@@ -316,5 +316,4 @@ displayPanier(arg){
         })
     },10000)
   }
-
 }
