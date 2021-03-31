@@ -24,6 +24,13 @@ export class LivreurService {
     return this.http.post(link,params,{headers:this.header}).toPromise().then( res => {console.log(res); return res} ).catch(error => {console.log(error); return 'bad' });
   } 
 
+  public getCommandesByVendeuse(param): Promise<any>{
+    let params="param="+JSON.stringify(param);
+    console.log(params);
+    let link=this.url+ '/admin/getCommandesByIdVendeuse';
+    return this.http.post(link,params,{headers:this.header}).toPromise().then( res => {console.log(res); return res} ).catch(error => {console.log(error); return 'bad' });
+  } 
+
   public getLivreurs(param): Promise<any>{
     let params="param="+JSON.stringify(param);
     console.log(params);

@@ -141,7 +141,7 @@
               <div class="form-group">
                 <label for="exampleFormControlSelect1">Liste des livreurs pointés</label>
                 <select class="form-control" id="exampleFormControlSelect1" [(ngModel)]="this.currentLivreur" [ngModelOptions]="{standalone: true}">
-                  <option *ngFor="let item of listLivreurs" value="{{item.id}}">{{item.prenom}} {{item.nom}}</option>
+                  <option *ngFor="let item of listLivreurs" value="{{item.idUser}}">{{item.prenom}} {{item.nom}}</option>
                 </select>
               </div>
             </div>

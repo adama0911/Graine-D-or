@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Columns, Config, DefaultConfig } from 'ngx-easy-table';
 import * as XLSX from 'xlsx';
+import { Router } from '@angular/router';
+
 
 import {
   ChangeDetectionStrategy,
@@ -11,6 +13,7 @@ import { commandeItem } from '../interfaces/commandeItem.interface';
 import { ConfigService } from 'src/app/services/Config.service';
 import { VendeurService } from 'src/app/services/vendeur.service';
 import { PageChangedEvent } from 'ngx-bootstrap/pagination';
+
 
 
 
@@ -45,7 +48,7 @@ export class CommandesComponent implements OnInit {
     this.modalEtat = etat;
   }
 
-  constructor (private _vendeurService:VendeurService){
+  constructor (private router:Router,private _vendeurService:VendeurService){
 
   }
 
@@ -287,9 +290,16 @@ export class CommandesComponent implements OnInit {
     const startItem = (event.page - 1) * event.itemsPerPage;
     const endItem = event.page * event.itemsPerPage;
     this.data = this.dataSave.slice(startItem, endItem);
- }
+  }
     
  
+  reloadCurrentRoute() {
+    let currentUrl = this.router.url;
+    this.router.navigateByUrl('/', {skipLocationChange: true}).then(() => {
+        this.router.navigate([currentUrl]);
+    });
+}
+
 
 
   /**
@@ -299,6 +309,7 @@ export class CommandesComponent implements OnInit {
   **/
    audio
   ngOnInit(): void {
+
     this.configuration = { ...DefaultConfig };
     this.configuration.searchEnabled = true;
     // ... etc.
@@ -325,11 +336,12 @@ export class CommandesComponent implements OnInit {
     })
 
     this.refSetInterval = setInterval(()=>{
+      let user =JSON.parse(sessionStorage.getItem('currentUser'));
       let dd = (new Date().toJSON()).split("T")[0]
       let df = (new Date().toJSON()).split("T")[0]
       let dateDebut = dd.split('-')[2]+"/"+dd.split('-')[1]+"/"+dd.split('-')[0]
       let dateFin = df.split('-')[2]+"/"+df.split('-')[1]+"/"+df.split('-')[0]
-      this._vendeurService.getCommandes({debut:dateDebut,fin:dateFin}).then(res=>{
+      this._vendeurService.getCommandes({idVendeuse:user.id,debut:dateDebut,fin:dateFin}).then(res=>{
         console.log(res);
         if(res.status==1){
           this.dataSave = this.data = (this.parseDatas(res.data)).reverse();
@@ -352,44 +364,43 @@ export class CommandesComponent implements OnInit {
           case 1:
             element.etatText = 'pointé';
             break;
-          case 2:
+          case 0:
             element.etatText = 'non pointé'
         }
 
         if(element.etat==1){
-            data.push( 
-              {
-
-                accesslevel: element.accesslevel,
-                adresse: element.adresse,
-                created_at: (new Date(element.created_at)).toLocaleDateString(),
-                livreur: element.livreur,
-                deleted_at: element.deleted_at,
-                depends_on:element.depends_on,
-                etat: element.etat,
-                etatText:element.etatText,
-                first_log:element.first_log,
-                id: element.id,
-                nom: element.nom,
-                prenom: element.prenom,
-                password: element.password,
-                telephone: element.telephone,
-                updated_at: (new Date(element.updated_at)).toLocaleDateString(),
-            });
+          data.push( 
+            {
+  
+              accesslevel: element.accesslevel,
+              created_at: (new Date(element.created_at)).toLocaleDateString(),
+              etat: element.etat,
+              etatText:element.etatText,
+              id: element.id,
+              idUser:element.idUser,
+              login:element.login,
+              nom: element.nom,
+              timestamp: element.timestamp,
+              prenom: element.prenom,
+              updated_at: (new Date(element.updated_at)).toLocaleDateString(),
+          });
+      
         }
-    });
-    console.log(data)
+
+      });
+    //console.log(data)
     return data;
-  }
+}
 
 
   getCommandes(){
+    let user =JSON.parse(sessionStorage.getItem('currentUser'));
     this.loading = true;
     let dd = (new Date().toJSON()).split("T")[0]
     let df = (new Date().toJSON()).split("T")[0]
     let dateDebut = dd.split('-')[2]+"/"+dd.split('-')[1]+"/"+dd.split('-')[0]
     let dateFin = df.split('-')[2]+"/"+df.split('-')[1]+"/"+df.split('-')[0]
-    this._vendeurService.getCommandes({debut:dateDebut,fin:dateFin}).then(res=>{
+    this._vendeurService.getCommandes({idVendeuse:user.id,debut:dateDebut,fin:dateFin}).then(res=>{
       console.log(res);
       if(res.status==1){
         this.dataSave = this.data = (this.parseDatas(res.data)).reverse();

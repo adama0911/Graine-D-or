@@ -99,7 +99,7 @@ export class HomeComponent implements OnInit {
         console.log(res)
         if(res.status == 1){
           sessionStorage.clear();
-          this.router.navigate(["/login"])
+          this.router.navigate(["/"])
         }
       })
   }

@@ -271,6 +271,7 @@ displayPanier(arg){
   **/
    audio
   ngOnInit(): void {
+    
     this.configuration = { ...DefaultConfig };
     this.configuration.isLoading = true;
     this.configuration.searchEnabled = true;

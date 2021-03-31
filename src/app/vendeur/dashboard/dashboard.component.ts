@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Columns, Config, DefaultConfig } from 'ngx-easy-table';
+import { Router } from '@angular/router';
+
 
 import {
   ChangeDetectionStrategy,
@@ -40,7 +42,7 @@ export class DashboardComponent implements OnInit {
   @ViewChild('panier', { static: true }) panier: TemplateRef<any>;
   @ViewChild('actionTpl', { static: true }) actionTpl: TemplateRef<any>;
 
-  constructor (private _confService:ConfigService,private _vendeurService:VendeurService){
+  constructor (private router:Router,private _confService:ConfigService,private _vendeurService:VendeurService){
 
   }
 
@@ -132,10 +134,12 @@ export class DashboardComponent implements OnInit {
   }
 
   validerRechercheInterval(){
+    let user =JSON.parse(sessionStorage.getItem('currentUser'));
+
     console.log({debut:(new Date(this.debut)).toLocaleDateString(),fin:(new Date(this.fin)).toLocaleDateString()})
 
     this.loading = true;
-    this._vendeurService.getCommandes({debut:(new Date(this.debut)).toLocaleDateString(),fin:(new Date(this.fin)).toLocaleDateString()}).then(res=>{
+    this._vendeurService.getCommandes({idVendeuse:user.id,debut:(new Date(this.debut)).toLocaleDateString(),fin:(new Date(this.fin)).toLocaleDateString()}).then(res=>{
       console.log(res);
       if(res.status==1){
         this.dataSave = this.data = this.parseDatas(res.data);
@@ -293,12 +297,13 @@ export class DashboardComponent implements OnInit {
  }
 
  getCommandes(){
+  let user =JSON.parse(sessionStorage.getItem('currentUser'));
   let dd = (new Date().toJSON()).split("T")[0]
   let df = (new Date().toJSON()).split("T")[0]
   let dateDebut = dd.split('-')[2]+"/"+dd.split('-')[1]+"/"+dd.split('-')[0]
   let dateFin = df.split('-')[2]+"/"+df.split('-')[1]+"/"+df.split('-')[0]
   this.loading = true;
-  this._vendeurService.getCommandes({debut:dateDebut,fin:dateFin}).then(res=>{
+  this._vendeurService.getCommandes({idVendeuse:user.id,debut:dateDebut,fin:dateFin}).then(res=>{
     console.log(res);
     if(res.status==1){
       this.dataSave = this.data = this.parseDatas(res.data);
@@ -372,6 +377,7 @@ export class DashboardComponent implements OnInit {
    * @function: methode appelé lorsque le component est pret
   **/
   ngOnInit(): void {
+    
     this.configuration = { ...DefaultConfig };
     this.configuration.searchEnabled = true;
     // ... etc.
@@ -396,9 +402,10 @@ export class DashboardComponent implements OnInit {
 
     firstLast = this.monthFirstLastDay(dd.split('-')[1]);
     
+    let user =JSON.parse(sessionStorage.getItem('currentUser'));
     let dateDebut = firstLast.firstday +dd.split('-')[1]+"/"+dd.split('-')[0]
     let dateFin = firstLast.lastday+ df.split('-')[1]+"/"+df.split('-')[0]
-    this._vendeurService.getCommandes({debut:dateDebut,fin:dateFin}).then(res=>{
+    this._vendeurService.getCommandes({idVendeuse:user.id,debut:dateDebut,fin:dateFin}).then(res=>{
       console.log(res);
       if(res.status==1){
         this.dataChart =  this.parseDatas(res.data);
@@ -409,12 +416,13 @@ export class DashboardComponent implements OnInit {
 
 
     this.refSetInterval = setInterval(()=>{
+      let user =JSON.parse(sessionStorage.getItem('currentUser'));
       let dd = (new Date().toJSON()).split("T")[0]
       let df = (new Date().toJSON()).split("T")[0]
       let dateDebut = dd.split('-')[2]+"/"+dd.split('-')[1]+"/"+dd.split('-')[0]
       let dateFin = df.split('-')[2]+"/"+df.split('-')[1]+"/"+df.split('-')[0]
       this.loading = true;
-      this._vendeurService.getCommandes({debut:dateDebut,fin:dateFin}).then(res=>{
+      this._vendeurService.getCommandes({idVendeuse:user.id,debut:dateDebut,fin:dateFin}).then(res=>{
         console.log(res);
         if(res.status==1){
           this.dataSave = this.data = this.parseDatas(res.data);

@@ -61,26 +61,22 @@ export class LivreursComponent implements OnInit {
           case 1:
             element.etatText = 'pointé';
             break;
-          case 2:
+          case 0:
             element.etatText = 'non pointé'
         }
         data.push( 
           {
 
             accesslevel: element.accesslevel,
-            adresse: element.adresse,
             created_at: (new Date(element.created_at)).toLocaleDateString(),
-            livreur: element.livreur,
-            deleted_at: element.deleted_at,
-            depends_on:element.depends_on,
             etat: element.etat,
             etatText:element.etatText,
-            first_log:element.first_log,
             id: element.id,
+            idUser:element.idUser,
+            login:element.login,
             nom: element.nom,
+            timestamp: element.timestamp,
             prenom: element.prenom,
-            password: element.password,
-            telephone: element.telephone,
             updated_at: (new Date(element.updated_at)).toLocaleDateString(),
         });
     });
@@ -130,8 +126,7 @@ export class LivreursComponent implements OnInit {
     this.columns = [
       { key: 'prenom', title: 'PRENOM' },
       { key: 'nom', title: 'NOM' },
-      { key: 'telephone', title: 'TELEPHONE' },
-      { key: 'adresse', title: 'ADRESSE' },
+      { key: 'login', title: 'LOGIN' },
       { key: 'created_at', title: "DATE D'INCRIPTION" },
       { key: 'etat', title: "ETAT" },
     ];
@@ -139,7 +134,6 @@ export class LivreursComponent implements OnInit {
 
     this._vendeurService.getLivreurs({}).then(res=>{
       console.log(res.data);
-      alert('inside')
       //this.data = this.dataSave = res.data;
         this.dataSave = this.data = this.parseDatas(res.data);
     })
