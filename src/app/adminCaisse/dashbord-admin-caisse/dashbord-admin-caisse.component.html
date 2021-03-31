@@ -141,7 +141,6 @@
                       <button type="button" *ngIf="item.etat==4 && item.paiement == 'sentoolpay'" class="btn btn-success" (click)="showMoodalPayer();selected = item;">livrer </button>
                       <button type="button" *ngIf="item.etat==4 && item.paiement != 'sentoolpay'" class="btn btn-success" (click)="showMoodalPayer();selected = item;"> Livrer et Payer </button>
                       <button type="button" *ngIf="item.etat==1" class="btn btn-danger" (click)="showMoodalannuler();selected = item;">Annuler </button>
-                      <button type="button"  class="btn btn-danger" (click)="selected = item;handlePanier(item.panier);this.showMoodalprint();">imprimer </button>
                      </td>
 
                   </tr>

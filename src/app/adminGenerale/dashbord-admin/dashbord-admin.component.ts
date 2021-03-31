@@ -45,7 +45,7 @@ export class DashbordAdminComponent implements OnInit {
       if(i.etatPaiment == 0){
         etatPaiment1 = "en attente"
       }else if(i.etatPaiment == 1){
-        etatPaiment1 = "payer"
+        etatPaiment1 = "payée"
       }else{
         etatPaiment1 =  "Echec"
       }
@@ -245,7 +245,7 @@ export class DashbordAdminComponent implements OnInit {
         
       })
       this._serviceAdmin.getCompense().then(res =>{
-        console.log(res)
+        //console.log(res)
         this.soldeCompenseBBS = res.compense
       })
     },20000)
