@@ -30,8 +30,9 @@ export class DashbordAdminComponent implements OnInit {
     for(let i of arg){
       let paiement = "";
       let recuperation = ""
+      let etatPaiment1 = "" 
       if(i.mode_paiement == 1){
-        paiement = "en ligne"
+        paiement = "sentoolpay"
       }else{
         paiement = "à la livaison"
       }
@@ -40,6 +41,14 @@ export class DashbordAdminComponent implements OnInit {
       }else{
         recuperation = "sur place"
       }
+      
+      if(i.etatPaiment == 0){
+        etatPaiment1 = "en cours"
+      }else if(i.etatPaiment == 1){
+        etatPaiment1 = "payer"
+      }else{
+        etatPaiment1 =  "Echec"
+      }
       let mtt = parseInt(i.montant)-parseInt(i.frais_livraison)
       this.dataToDisplay.push({
         id:i.id,
@@ -47,13 +56,16 @@ export class DashbordAdminComponent implements OnInit {
         commande:i.refCommande,
         livreur:i.livreur,
         client:i.numero_client,
+        vendeuse:i.vendeuse,
+        caissier:i.caissier,
         montant:parseInt(i.montant)-parseInt(i.frais_livraison),
         fraisLivraison:parseInt(i.frais_livraison),
         paiement:paiement,
         recuperation:recuperation,
         etat:i.etat,
         panier:i.designation,
-        monnaiePrepa:this.monnairePrpa(mtt,i.frais_livraison)
+        monnaiePrepa:this.monnairePrpa(mtt,i.frais_livraison),
+        etatPaiment:etatPaiment1
       })
 
     }
@@ -68,10 +80,10 @@ export class DashbordAdminComponent implements OnInit {
     this.nbrCommandes = arg.length;
     for(let i of arg){
       let somme =  parseInt(i.montant) + parseInt(i.frais_livraison);
-      this.soldeGraineDor = this.soldeGraineDor + somme;
-      if(i.mode_paiement == 1){
+      this.soldeGraineDor = this.soldeGraineDor + parseInt(i.montant);
+      if(i.mode_paiement == 3){
         let somme =  parseInt(i.montant) + parseInt(i.frais_livraison);
-        this.soldeCompenseBBS = this.soldeCompenseBBS + somme;     
+        this.soldeCompenseBBS = this.soldeCompenseBBS + parseInt(i.montant);     
       }
     }
   }
@@ -227,7 +239,7 @@ export class DashbordAdminComponent implements OnInit {
         
         
       })
-    },10000)
+    },20000)
 
   }
   displayPanier(arg){

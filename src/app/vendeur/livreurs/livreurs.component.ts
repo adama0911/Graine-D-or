@@ -84,7 +84,7 @@ export class LivreursComponent implements OnInit {
             updated_at: (new Date(element.updated_at)).toLocaleDateString(),
         });
     });
-    console.log(data)
+    //console.log(data)
     return data;
   }
 
@@ -95,7 +95,7 @@ export class LivreursComponent implements OnInit {
    **/
   searchAll = () => {
     let value = this.motcle;
-    console.log("PASS", { value });
+    //console.log("PASS", { value });
   
     const filterTable = this.dataSave.filter(o =>
       Object.keys(o).some(k =>
@@ -139,7 +139,7 @@ export class LivreursComponent implements OnInit {
 
     this._vendeurService.getLivreurs({}).then(res=>{
       console.log(res.data);
-      
+      alert('inside')
       //this.data = this.dataSave = res.data;
         this.dataSave = this.data = this.parseDatas(res.data);
     })

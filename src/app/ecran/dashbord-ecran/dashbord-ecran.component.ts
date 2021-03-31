@@ -110,7 +110,7 @@ export class DashbordEcranComponent implements OnInit {
         
         
       })
-    },10000)
+    },20000)
 
   }
   displayPanier(arg){

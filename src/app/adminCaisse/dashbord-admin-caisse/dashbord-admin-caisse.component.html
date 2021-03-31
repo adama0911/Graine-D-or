@@ -97,8 +97,8 @@
                     <th style="border: 1px solid white;color: white;">client</th>
                     <th style="border: 1px solid white;color: white;">montant commande</th>
                     <th style="border: 1px solid white;color: white;">montant livraison</th>
-                    <th style="border: 1px solid white;color: white;">paiement</th>
-                    <th style="border: 1px solid white;color: white;">recuperation</th>
+                    <th style="border: 1px solid white;color: white;">mod paiement</th>
+                    <th style="border: 1px solid white;color: white;">Etat Paiement</th>
                     <th style="border: 1px solid white;color: white;">etat</th>
                     <th style="border: 1px solid white;color: white;">monnaie</th>
                     <th style="border: 1px solid white;color: white;">action</th>
@@ -106,8 +106,8 @@
                 </thead>
                 <tbody>                  
                   <tr *ngFor="let item of this.dataToDisplay | paginate: { itemsPerPage: 10, currentPage: p }">
-                  <td>{{displayDate(item.date)}}</td>
-                  <td>
+                  <td >{{displayDate(item.date)}}</td>
+                  <td >
                     <div class="dropdown">
                       <span *ngIf="item.refCommande != ''">{{item.commande}}</span>
                       <span *ngIf="item.refCommande == ''">refCommande</span>
@@ -116,16 +116,16 @@
                       </div>
                     </div>
                   </td>
-                  <td>
+                  <td >
                     <p *ngIf="item.livreur != ''">{{displayData(item.livreur,'prenom')}} {{displayData(item.livreur,'nom')}}</p>
                     <p *ngIf="item.livreur == ''">pas de livreur</p>
                   </td>
                  
-                  <td>{{formateNumClient(item.client)}}</td>
+                  <td >{{formateNumClient(item.client)}}</td>
                   <td style="text-align: center;">{{currencyFormat(item.montant)}}</td>
                   <td style="text-align: center;">{{currencyFormat(item.fraisLivraison)}}</td>
-                  <td>{{item.paiement}} </td>
-                  <td>{{item.recuperation}}</td>
+                  <td >{{item.paiement}} </td>
+                  <td >{{item.etatPaiment}}</td>
                   <td >
                     <div *ngIf="item.etat==-1" class="p-3 mb-2 bg-danger text-white" style="text-align: center;">Annuler </div>
                     <div *ngIf="item.etat==1" class="p-3 mb-2 bg-secondary text-white" style="text-align: center;">Enregistrer </div>
@@ -135,10 +135,10 @@
                     <div *ngIf="item.etat==5" class="p-3 mb-2 bg-success text-white" style="text-align: center;">Payer</div> 
                   </td>
                   <td style="text-align: center;">{{currencyFormat(item.monnaiePrepa)}}</td>
-                    <td>
+                    <td >
                       <button type="button" *ngIf="item.etat==3" class="btn btn-warning" (click)="showMoodalEncours();selected = item;handlePanier(item.panier);">En cours de livraison </button>
                       <button type="button" *ngIf="item.etat==4" class="btn btn-warning" (click)="showMoodalPayer();selected = item;">Payer </button>
-                      <button type="button" *ngIf="item.etat==3 || item.etat==4 || item.etat==5" class="btn btn-warning" (click)=" this.showMoodalprint();selected = item;">Imprimer </button>
+                      <button type="button" *ngIf="item.etat==3 || item.etat==4 || item.etat==5" class="btn btn-warning" (click)="handlePanier(item.panier);selected = item;this.showMoodalprint();">Imprimer </button>
                      </td>
 
                   </tr>
@@ -285,7 +285,7 @@
               <div class="panel panel-default"  id="tntrecuimpressionabonnement">
                 <div class="panel-heading">
                   <div style="text-align: center;">
-                    <img src="https://rapidos.sn/wp-content/uploads/2020/04/graine-d-or.jpg" class="img-rounded" style="width: 70%;height: 5rem;"   height="100"/>
+                    <img style="width: 7rem;"  src="https://rapidos.sn/wp-content/uploads/2020/04/graine-d-or.jpg" class="img-rounded" />
                   
                   </div>
                   <div style="text-align: center;">
@@ -301,14 +301,14 @@
                   </p>
                 </div>
                 <div class="panel-body" style="font-size: 0.7rem !important;">
-                  <table class="table" style="font-size: 0.7rem !important;">
+                  <table class="table" style="font-size: 0.7rem !important;width: 100%;">
                     <hr>
-                    <tr style="border-top: 2px solide black;border-bottom: 2px solide black;">
+                    <tr style="border-top: 2px solide black;border-bottom: 2px solide black;text-align: left;">
                       <th>Qte</th>
                       <th>Produit</th>
                       <th>Prix TTC</th>
                     </tr>
-                    <tr class="text-uppercase" *ngFor="let i of listPanierToPrint">
+                    <tr class="text-uppercase" style="text-align: left;" *ngFor="let i of listPanierToPrint">
                       <td>{{i.qte}}</td>
                       <td>{{i.article}}</td>
                       <td>{{i.prix}} Fcfa</td>

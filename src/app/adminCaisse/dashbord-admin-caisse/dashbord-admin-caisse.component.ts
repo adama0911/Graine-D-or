@@ -38,8 +38,9 @@ export class DashbordAdminCaisseComponent implements OnInit {
     for(let i of arg){
       let paiement = "";
       let recuperation = ""
+      let etatPaiment1 = "" 
       if(i.mode_paiement == 1){
-        paiement = "en ligne"
+        paiement = "sentoolpay"
       }else{
         paiement = "à la livaison"
       }
@@ -47,6 +48,14 @@ export class DashbordAdminCaisseComponent implements OnInit {
         recuperation = "à livrer"
       }else{
         recuperation = "sur place"
+      }
+      
+      if(i.etatPaiment == 0){
+        etatPaiment1 = "en cours"
+      }else if(i.etatPaiment == 1){
+        etatPaiment1 = "payer"
+      }else{
+        etatPaiment1 =  "Echec"
       }
       let mtt = parseInt(i.montant)-parseInt(i.frais_livraison)
       this.dataToDisplay.push({
@@ -63,7 +72,8 @@ export class DashbordAdminCaisseComponent implements OnInit {
         recuperation:recuperation,
         etat:i.etat,
         panier:i.designation,
-        monnaiePrepa:this.monnairePrpa(mtt,i.frais_livraison)
+        monnaiePrepa:this.monnairePrpa(mtt,i.frais_livraison),
+        etatPaiment:etatPaiment1
       })
 
     }
@@ -116,10 +126,10 @@ export class DashbordAdminCaisseComponent implements OnInit {
 
     this.nbrCommandes = arg.length;
     for(let i of arg){
-      let somme =  parseInt(i.montant) + parseInt(i.frais_livraison);
+      let somme =  parseInt(i.montant) ;
       this.soldeGraineDor = this.soldeGraineDor + somme;
-      if(i.mode_paiement == 1){
-        let somme =  parseInt(i.montant) + parseInt(i.frais_livraison);
+      if(i.mode_paiement == 3){
+        let somme =  parseInt(i.montant) ;
         this.soldeCompenseBBS = this.soldeCompenseBBS + somme;     
       }
     }
@@ -297,7 +307,7 @@ export class DashbordAdminCaisseComponent implements OnInit {
     this.df = (new Date().toJSON()).split("T")[0]
     let dateDebut = this.dd.split('-')[2]+"/"+this.dd.split('-')[1]+"/"+this.dd.split('-')[0]
     let dateFin = this.df.split('-')[2]+"/"+this.df.split('-')[1]+"/"+this.df.split('-')[0]
-    this._serviceAdmin.getCommande({debut:dateDebut,fin:dateFin}).then(res=>{
+    this._serviceAdmin.getCommandeByCaissier({debut:dateDebut,fin:dateFin,idCaissier:JSON.parse(sessionStorage.getItem('currentUser')).id}).then(res=>{
       if(res.status == 1){
         this.calculeForBashbord(res.data)
         let d = res.data.reverse()
@@ -316,7 +326,7 @@ export class DashbordAdminCaisseComponent implements OnInit {
       let f = (new Date().toJSON()).split("T")[0]
       let dateDebut = this.dd.split('-')[2]+"/"+this.dd.split('-')[1]+"/"+this.dd.split('-')[0]
       let dateFin = this.df.split('-')[2]+"/"+this.df.split('-')[1]+"/"+this.df.split('-')[0]
-      this._serviceAdmin.getCommande({debut:dateDebut,fin:dateFin}).then(res=>{
+      this._serviceAdmin.getCommandeByCaissier({debut:dateDebut,fin:dateFin,idCaissier:JSON.parse(sessionStorage.getItem('currentUser')).id}).then(res=>{
         console.log(res)
         if(res.status == 1){
           console.log(this.listeSave.length+" "+res.data.length)
@@ -339,7 +349,7 @@ export class DashbordAdminCaisseComponent implements OnInit {
         
         
       })
-    },10000)
+    },20000)
 
   }
   displayData(obj,nom){

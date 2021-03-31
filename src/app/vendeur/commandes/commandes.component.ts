@@ -341,7 +341,7 @@ export class CommandesComponent implements OnInit {
           }
         }
       })
-    },10000)
+    },20000)
 
   }
 
