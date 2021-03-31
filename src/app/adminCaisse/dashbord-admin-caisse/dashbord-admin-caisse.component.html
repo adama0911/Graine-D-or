@@ -118,7 +118,7 @@
                   </td>
                   <td >
                     <p *ngIf="item.livreur != ''">{{displayData(item.livreur,'prenom')}} {{displayData(item.livreur,'nom')}}</p>
-                    <p *ngIf="item.livreur == ''">pas de livreur</p>
+                    <p *ngIf="item.livreur == ''"></p>
                   </td>
                  
                   <td >{{formateNumClient(item.client)}}</td>
@@ -141,6 +141,7 @@
                       <button type="button" *ngIf="item.etat==4 && item.paiement == 'sentoolpay'" class="btn btn-success" (click)="showMoodalPayer();selected = item;">livrer </button>
                       <button type="button" *ngIf="item.etat==4 && item.paiement != 'sentoolpay'" class="btn btn-success" (click)="showMoodalPayer();selected = item;"> Livrer et Payer </button>
                       <button type="button" *ngIf="item.etat==1" class="btn btn-danger" (click)="showMoodalannuler();selected = item;">Annuler </button>
+                      <button type="button"  class="btn btn-danger" (click)="selected = item;handlePanier(item.panier);this.showMoodalprint();">imprimer </button>
                      </td>
 
                   </tr>
@@ -190,7 +191,7 @@
   <ng-template let-row let-rowIndex="rowIndex" let-column="column" #livreur>
     <td>
       <p *ngIf="row.livreur != ''">{{displayData(row.livreur,'prenom')}} {{displayData(row.livreur,'nom')}}</p>
-      <p *ngIf="row.livreur == ''">pas de livreur</p>
+      <p *ngIf="row.livreur == ''"></p>
     </td>
   </ng-template>
   <ng-template let-row let-rowIndex="rowIndex" let-column="column" #monnaiePrepa>
@@ -371,7 +372,7 @@
 <div id="annulerNotif" class="w3-modal">
   <div class="w3-modal-content alert alert-success" style="border-radius: 5px;padding: 3rem;">
     <div class="w3-container">
-      <span (click)="hideMoodalNotif()" style="font-size: 2rem;" class="w3-button w3-display-topright">&times;</span>
+      <span  style="font-size: 2rem;" class="w3-button w3-display-topright">&times;</span>
       <div class="row" style="text-align: center;">
         
         <div class="col-12" style="text-align: center;">

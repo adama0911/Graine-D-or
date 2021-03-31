@@ -178,17 +178,17 @@
 
 <ng-template let-row let-rowIndex="rowIndex" let-column="column" #etatTpl>
 
-  <div *ngIf="row.etat==-1" class="p-3 mb-2 bg-danger text-white" style="text-align: center;">Annuler </div>
-  <div *ngIf="row.etat==1" class="p-3 mb-2 bg-secondary text-white" style="text-align: center;">Enregistrer </div>
-  <div *ngIf="row.etat==2" class="p-3 mb-2 bg-info text-white" style="text-align: center;">Valider </div>
-  <div *ngIf="row.etat==3" class="p-3 mb-2 bg-warning text-white" style="text-align: center;">Preparer</div>
+  <div *ngIf="row.etat==-1" class="p-3 mb-2 bg-danger text-white" style="text-align: center;">Annulée </div>
+  <div *ngIf="row.etat==1" class="p-3 mb-2 bg-secondary text-white" style="text-align: center;">Enregistrée </div>
+  <div *ngIf="row.etat==2" class="p-3 mb-2 bg-info text-white" style="text-align: center;">Validée </div>
+  <div *ngIf="row.etat==3" class="p-3 mb-2 bg-warning text-white" style="text-align: center;">Preparée </div>
   <div *ngIf="row.etat==4" class="p-3 mb-2 bg-primary text-white" style="text-align: center;">En cour de livraison</div> 
-  <div *ngIf="row.etat==5" class="p-3 mb-2 bg-success text-white" style="text-align: center;">Payer</div> 
+  <div *ngIf="row.etat==5" class="p-3 mb-2 bg-success text-white" style="text-align: center;">Payée </div> 
 </ng-template>
 <ng-template let-row let-rowIndex="rowIndex" let-column="column" #livreur>
   <td>
     <p *ngIf="row.livreur != ''">{{displayData(row.livreur,'prenom')}} {{displayData(row.livreur,'nom')}}</p>
-    <p *ngIf="row.livreur == ''">pas de livreur</p>
+    <p *ngIf="row.livreur == ''"></p>
   </td>
 </ng-template>
 <ng-template let-row let-rowIndex="rowIndex" let-column="column" #monnaiePrepa>

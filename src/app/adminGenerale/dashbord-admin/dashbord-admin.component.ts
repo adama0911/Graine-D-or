@@ -43,7 +43,7 @@ export class DashbordAdminComponent implements OnInit {
       }
       
       if(i.etatPaiment == 0){
-        etatPaiment1 = "en cours"
+        etatPaiment1 = "en attente"
       }else if(i.etatPaiment == 1){
         etatPaiment1 = "payer"
       }else{
@@ -75,16 +75,12 @@ export class DashbordAdminComponent implements OnInit {
   calculeForBashbord(arg){
     this.nbrCommandes = 0;
     this.soldeGraineDor = 0;
-    this.soldeCompenseBBS = 0;
 
     this.nbrCommandes = arg.length;
     for(let i of arg){
       let somme =  parseInt(i.montant) + parseInt(i.frais_livraison);
       this.soldeGraineDor = this.soldeGraineDor + parseInt(i.montant);
-      if(i.mode_paiement == 3){
-        let somme =  parseInt(i.montant) + parseInt(i.frais_livraison);
-        this.soldeCompenseBBS = this.soldeCompenseBBS + parseInt(i.montant);     
-      }
+     
     }
   }
   @ViewChild('panier', { static: true }) panier: TemplateRef<any>;
@@ -184,6 +180,10 @@ export class DashbordAdminComponent implements OnInit {
       
       
     })
+    this._serviceAdmin.getCompense().then(res =>{
+      console.log(res)
+      this.soldeCompenseBBS = res.compense
+    })
   }
   periodiqueChecker:any;
   ngOnDestroy(){
@@ -212,6 +212,10 @@ export class DashbordAdminComponent implements OnInit {
       
       
     })
+    this._serviceAdmin.getCompense().then(res =>{
+      console.log(res)
+      this.soldeCompenseBBS = res.compense
+    })
      this.periodiqueChecker = setInterval(()=>{
       let d = (new Date().toJSON()).split("T")[0]
       let f = (new Date().toJSON()).split("T")[0]
@@ -228,6 +232,7 @@ export class DashbordAdminComponent implements OnInit {
           this.formateData(d)
           this.loading = false;
           if(this.listeSave.length < res.data.length){
+            console.log("Fiiiiiiiii")
             this.loading = false;
             this.audio = new Audio();
             this.audio.src ='../../assets/hangouts_message_1.mp3';
@@ -238,6 +243,10 @@ export class DashbordAdminComponent implements OnInit {
         }
         
         
+      })
+      this._serviceAdmin.getCompense().then(res =>{
+        console.log(res)
+        this.soldeCompenseBBS = res.compense
       })
     },20000)
 
