@@ -51,9 +51,9 @@ export class DashbordAdminCaisseComponent implements OnInit {
       }
       
       if(i.etatPaiment == 0){
-        etatPaiment1 = "en cours"
+        etatPaiment1 = "en attente"
       }else if(i.etatPaiment == 1){
-        etatPaiment1 = "payer"
+        etatPaiment1 = "payée"
       }else{
         etatPaiment1 =  "Echec"
       }

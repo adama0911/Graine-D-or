@@ -138,7 +138,8 @@
                   <td style="text-align: center;">{{currencyFormat(item.monnaiePrepa)}}</td>
                     <td >
                       <button type="button" *ngIf="item.etat==3" class="btn btn-warning" (click)="showMoodalEncours();selected = item;handlePanier(item.panier);">En cours de livraison </button>
-                      <button type="button" *ngIf="item.etat==4" class="btn btn-success" (click)="showMoodalPayer();selected = item;">Payer </button>
+                      <button type="button" *ngIf="item.etat==4 && item.paiement == 'sentoolpay'" class="btn btn-success" (click)="showMoodalPayer();selected = item;">livrer </button>
+                      <button type="button" *ngIf="item.etat==4 && item.paiement != 'sentoolpay'" class="btn btn-success" (click)="showMoodalPayer();selected = item;"> Livrer et Payer </button>
                       <button type="button" *ngIf="item.etat==1" class="btn btn-danger" (click)="showMoodalannuler();selected = item;">Annuler </button>
                      </td>
 
@@ -232,7 +233,7 @@
       <div class="row" style="text-align: center;">
         
         <div class="col-12" style="text-align: center;">
-          <h2>Vous voulez mettre à payer cette commande</h2>
+          <h2>Vous voulez finalisée cette commande</h2>
           <button class="btn btn-danger" style="margin-right: 5px;" (click)="hideMoodalPayer()">Annuler</button>
           <button class="btn btn-success" style="margin-right: 5px;" (click)="payer()">Valider</button>
 
