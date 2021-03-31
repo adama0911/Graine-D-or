@@ -72,11 +72,11 @@ import { DashbordEcranComponent } from './ecran/dashbord-ecran/dashbord-ecran.co
 const routes: Routes = [
   {
     path: "",
-    redirectTo: "/login",
+    redirectTo: "/",
     pathMatch: "full"
   },
   {
-    path:"login",
+    path:"",
     component:LoginComponent
   },
   { path: '', component: HomeComponent,
@@ -117,7 +117,7 @@ const routes: Routes = [
         },
         {
           path:"commandes",
-          component:CommandesComponent
+          component:CommandesComponent,
         },
         {
           path:"commandesLivreur",

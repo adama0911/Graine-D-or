@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Columns, Config, DefaultConfig } from 'ngx-easy-table';
+import { Router } from '@angular/router';
+
 
 import {
   ChangeDetectionStrategy,
@@ -38,7 +40,7 @@ export class DashboardComponent implements OnInit {
   @ViewChild('panier', { static: true }) panier: TemplateRef<any>;
   @ViewChild('actionTpl', { static: true }) actionTpl: TemplateRef<any>;
 
-  constructor (private _confService:ConfigService,private _vendeurService:VendeurService){
+  constructor (private router:Router,private _confService:ConfigService,private _vendeurService:VendeurService){
 
   }
 
@@ -312,6 +314,7 @@ export class DashboardComponent implements OnInit {
    * @function: methode appelé lorsque le component est pret
   **/
   ngOnInit(): void {
+    
     this.configuration = { ...DefaultConfig };
     this.configuration.searchEnabled = true;
     // ... etc.

@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Columns, Config, DefaultConfig } from 'ngx-easy-table';
 import * as XLSX from 'xlsx';
+import { Router } from '@angular/router';
+
 
 import {
   ChangeDetectionStrategy,
@@ -11,6 +13,7 @@ import { commandeItem } from '../interfaces/commandeItem.interface';
 import { ConfigService } from 'src/app/services/Config.service';
 import { VendeurService } from 'src/app/services/vendeur.service';
 import { PageChangedEvent } from 'ngx-bootstrap/pagination';
+
 
 
 
@@ -43,7 +46,7 @@ export class CommandesComponent implements OnInit {
     this.modalEtat = etat;
   }
 
-  constructor (private _vendeurService:VendeurService){
+  constructor (private router:Router,private _vendeurService:VendeurService){
 
   }
 
@@ -272,9 +275,16 @@ export class CommandesComponent implements OnInit {
     const startItem = (event.page - 1) * event.itemsPerPage;
     const endItem = event.page * event.itemsPerPage;
     this.data = this.dataSave.slice(startItem, endItem);
- }
+  }
     
  
+  reloadCurrentRoute() {
+    let currentUrl = this.router.url;
+    this.router.navigateByUrl('/', {skipLocationChange: true}).then(() => {
+        this.router.navigate([currentUrl]);
+    });
+}
+
 
 
   /**
@@ -283,6 +293,7 @@ export class CommandesComponent implements OnInit {
    * @function: methode appelé lorsque le component est pret
   **/
   ngOnInit(): void {
+
     this.configuration = { ...DefaultConfig };
     this.configuration.searchEnabled = true;
     // ... etc.

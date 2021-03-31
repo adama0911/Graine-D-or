@@ -270,6 +270,7 @@ displayPanier(arg){
    * @function: methode appelé lorsque le component est pret
   **/
   ngOnInit(): void {
+    
     this.configuration = { ...DefaultConfig };
     this.configuration.isLoading = true;
     this.configuration.searchEnabled = true;

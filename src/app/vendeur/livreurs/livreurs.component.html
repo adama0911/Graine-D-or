@@ -35,8 +35,7 @@
                         <tr *ngFor="let item of this.data | paginate: { itemsPerPage: 10, currentPage: p }">
                           <td>{{item.prenom}}</td>
                           <td>{{item.nom}}</td>
-                          <td>{{item.telephone}}</td>
-                          <td>{{item.adresse}}</td>
+                          <td>{{item.login}}</td>
                           <td>{{item.created_at}}</td>
                           <td [ngClass]="{bg:true,'bg-success':item.etat==1,'bg-danger':item.etat==0}">
                             <p *ngIf="item.etat==1">{{item.etatText}}</p>
