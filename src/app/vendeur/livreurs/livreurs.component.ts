@@ -61,7 +61,7 @@ export class LivreursComponent implements OnInit {
           case 1:
             element.etatText = 'pointé';
             break;
-          case 2:
+          case 0:
             element.etatText = 'non pointé'
         }
         data.push( 
@@ -134,7 +134,6 @@ export class LivreursComponent implements OnInit {
 
     this._vendeurService.getLivreurs({}).then(res=>{
       console.log(res.data);
-      alert('inside')
       //this.data = this.dataSave = res.data;
         this.dataSave = this.data = this.parseDatas(res.data);
     })
