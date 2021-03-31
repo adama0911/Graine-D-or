@@ -414,4 +414,49 @@ export class DashbordAdminCaisseComponent implements OnInit {
   hideMoodalprint(){
     document.getElementById('print').style.display = "none";
   }
+
+  
+  showMoodalannuler(){
+    document.getElementById('annuler').style.display = "block";
+  }
+  hideMoodalannuler(){
+    document.getElementById('annuler').style.display = "none";
+  }
+  hideMoodalannulerNotif(){
+    document.getElementById('annulerNotif').style.display = "block";
+    setInterval(()=>{
+      document.getElementById('annulerNotif').style.display = "none";
+    },3000)
+    
+  }
+  cancelCommande(){
+    this.loading = true;
+    //$param->user,$param->idCommande,$param->oldstate,$param->newstate
+      this._serviceAdmin.updateEtat({idCommande:this.selected.id,oldstate:this.selected.etat,newstate:"-1",user:JSON.parse(sessionStorage.getItem('currentUser')).login}).then(res=>{
+        if(res.status == 1){
+          this.dd = (new Date().toJSON()).split("T")[0]
+          this.df = (new Date().toJSON()).split("T")[0]
+          let dateDebut = this.dd.split('-')[2]+"/"+this.dd.split('-')[1]+"/"+this.dd.split('-')[0]
+          let dateFin = this.df.split('-')[2]+"/"+this.df.split('-')[1]+"/"+this.df.split('-')[0]
+          this._serviceAdmin.getCommandeByCaissier({debut:dateDebut,fin:dateFin,idCaissier:JSON.parse(sessionStorage.getItem('currentUser')).id}).then(res=>{
+            console.log(res);
+            if(res.status == 1){
+              this.calculeForBashbord(res.data)
+              this.data = res.data.reverse()
+              this.listeSave = res.data.reverse()
+
+              this.loading = false;
+              this.hideMoodalannulerNotif();
+            }else{
+              this.loading = false;
+            }
+            
+            
+          })
+      
+        }
+      })
+    
+   
+  }
 }
