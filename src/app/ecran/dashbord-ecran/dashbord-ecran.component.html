@@ -19,8 +19,8 @@
                     <th style="border: 1px solid white;color: white;">client</th>
                     <th style="border: 1px solid white;color: white;">montant commande</th>
                     <th style="border: 1px solid white;color: white;">montant livraison</th>
-                    <th style="border: 1px solid white;color: white;">paiement</th>
-                    <th style="border: 1px solid white;color: white;">recuperation</th>
+                    <th style="border: 1px solid white;color: white;">mode paiement</th>
+                    <th style="border: 1px solid white;color: white;">Etat paiement</th>
                     <th style="border: 1px solid white;color: white;">etat</th>
                     <th style="border: 1px solid white;color: white;">monnaie</th>
                 </tr>
@@ -45,12 +45,13 @@
                     <td>{{item.montant}}</td>
                     <td>{{item.frais_livraison}}</td>
                     <td>
-                      <p *ngIf="item.mode_paiement==1" >en ligne </p>
+                      <p *ngIf="item.mode_paiement==1" >sentoolpay </p>
                       <p *ngIf="item.mode_paiement==0" >à la livraison </p>
                     </td>
                     <td>
-                      <p *ngIf="item.recuperation==0" >sur place </p>
-                      <p *ngIf="item.recuperation==1" >à livrer</p>
+                      <p *ngIf="item.etatPaiment==0" >en attente  </p>
+                      <p *ngIf="item.etatPaiment==1" >payer</p>
+                      <p *ngIf="item.etatPaiment==-1" >Echec</p>
                     </td>
                     <td >
                       <div *ngIf="item.etat==-1" class="p-3 mb-2 bg-danger text-white" style="text-align: center;">Annuler </div>

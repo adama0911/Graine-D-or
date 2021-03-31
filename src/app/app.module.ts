@@ -67,6 +67,7 @@ import { NgxLoadingModule } from 'ngx-loading';
 import { LoginComponent } from './login/login.component';
 import { HomeComponent } from './home/home.component';
 import { DashbordEcranComponent } from './ecran/dashbord-ecran/dashbord-ecran.component';
+import { StatistiqueComponent } from './adminGenerale/statistique/statistique.component';
 
 
 const routes: Routes = [
@@ -136,78 +137,16 @@ const routes: Routes = [
           component:DashbordEcranComponent
         },
         {
+          path:"statistiques",
+          component:StatistiqueComponent
+        },
+        {
           path: "**",
           redirectTo: "/"
         }
       ]
   }
 ];
-/*const routes: Routes = [
-  {
-    path: "",
-    redirectTo: "/login",
-    pathMatch: "full"
-  },
-  {
-    path:"login",
-    component:LoginComponent
-  },
-  {
-    path:"home",
-    component:HomeComponent
-  },
-  
-  {
-    path:"createCaisse",
-    component:CreateCaisseComponent
-  },
-  {
-    path:"dashbordAdmin",
-    component:DashbordAdminComponent
-  },
-  {
-    path:"createUsers",
-    component:CreateUsersComponent
-  },
-  {
-    path: "dashbordAdminCaisse",
-    component: DashbordAdminCaisseComponent,
-    // children: [
-    //   {
-    //     path: "",
-    //     loadChildren:
-    //       "./layouts/admin-layout/admin-layout.module#AdminLayoutModule"
-    //   }
-    // ]
-  }, 
-  {
-    path: 'livreurs',
-    component: LivreursComponent,
-
-  },
-  {
-    path:"commandes",
-    component:CommandesComponent
-  },
-  {
-    path:"commandesLivreur",
-    component:LivreurCommandesComponent
-  },
-  {
-    path:"historiqueLivreur",
-    component:HistoriqueComponent
-  },
-  {
-    path:"dashboardVendeur",
-    component:DashboardComponent
-  },
-  {
-    path: "**",
-    redirectTo: "/"
-  }
-];*/
-
-
 
 @NgModule({
   declarations: [
@@ -226,6 +165,8 @@ const routes: Routes = [
     LoginComponent,
     HomeComponent,
     DashbordEcranComponent,
+    StatistiqueComponent,
+    
   ],
   imports: [
     BrowserModule,
@@ -257,6 +198,7 @@ const routes: Routes = [
     FormsModule,
     NzModalModule,
     NgbModule,
+    
   ],
   providers: [ConfigService,BsModalService,PaginationConfig,
 

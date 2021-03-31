@@ -59,6 +59,10 @@ export class DashbordEcranComponent implements OnInit {
   currencyFormat(somme) : String{
     return Number(somme).toLocaleString() ;
   }
+  periodiqueChecker:any;
+  ngOnDestroy(){
+    clearInterval(this.periodiqueChecker);
+  }
   ngOnInit(): void {
    
     this.loading = true;
@@ -80,7 +84,7 @@ export class DashbordEcranComponent implements OnInit {
       
       
     })
-    setInterval(()=>{
+    this.periodiqueChecker = setInterval(()=>{
       console.log('inside intervalle')
       let d = (new Date().toJSON()).split("T")[0]
       let f = (new Date().toJSON()).split("T")[0]
@@ -94,16 +98,19 @@ export class DashbordEcranComponent implements OnInit {
           this.data = d
           this.listeSave = d
           this.loading = false;
-          //this.audio = new Audio();
-          //this.audio.src ='../../assets/hangouts_message_1.mp3';
-          //this.audio.play();
+          if(this.listeSave.length < res.data.length){
+            this.loading = false;
+            this.audio = new Audio();
+            this.audio.src ='../../assets/hangouts_message_1.mp3';
+            this.audio.play();
+          }
         }else{
           this.loading = false;
         }
         
         
       })
-    },10000)
+    },20000)
 
   }
   displayPanier(arg){

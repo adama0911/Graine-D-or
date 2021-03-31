@@ -34,6 +34,21 @@ export class AdminGeneralService {
       let link=this.url+"/admin/getUsersByDependsOn";
       return this.http.post(link,params,{headers:this.header}).toPromise().then( res => { return res} ).catch(error => {console.log(error); return 'bad' });
     }
+     // getUsersAdmin est une fonction pour obtenir la liste des utilisateur
+     public getUsersAdmin(): Promise<any>{
+      let params//="param="+JSON.stringify(param);
+      console.log(params);
+      
+      let link=this.url+"/service/getUsersByAdmin";
+      return this.http.post(link,params,{headers:this.header}).toPromise().then( res => { return res} ).catch(error => {console.log(error); return 'bad' });
+    } 
+    public getUsersByAccessLevel(param): Promise<any>{
+      let params="param="+JSON.stringify(param);
+      console.log(params);
+      
+      let link=this.url+"/service/getUsersByAccessLevel";
+      return this.http.post(link,params,{headers:this.header}).toPromise().then( res => { return res} ).catch(error => {console.log(error); return 'bad' });
+    }
     // deleteUser pour supprimer un uttilisateur
     public deleteUser(param): Promise<any>{
       let params="param="+JSON.stringify(param);
@@ -80,6 +95,14 @@ export class AdminGeneralService {
       console.log(params);
       
       let link=this.url+"/service/remiseSurFileDattente";
+      return this.http.post(link,params,{headers:this.header}).toPromise().then( res => { return res} ).catch(error => {console.log(error); return 'bad' });
+    } 
+    // resetPassword pour réinitaliser le mot de passe de l'utilisateur
+    public resetPassword(param): Promise<any>{
+      let params="param="+JSON.stringify(param);
+      console.log(params);
+      
+      let link=this.url+"/service/updatePassword";
       return this.http.post(link,params,{headers:this.header}).toPromise().then( res => { return res} ).catch(error => {console.log(error); return 'bad' });
     }
 }

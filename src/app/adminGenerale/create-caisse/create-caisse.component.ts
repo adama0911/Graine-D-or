@@ -153,11 +153,30 @@ export class CreateCaisseComponent implements OnInit {
   public data = [
     
   ];
-
+  eMessage = "";
+  resetPassword(){
+    this._serviceAdmin.resetPassword({id:this.selected.id,telephone:this.selected.telephone}).then(res=>{
+      console.log(res)
+      if(res != "bad"){
+        if(res.status == 1){
+          this.eMessage = "Mot de passe réinitialisé"
+          this.showMoodalNotifReset()
+        }else{
+          this.eMessage = "Erreur : Mot de passe non réinitialisé"
+          this.showMoodalNotifReset()
+        }
+      }else{
+        this.eMessage = "Erreur : Mot de passe non réinitialisé "
+          this.showMoodalNotifReset()
+      }
+     
+      
+    })
+  }
   getUsers(){
     this.loading = true;
 
-    this._serviceAdmin.getUsers({depends_on:JSON.parse(sessionStorage.getItem('currentUser')).id}).then(res=>{
+    this._serviceAdmin.getUsersAdmin().then(res=>{
       console.log(res)
       this.data = res['users']
       this.loading = false;
@@ -167,7 +186,7 @@ export class CreateCaisseComponent implements OnInit {
   ngOnInit(): void {
     this.loading = true;
 
-    this._serviceAdmin.getUsers({depends_on:JSON.parse(sessionStorage.getItem('currentUser')).id}).then(res=>{
+    this._serviceAdmin.getUsersAdmin().then(res=>{
       console.log(res)
       this.data = res['users']
       this.loading = false;
@@ -220,5 +239,19 @@ export class CreateCaisseComponent implements OnInit {
       document.getElementById('id02').style.display = "none";
     },5000)
   }
-
+  showMoodalReset(){
+    document.getElementById('resetPassword').style.display = "block";
+  }
+  hideMoodalReset(){
+    document.getElementById('resetPassword').style.display = "none";
+  } 
+  hideMoodalResetNotif(){
+    document.getElementById('resetPasswordNotif').style.display = "none";
+  }
+  showMoodalNotifReset(){
+    document.getElementById('resetPasswordNotif').style.display = "block";
+    setTimeout(()=>{
+      document.getElementById('resetPasswordNotif').style.display = "none";
+    },5000)
+  }
 }

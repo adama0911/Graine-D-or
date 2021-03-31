@@ -32,6 +32,7 @@ export class CreateUsersComponent implements OnInit {
   errorMessage = "";
   badPhoneNumber:boolean = false;
   @ViewChild('actionTpl', { static: true }) actionTpl: TemplateRef<any>;
+  @ViewChild('profile', { static: true }) profile: TemplateRef<any>;
   constructor(private _serviceAdmin:AdminGeneralService) { 
    
   }
@@ -178,6 +179,26 @@ export class CreateUsersComponent implements OnInit {
     }
     return false;
   }
+  eMessage = "";
+  resetPassword(){
+    this._serviceAdmin.resetPassword({id:this.selected.id,telephone:this.selected.telephone}).then(res=>{
+      console.log(res)
+      if(res != "bad"){
+        if(res.status == 1){
+          this.eMessage = "Mot de passe réinitialisé"
+          this.showMoodalNotifReset()
+        }else{
+          this.eMessage = "Erreur : Mot de passe non réinitialisé"
+          this.showMoodalNotifReset()
+        }
+      }else{
+        this.eMessage = "Erreur : Mot de passe non réinitialisé "
+          this.showMoodalNotifReset()
+      }
+     
+      
+    })
+  }
   ngOnInit(): void {
     this.loading = true;
     this._serviceAdmin.getUsers({depends_on:JSON.parse(sessionStorage.getItem('currentUser')).id}).then(res=>{
@@ -189,6 +210,7 @@ export class CreateUsersComponent implements OnInit {
     this.configuration.searchEnabled = true;
     // ... etc.
     this.columns = [
+      { key: 'profil', title: 'profil', cellTemplate: this.profile },
       { key: 'prenom', title: 'PRENOM' },
       { key: 'nom', title: 'NOM' },
       { key: 'telephone', title: 'TELEPHONE' },
@@ -233,6 +255,21 @@ export class CreateUsersComponent implements OnInit {
     document.getElementById('id02').style.display = "block";
     setTimeout(()=>{
       document.getElementById('id02').style.display = "none";
+    },5000)
+  }
+  showMoodalReset(){
+    document.getElementById('resetPassword').style.display = "block";
+  }
+  hideMoodalReset(){
+    document.getElementById('resetPassword').style.display = "none";
+  } 
+  hideMoodalResetNotif(){
+    document.getElementById('resetPasswordNotif').style.display = "none";
+  }
+  showMoodalNotifReset(){
+    document.getElementById('resetPasswordNotif').style.display = "block";
+    setTimeout(()=>{
+      document.getElementById('resetPasswordNotif').style.display = "none";
     },5000)
   }
 }

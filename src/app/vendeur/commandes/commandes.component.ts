@@ -33,12 +33,14 @@ export class CommandesComponent implements OnInit {
   showBoundaryLinks: boolean = true;
   showDirectionLinks: boolean = true
   public loading = false;
+  public loadingModal = false;
   motcle = null;
   p: number = 1;
   currentCom = {};
   currentLivreur:any;
   modalEtat = '2';
   listLivreurs = [];
+  refSetInterval : any;
 
   modalOK(com,etat){
     this.showMoodal();
@@ -103,8 +105,18 @@ export class CommandesComponent implements OnInit {
   }
 
   assignerCommande(currentCom,currentLivreur){
-    console.log(currentCom)
-    console.log(currentLivreur)
+    this.loadingModal=true;
+    console.log({idCommande:currentCom.id,idLivreur:currentLivreur})
+    this._vendeurService.assigner({idCommande:currentCom.id,idLivreur:currentLivreur}).then(res=>{
+      if(res.status==1){
+        console.log("Assigner",res);
+        this.loadingModal=false;
+        this.hideMoodal();
+        this.getCommandes();
+      }else{
+        console.log("Pas assigner",res);
+      }
+    })
   }
 
   /**
@@ -198,7 +210,10 @@ export class CommandesComponent implements OnInit {
     }else{
       return arg
     }
-    
+  }
+
+  beforeDestroy() {
+    clearInterval(this.refSetInterval);
   }
 
   /**
@@ -292,6 +307,7 @@ export class CommandesComponent implements OnInit {
    * @return :0 
    * @function: methode appelé lorsque le component est pret
   **/
+   audio
   ngOnInit(): void {
 
     this.configuration = { ...DefaultConfig };
@@ -311,9 +327,32 @@ export class CommandesComponent implements OnInit {
     ];
 
     this.getCommandes();
-    setInterval(()=>{
-      this.getCommandes();
-    },10000)
+
+    this._vendeurService.getLivreurs({}).then(res=>{
+      console.log(res.data);
+      
+      //this.data = this.dataSave = res.data;
+       this.listLivreurs = this.parseDatasLivreurs(res.data);
+    })
+
+    this.refSetInterval = setInterval(()=>{
+      let dd = (new Date().toJSON()).split("T")[0]
+      let df = (new Date().toJSON()).split("T")[0]
+      let dateDebut = dd.split('-')[2]+"/"+dd.split('-')[1]+"/"+dd.split('-')[0]
+      let dateFin = df.split('-')[2]+"/"+df.split('-')[1]+"/"+df.split('-')[0]
+      this._vendeurService.getCommandes({debut:dateDebut,fin:dateFin}).then(res=>{
+        console.log(res);
+        if(res.status==1){
+          this.dataSave = this.data = (this.parseDatas(res.data)).reverse();
+          if(this.dataSave.length < res.data.length){
+            this.loading = false;
+            this.audio = new Audio();
+            this.audio.src ='../../assets/hangouts_message_1.mp3';
+            this.audio.play();
+          }
+        }
+      })
+    },20000)
 
   }
 
@@ -361,19 +400,12 @@ export class CommandesComponent implements OnInit {
     let df = (new Date().toJSON()).split("T")[0]
     let dateDebut = dd.split('-')[2]+"/"+dd.split('-')[1]+"/"+dd.split('-')[0]
     let dateFin = df.split('-')[2]+"/"+df.split('-')[1]+"/"+df.split('-')[0]
-    this._vendeurService.getCommandes({debut:"01/01/2019",fin:dateFin}).then(res=>{
+    this._vendeurService.getCommandes({debut:dateDebut,fin:dateFin}).then(res=>{
       console.log(res);
       if(res.status==1){
         this.dataSave = this.data = (this.parseDatas(res.data)).reverse();
         this.loading = false;
       }
-    })
-
-    this._vendeurService.getLivreurs({}).then(res=>{
-      console.log(res.data);
-      
-      //this.data = this.dataSave = res.data;
-       this.listLivreurs = this.parseDatasLivreurs(res.data);
     })
   }
 

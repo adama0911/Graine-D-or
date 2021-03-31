@@ -97,54 +97,49 @@
                     <th style="border: 1px solid white;color: white;">client</th>
                     <th style="border: 1px solid white;color: white;">montant commande</th>
                     <th style="border: 1px solid white;color: white;">montant livraison</th>
-                    <th style="border: 1px solid white;color: white;">paiement</th>
-                    <th style="border: 1px solid white;color: white;">recuperation</th>
+                    <th style="border: 1px solid white;color: white;">mod paiement</th>
+                    <th style="border: 1px solid white;color: white;">Etat Paiement</th>
                     <th style="border: 1px solid white;color: white;">etat</th>
                     <th style="border: 1px solid white;color: white;">monnaie</th>
                     <th style="border: 1px solid white;color: white;">action</th>
                   </tr>
                 </thead>
-                <tbody>
-                  <tr *ngFor="let item of this.data | paginate: { itemsPerPage: 10, currentPage: p }">
-                    <td>{{displayDate(item.created_at)}}</td>
-                    <td>
-                      <div class="dropdown">
-                        <span *ngIf="item.refCommande != ''">{{item.refCommande}}</span>
-                        <span *ngIf="item.refCommande == ''">refCommande</span>
-                        <div class="dropdown-content">
-                        <p  style="color: black;"> {{displayPanier(item.designation)}}</p>
-                        </div>
+                <tbody>                  
+                  <tr *ngFor="let item of this.dataToDisplay | paginate: { itemsPerPage: 10, currentPage: p }">
+                  <td >{{displayDate(item.date)}}</td>
+                  <td >
+                    <div class="dropdown">
+                      <span *ngIf="item.refCommande != ''">{{item.commande}}</span>
+                      <span *ngIf="item.refCommande == ''">refCommande</span>
+                      <div class="dropdown-content">
+                      <p style="color: black;">{{displayPanier(item.panier)}}</p>
                       </div>
-                    </td>
-                    <td>
-                      <p *ngIf="item.livreur != ''">{{displayData(item.livreur,'prenom')}} {{displayData(item.livreur,'nom')}}</p>
-                      <p *ngIf="item.livreur == ''">pas de livreur</p>
-                    </td>
-                    <td>{{formateNumClient(item.numero_client)}}</td>
-                    <td>{{item.montant}}</td>
-                    <td>{{item.frais_livraison}}</td>
-                    <td>
-                      <p *ngIf="item.mode_paiement==1" >en ligne </p>
-                      <p *ngIf="item.mode_paiement==0" >à la livraison </p>
-                    </td>
-                    <td>
-                      <p *ngIf="item.recuperation==0" >sur place </p>
-                      <p *ngIf="item.recuperation==1" >à livrer</p>
-                    </td>
+                    </div>
+                  </td>
+                  <td >
+                    <p *ngIf="item.livreur != ''">{{displayData(item.livreur,'prenom')}} {{displayData(item.livreur,'nom')}}</p>
+                    <p *ngIf="item.livreur == ''">pas de livreur</p>
+                  </td>
+                 
+                  <td >{{formateNumClient(item.client)}}</td>
+                  <td style="text-align: center;">{{currencyFormat(item.montant)}}</td>
+                  <td style="text-align: center;">{{currencyFormat(item.fraisLivraison)}}</td>
+                  <td >{{item.paiement}} </td>
+                  <td >{{item.etatPaiment}}</td>
+                  <td >
+                    <div *ngIf="item.etat==-1" class="p-3 mb-2 bg-danger text-white" style="text-align: center;">Annulée </div>
+                    <div *ngIf="item.etat==1" class="p-3 mb-2 bg-secondary text-white" style="text-align: center;">Enregistrée </div>
+                    <div *ngIf="item.etat==2" class="p-3 mb-2 bg-info text-white" style="text-align: center;">Validée </div>
+                    <div *ngIf="item.etat==3" class="p-3 mb-2 bg-warning text-white" style="text-align: center;">Preparée </div>
+                    <div *ngIf="item.etat==4" class="p-3 mb-2 bg-primary text-white" style="text-align: center;">En cour de livraison</div> 
+                    <div *ngIf="item.etat==5 && item.paiement == 'sentoolpay' " class="p-3 mb-2 bg-success text-white" style="text-align: center;">livrée </div> 
+                    <div *ngIf="item.etat==5 && item.paiement != 'sentoolpay'" class="p-3 mb-2 bg-success text-white" style="text-align: center;">Payée et Livrée </div> 
+                </td>
+                  <td style="text-align: center;">{{currencyFormat(item.monnaiePrepa)}}</td>
                     <td >
-                      <div *ngIf="item.etat==-1" class="p-3 mb-2 bg-danger text-white" style="text-align: center;">Annuler </div>
-                      <div *ngIf="item.etat==1" class="p-3 mb-2 bg-secondary text-white" style="text-align: center;">Enregistrer </div>
-                      <div *ngIf="item.etat==2" class="p-3 mb-2 bg-info text-white" style="text-align: center;">Valider </div>
-                      <div *ngIf="item.etat==3" class="p-3 mb-2 bg-warning text-white" style="text-align: center;">Preparer</div>
-                      <div *ngIf="item.etat==4" class="p-3 mb-2 bg-primary text-white" style="text-align: center;">En cour de livraison</div> 
-                      <div *ngIf="item.etat==5" class="p-3 mb-2 bg-success text-white" style="text-align: center;">Payer</div> 
-                    </td>
-                    <td>    
-                      {{monnairePrpa(item.montant,item.frais_livraison)}}
-                    </td>
-                    <td>
-                      <button type="button" *ngIf="item.etat==3" class="btn btn-warning" (click)="showMoodalEncours();selected = item;">En cours de livraison </button>
-                      <button type="button" *ngIf="item.etat==4" class="btn btn-warning" (click)="showMoodalPayer();selected = item;">Payer </button>
+                      <button type="button" *ngIf="item.etat==3" class="btn btn-warning" (click)="showMoodalEncours();selected = item;handlePanier(item.panier);">En cours de livraison </button>
+                      <button type="button" *ngIf="item.etat==4" class="btn btn-success" (click)="showMoodalPayer();selected = item;">Payer </button>
+                      <button type="button" *ngIf="item.etat==1" class="btn btn-danger" (click)="showMoodalannuler();selected = item;">Annuler </button>
                      </td>
 
                   </tr>
@@ -276,4 +271,113 @@
     </div>
   </div>
 </div>
-  
+
+<div id="print" class="w3-modal">
+  <div class="w3-modal-content" style="border-radius: 5px;padding: 3rem;">
+    <div class="w3-container">
+      <span (click)="hideMoodalprint()" style="font-size: 2rem;" class="w3-button w3-display-topright">&times;</span>
+      <div class="row" style="text-align: center;">
+        
+        <div class="col-12" style="text-align: center;">
+         
+                             
+          <div id="invoice" *ngIf="selected" >
+            <div class="panel-heading" >
+              <div class="panel panel-default"  id="tntrecuimpressionabonnement">
+                <div class="panel-heading">
+                  <div style="text-align: center;">
+                    <img style="width: 7rem;"  src="https://rapidos.sn/wp-content/uploads/2020/04/graine-d-or.jpg" class="img-rounded" />
+                  
+                  </div>
+                  <div style="text-align: center;">
+                    <h3>Almadies</h3>
+                    <h5>Tel : 33 820 85 73</h5>
+                  </div>
+                  <p align="left"  >
+                    <strong style="font-size: 0.8rem !important;">N° commande:</strong> <span style="font-size: 0.8rem !important;"> {{selected.commande}}</span><br>
+                    <strong style="font-size: 0.8rem !important;">Caissier(e):</strong><span style="font-size: 0.8rem !important;">{{displayData(selected.caissier,'prenom')}} {{displayData(selected.caissier,'nom')}} Le {{displayDate1()}}</span><br>
+                    <strong style="font-size: 0.8rem !important;">Vendeuse:</strong><span style="font-size: 0.8rem !important;">{{displayData(selected.vendeuse,'prenom')}} {{displayData(selected.vendeuse,'nom')}}</span><br>
+                    <strong style="font-size: 0.8rem !important;">Livreur:</strong><span style="font-size: 0.8rem !important;">{{displayData(selected.livreur,'prenom')}} {{displayData(selected.livreur,'nom')}}</span><br>
+                    <strong style="font-size: 0.8rem !important;">Whatsapp:</strong> <span style="font-size: 0.8rem !important;">{{selected.client}}</span>
+                  </p>
+                </div>
+                <div class="panel-body" style="font-size: 0.7rem !important;">
+                  <table class="table" style="font-size: 0.7rem !important;width: 100%;">
+                    <hr>
+                    <tr style="border-top: 2px solide black;border-bottom: 2px solide black;text-align: left;">
+                      <th>Qte</th>
+                      <th>Produit</th>
+                      <th>Prix TTC</th>
+                    </tr>
+                    <tr class="text-uppercase" style="text-align: left;" *ngFor="let i of listPanierToPrint">
+                      <td>{{i.qte}}</td>
+                      <td>{{i.article}}</td>
+                      <td>{{i.prix}} Fcfa</td>
+                      <!--<td>
+                      <b align="left"> Numéro commande:</b>  {{selected.id}}<br>
+                      <b align="left"> Désignation:</b> <span style="text-align: right;"> {{selected.designation}}</span><br>
+                      <b align="left">Montant: </b>{{selected.montant}} fcfa<br>
+                      <b style="text-align: center;"> Total: {{getTotal(selected.montant,selected.frais_livraison)}} fcfa</b> <br>
+                      </td>-->
+                    
+                    </tr>
+                  
+                  </table>
+                  <hr>
+                  <div style="text-align: center;">
+                    <b >Frais de livraison:</b>{{selected.fraisLivraison}} fcfa<br>
+                    <b > Total TTC: {{selected.montant}} fcfa</b> <br>
+                  </div>
+                  <hr>
+                  <br><br>
+                  <div style="text-align: center;">
+                    <b>Ouvert de 6h30 à 20h30</b><br>
+                    <b > Merci de votre visite - A très bientôt</b> <br>
+                  </div>
+
+                </div>
+                <div class="panel-footer">
+                </div>
+              </div>
+            </div>
+          </div>
+          <div>
+            <button class="btn btn-primary" (click)="hideMoodalprint();print()">Imprimer</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="annuler" class="w3-modal">
+  <div class="w3-modal-content" style="border-radius: 5px;padding: 3rem;">
+    <div class="w3-container">
+      <span (click)="hideMoodalannuler()" style="font-size: 2rem;" class="w3-button w3-display-topright">&times;</span>
+      <div class="row" style="text-align: center;">
+        
+        <div class="col-12" style="text-align: center;">
+          <h2>Vous voulez annulé cette commande</h2>
+          <button class="btn btn-danger" style="margin-right: 5px;" (click)="hideMoodalannuler()">Annuler</button>
+          <button class="btn btn-success" style="margin-right: 5px;" (click)="cancelCommande();hideMoodalannuler()">Valider</button>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="annulerNotif" class="w3-modal">
+  <div class="w3-modal-content alert alert-success" style="border-radius: 5px;padding: 3rem;">
+    <div class="w3-container">
+      <span (click)="hideMoodalNotif()" style="font-size: 2rem;" class="w3-button w3-display-topright">&times;</span>
+      <div class="row" style="text-align: center;">
+        
+        <div class="col-12" style="text-align: center;">
+          <h2 class="alert alert-success">Commande annulé</h2>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+ 
