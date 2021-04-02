@@ -39,6 +39,11 @@ export class CreateCaisseComponent implements OnInit {
   consolelog(){
     console.log(this.selected)
   }
+  /**
+   * checkTelephone: check si le nuémro de téléphone saisie est conforme
+   * @param tel le numero de telephone saisie
+   * @returns boolan
+   */
   checkTelephone(tel){
     if(tel == null || tel == ""){
       return false;
@@ -60,6 +65,11 @@ export class CreateCaisseComponent implements OnInit {
     }
     return true;
   }
+  /**
+   * isNumber : check s'il à saisie de chiffre
+   * @param num numéro de téléphone
+   * @returns boolean
+   */
   isNumber(num:string):boolean{
     let tab=["0","1","2","3","4","5","6","7","8","9"];
     for(let i=0;i<tab.length;i++){
@@ -69,6 +79,9 @@ export class CreateCaisseComponent implements OnInit {
     }
     return false;
   }
+  /**
+   * creation d'utlisateur
+   */
   createUser(){
     this.loading = true;
     this.badPhoneNumber = false;
@@ -95,6 +108,9 @@ export class CreateCaisseComponent implements OnInit {
     this.hideNotifAdd()
     //this.data.push({prenom:this.prenom,nom:this.nom,login:this.identifiant,telephone:this.telephone,adresse:this.adresse,action:"Valider"})
   }
+  /**
+   * update user
+   */
   updateUser(){
     this.loading = true;
     this.badPhoneNumber = false;
@@ -130,6 +146,9 @@ export class CreateCaisseComponent implements OnInit {
 
     this.hideNotifUpdate()
   }
+  /**
+   * delete user
+   */
   deleteUser(){
     console.log(this.selected)
       this.loading = true;
@@ -154,6 +173,9 @@ export class CreateCaisseComponent implements OnInit {
     
   ];
   eMessage = "";
+  /**
+   * réinitialisation de mot passe
+   */
   resetPassword(){
     this._serviceAdmin.resetPassword({id:this.selected.id,telephone:this.selected.telephone}).then(res=>{
       console.log(res)
@@ -173,6 +195,9 @@ export class CreateCaisseComponent implements OnInit {
       
     })
   }
+  /**
+   * get users
+   */
   getUsers(){
     this.loading = true;
 
@@ -212,6 +237,9 @@ export class CreateCaisseComponent implements OnInit {
     this.identifiant = undefined;
     
   }
+  /**
+   * les modals de confirmation
+   */
   hideNotifAdd(){
     setTimeout(()=>{
       this.errorCode = 0;

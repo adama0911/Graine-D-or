@@ -169,21 +169,21 @@ displayPanier(arg){
       
       switch (element.etat) {
         case -1:
-          element.etatText = 'Annuler'
+          element.etatText = 'Annulée'
         case 1:
-          element.etatText = 'Enregistrer'
+          element.etatText = 'Enregistrée'
           break;
         case 2:
-          element.etatText = 'Valider'
+          element.etatText = 'Validée'
           break;
         case 3:
-          element.etatText = 'Preparer'
+          element.etatText = 'Preparée'
           break;
         case 4:
           element.etatText = 'En cour de livraison'
           break;  
         case 5:
-          element.etatText = 'Payer'
+          element.etatText = 'Payée'
           break;  
 
       }
@@ -199,16 +199,29 @@ displayPanier(arg){
 
       switch (element.mode_paiement) {
         case 1:
-          element.paiementText = 'en ligne'
+          element.paiementText = 'sentoolpay'
           break;
-        case 2:
-          element.paiementText = 'à la livraiso'
+        case 3:
+          element.paiementText = 'à la livraison'
           break;
       }
+      switch (element.etatPaiment) {
+        case 0:
+          element.etatpaiementText = 'en attente'
+          break;
+        case 1:
+          element.etatpaiementText = 'payée'
+          break;
+        case -1:
+          element.etatpaiementText = 'echec'
+          break;
+      }
+
 
       data.push( 
         {
           id:element.id,
+          date:new Date(element.created_at).toLocaleString(),
           commande: element.refCommande,
           designation: element.designation,
           livreur: this.prenomComplet(element.livreur),
@@ -219,6 +232,7 @@ displayPanier(arg){
           montantCommande: element.montant,
           montantLivraison: element.frais_livraison,
           paiement: element.mode_paiement,
+          etatpaiement: element.etatpaiementText,
           recuperation: element.recuperation,
           etat: element.etat,
           etatText: element.etatText,
@@ -262,7 +276,11 @@ displayPanier(arg){
     }
     return "";
   }
+  periodiquecheck:any;
+  ngOnDestroy(){
+    clearInterval(this.periodiquecheck);
 
+  }
 
   /**
    * @param:0
@@ -277,14 +295,16 @@ displayPanier(arg){
     this.configuration.searchEnabled = true;
     // ... etc.
     this.columns = [
+      { key: 'commande', title: 'DATE' , cellTemplate: this.panier},
       { key: 'commande', title: 'COMMANDE' , cellTemplate: this.panier},
       { key: 'livreur', title: 'LIVREUR' },
       { key: 'client', title: 'CLIENT' },
       { key: 'vendeuse', title: 'VENDEUSE' },
       { key: 'montantCommande', title: 'MONTANT COMMANDE' },
       { key: 'montantLivraison', title: 'MONTANT LIVRAISON' },
-      { key: 'paiement', title: 'PAIEMENT' , cellTemplate: this.paiementTpl},
-      { key: 'recuperation', title: 'RÉCUPÉRATION' , cellTemplate: this.recuperationTpl},
+      { key: 'paiement', title: 'MODE PAIEMENT' , cellTemplate: this.paiementTpl},
+      { key: 'paiement', title: 'ETAT PAIEMENT' , cellTemplate: this.paiementTpl},
+      //{ key: 'recuperation', title: 'RÉCUPÉRATION' , cellTemplate: this.recuperationTpl},
       { key: 'etat', title: 'ETAT COMMANDE' , cellTemplate: this.etatTpl},
       { key: 'monnaie', title: 'MONNAIE À PRÉPARÉE' },
     ];
@@ -300,19 +320,21 @@ displayPanier(arg){
       }
     })
 
-    setInterval(()=>{
+    this.periodiquecheck = setInterval(()=>{
       let dateDebut = dd.split('-')[2]+"/"+dd.split('-')[1]+"/"+dd.split('-')[0]
         let dateFin = df.split('-')[2]+"/"+df.split('-')[1]+"/"+df.split('-')[0]
         this._livreurService.getCommandes({debut:dateDebut,fin:dateFin}).then(res=>{
           console.log(res);
           if(res.status==1){
-            this.dataSave = this.data = (this.parseDatas(res.data)).reverse();
             if(this.dataSave.length < res.data.length){
+            
               this.loading = false;
               this.audio = new Audio();
               this.audio.src ='../../assets/hangouts_message_1.mp3';
               this.audio.play();
             }
+            this.dataSave = this.data = (this.parseDatas(res.data)).reverse();
+
           }
         })
     },20000)

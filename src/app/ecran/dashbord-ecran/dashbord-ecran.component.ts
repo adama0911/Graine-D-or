@@ -94,16 +94,18 @@ export class DashbordEcranComponent implements OnInit {
         //console.log(res.data);
        
         if(res.status == 1){
-          let d = res.data.reverse()
-          this.data = d
-          this.listeSave = d
-          this.loading = false;
           if(this.listeSave.length < res.data.length){
+          
+         
             this.loading = false;
             this.audio = new Audio();
             this.audio.src ='../../assets/hangouts_message_1.mp3';
             this.audio.play();
           }
+          let d = res.data.reverse()
+          this.data = d
+          this.listeSave = d
+          this.loading = false;
         }else{
           this.loading = false;
         }

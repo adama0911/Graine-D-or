@@ -131,21 +131,21 @@ export class CommandesComponent implements OnInit {
         
         switch (element.etat) {
           case -1:
-            element.etatText = 'Annuler'
+            element.etatText = 'Annulée'
           case 1:
-            element.etatText = 'Enregistrer'
+            element.etatText = 'Enregistrée'
             break;
           case 2:
-            element.etatText = 'Valider'
+            element.etatText = 'Validée'
             break;
           case 3:
-            element.etatText = 'Preparer'
+            element.etatText = 'Preparée'
             break;
           case 4:
             element.etatText = 'En cour de livraison'
             break;  
           case 5:
-            element.etatText = 'Payer'
+            element.etatText = 'Payée'
             break;  
 
         }
@@ -161,16 +161,28 @@ export class CommandesComponent implements OnInit {
 
         switch (element.mode_paiement) {
           case 1:
-            element.paiementText = 'en ligne'
+            element.paiementText = 'sentoolpay'
             break;
-          case 2:
-            element.paiementText = 'à la livraiso'
+          case 3:
+            element.paiementText = 'à la livraison'
+            break;
+        }
+        switch (element.etatPaiment) {
+          case 0:
+            element.etatpaiementText = 'en attente'
+            break;
+          case 1:
+            element.etatpaiementText = 'payée'
+            break;
+          case -1:
+            element.etatpaiementText = 'echec'
             break;
         }
 
         data.push( 
           {
             id:element.id,
+            date:new Date(element.created_at).toLocaleString(),
             commande: element.refCommande,
             designation: element.designation,
             livreur: this.prenomComplet(element.livreur),
@@ -181,6 +193,7 @@ export class CommandesComponent implements OnInit {
             montantCommande: element.montant,
             montantLivraison: element.frais_livraison,
             paiement: element.mode_paiement,
+            etatpaiement: element.etatpaiementText,
             recuperation: element.recuperation,
             etat: element.etat,
             etatText: element.etatText,
@@ -210,10 +223,6 @@ export class CommandesComponent implements OnInit {
     }else{
       return arg
     }
-  }
-
-  beforeDestroy() {
-    clearInterval(this.refSetInterval);
   }
 
   /**
@@ -301,7 +310,20 @@ export class CommandesComponent implements OnInit {
 }
 
 
+ngOnDestroy(){
+  clearInterval(this.refSetInterval);
 
+}
+getLiv(){
+  this.loading = true;
+  this._vendeurService.getLivreurs({}).then(res=>{
+    console.log(res.data);
+    
+    //this.data = this.dataSave = res.data;
+     this.listLivreurs = this.parseDatasLivreurs(res.data);
+     this.loading = false;
+  })
+}
   /**
    * @param:0
    * @return :0 
@@ -314,14 +336,16 @@ export class CommandesComponent implements OnInit {
     this.configuration.searchEnabled = true;
     // ... etc.
     this.columns = [
-      { key: 'commande', title: 'COMMANDE' },
+      { key: 'commande', title: 'DATE' , },
+      { key: 'commande', title: 'COMMANDE' , },
       { key: 'livreur', title: 'LIVREUR' },
       { key: 'client', title: 'CLIENT' },
       { key: 'montantCommande', title: 'MONTANT COMMANDE' },
       { key: 'montantLivraison', title: 'MONTANT LIVRAISON' },
-      { key: 'paiement', title: 'PAIEMENT' },
-      { key: 'recuperation', title: 'RÉCUPÉRATION' },
-      { key: 'etat', title: 'ETAT COMMANDE' },
+      { key: 'paiement', title: 'MODE PAIEMENT' , },
+      { key: 'paiement', title: 'ETAT PAIEMENT' , },
+      //{ key: 'recuperation', title: 'RÉCUPÉRATION' , rationTpl},
+      { key: 'etat', title: 'ETAT COMMANDE' , },
       { key: 'monnaie', title: 'MONNAIE À PRÉPARÉE' },
       { key: 'action', title: 'Actions' },
     ];
@@ -344,13 +368,14 @@ export class CommandesComponent implements OnInit {
       this._vendeurService.getCommandes({idVendeuse:user.id,debut:dateDebut,fin:dateFin}).then(res=>{
         console.log(res);
         if(res.status==1){
-          this.dataSave = this.data = (this.parseDatas(res.data)).reverse();
           if(this.dataSave.length < res.data.length){
             this.loading = false;
             this.audio = new Audio();
             this.audio.src ='../../assets/hangouts_message_1.mp3';
             this.audio.play();
           }
+          this.dataSave = this.data = (this.parseDatas(res.data)).reverse();
+
         }
       })
     },20000)

@@ -24,6 +24,10 @@ export class DashbordAdminComponent implements OnInit {
   p;
   audio:any;
   dataToDisplay = [];
+   /**
+   * formateData : permet de formater le taablau des commandes 
+   * @param arg tableau de commande à formater
+   */
   formateData(arg){
   this.dataToDisplay = [];
 
@@ -69,9 +73,13 @@ export class DashbordAdminComponent implements OnInit {
       })
 
     }
-    console.log(this.dataToDisplay)
+    //console.log(this.dataToDisplay)
     this.listeSave = this.dataToDisplay
   }
+    /**
+   * calculeForBashbord permet d'obtenir le nombre de commande et la somme des montants du tableau de commande afficher
+   * @param arg tableau de commande 
+   */
   calculeForBashbord(arg){
     this.nbrCommandes = 0;
     this.soldeGraineDor = 0;
@@ -93,6 +101,9 @@ export class DashbordAdminComponent implements OnInit {
   constructor(private _serviceAdmin:AdminGeneralService,) { 
    
   }
+    /**
+   * searchAll :permet de filtrer le tableau de commande afficher
+   */
   searchAll = () => {
     let value = this.motcle;
     console.log("PASS", { value });
@@ -106,6 +117,12 @@ export class DashbordAdminComponent implements OnInit {
     );
     this.dataToDisplay = filterTable;
   }
+    /**
+   * monnairePrpa : permet de calculer le montant à préparer par livreur pour eventuel problème demonnaie
+   * @param mtt1 montant commande 
+   * @param mtt2 frais de livraison s'il y as
+   * @returns le montant à préparer
+   */
   monnairePrpa(mtt1 ,mtt2){
     let somme = parseInt(mtt1)+parseInt(mtt2);
     let temp = somme/10000;
@@ -114,6 +131,11 @@ export class DashbordAdminComponent implements OnInit {
     let monnaie = temp3 * 10000;
     return monnaie - somme;
   }
+    /**
+   * formateNumClient : permet juste de le + devant
+   * @param arg le numéro whatsapp du client 
+   * @returns le numéro sans le +
+   */
   formateNumClient(arg){
     if(arg.includes("+")){
       return arg.split("+")[1]
@@ -125,6 +147,9 @@ export class DashbordAdminComponent implements OnInit {
   public data = [
   
   ];
+  /**
+   * annulation de commande
+   */
   cancelCommande(){
     this.loading = true;
     //$param->user,$param->idCommande,$param->oldstate,$param->newstate
@@ -155,9 +180,17 @@ export class DashbordAdminComponent implements OnInit {
     
    
   }
+   /**
+   * 
+   * @param somme un entier Ex: 10000 devient 10 000
+   * @returns la somme formater 
+   */
   currencyFormat(somme) : String{
     return Number(somme).toLocaleString() ;
   }
+  /**
+   * rechercher par intervalle
+   */
   recherche(){
     this.loading = true;
     let dateDebut = this.dd.split('-')[2]+"/"+this.dd.split('-')[1]+"/"+this.dd.split('-')[0]
@@ -186,6 +219,9 @@ export class DashbordAdminComponent implements OnInit {
     })
   }
   periodiqueChecker:any;
+    /**
+   * permet d'arreter le'intervalle quand on quitte la page
+   */
   ngOnDestroy(){
     clearInterval(this.periodiqueChecker);
   }
@@ -216,6 +252,9 @@ export class DashbordAdminComponent implements OnInit {
       console.log(res)
       this.soldeCompenseBBS = res.compense
     })
+    /**
+     * la recherche périodique par intervalle
+     */
      this.periodiqueChecker = setInterval(()=>{
       let d = (new Date().toJSON()).split("T")[0]
       let f = (new Date().toJSON()).split("T")[0]
@@ -225,13 +264,15 @@ export class DashbordAdminComponent implements OnInit {
         //console.log(res.data);
        
         if(res.status == 1){
-          this.calculeForBashbord(res.data)
-          let d = res.data.reverse()
-          this.data = d
-          this.listeSave = d
-          this.formateData(d)
-          this.loading = false;
           if(this.listeSave.length < res.data.length){
+            this.calculeForBashbord(res.data)
+            let d = res.data.reverse()
+            this.data = d
+            this.listeSave = d
+            this.formateData(d)
+            this.loading = false;
+            console.log("my list : "+this.listeSave.length+" and incoming list : "+ res.data.length)
+         
             console.log("Fiiiiiiiii")
             this.loading = false;
             this.audio = new Audio();
@@ -251,6 +292,11 @@ export class DashbordAdminComponent implements OnInit {
     },20000)
 
   }
+    /**
+   * 
+   * @param arg tableau JSON 
+   * @returns Le tableau converti en chaine
+   */
   displayPanier(arg){
     if(arg.includes("[{")){
       if(arg != null || arg != undefined || arg != ""){
@@ -270,13 +316,23 @@ export class DashbordAdminComponent implements OnInit {
     
     
   }
- 
+   /**
+   * 
+   * @param date date dormat aaaa-mm-jj à covertir en jj-mm-aaaa
+   * @returns la date formaté
+   */
   displayDate(date){ 
     if(date != ""){
       return new Date(date).toLocaleString();
     }
     
   }
+    /**
+   * 
+   * @param obj objet JSON
+   * @param nom L'attribbue rechercher
+   * @returns la valeur de l'attribue
+   */
   displayData(obj,nom){
     if(obj.includes("{")){
       let ob = JSON.parse(obj);
@@ -298,6 +354,9 @@ export class DashbordAdminComponent implements OnInit {
     }
    
   }
+  /**
+   * les modales utiliser
+   */
   showMoodal(){
     document.getElementById('id01').style.display = "block";
   }

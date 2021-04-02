@@ -285,12 +285,12 @@
           <div id="invoice" *ngIf="selected" >
             <div class="panel-heading" >
               <div class="panel panel-default"  id="tntrecuimpressionabonnement">
-                <div class="panel-heading">
-                  <div style="text-align: center;">
-                    <img style="width: 7rem;"  src="https://rapidos.sn/wp-content/uploads/2020/04/graine-d-or.jpg" class="img-rounded" />
+                <div class="panel-heading" style="padding: 0;">
+                  <div style="text-align: center;margin-left:-25%">
+                    <img style="width: 7rem;height: 5rem;"  src="https://rapidos.sn/wp-content/uploads/2020/04/graine-d-or.jpg" class="img-rounded" />
                   
                   </div>
-                  <div style="text-align: center;">
+                  <div style="text-align: center;margin-left:-25%">
                     <h3>Almadies</h3>
                     <h5>Tel : 33 820 85 73</h5>
                   </div>
@@ -305,7 +305,7 @@
                 <div class="panel-body" style="font-size: 0.7rem !important;">
                   <table class="table" style="font-size: 0.7rem !important;width: 100%;">
                     <hr>
-                    <tr style="border-top: 2px solide black;border-bottom: 2px solide black;text-align: left;">
+                       <tr style="border-top: 2px solide black;border-bottom: 2px solide black;text-align: left;">
                       <th>Qte</th>
                       <th>Produit</th>
                       <th>Prix TTC</th>
@@ -318,22 +318,22 @@
                       <b align="left"> Numéro commande:</b>  {{selected.id}}<br>
                       <b align="left"> Désignation:</b> <span style="text-align: right;"> {{selected.designation}}</span><br>
                       <b align="left">Montant: </b>{{selected.montant}} fcfa<br>
-                      <b style="text-align: center;"> Total: {{getTotal(selected.montant,selected.frais_livraison)}} fcfa</b> <br>
+                      <b style="text-align: center;margin-left:-23"> Total: {{getTotal(selected.montant,selected.frais_livraison)}} fcfa</b> <br>
                       </td>-->
                     
                     </tr>
                   
                   </table>
                   <hr>
-                  <div style="text-align: center;">
+                  <div style="text-align: center;margin-left:-20%">
                     <b >Frais de livraison:</b>{{selected.fraisLivraison}} fcfa<br>
                     <b > Total TTC: {{selected.montant}} fcfa</b> <br>
                   </div>
                   <hr>
                   <br><br>
-                  <div style="text-align: center;">
+                  <div style="text-align: center;margin-left:-20%">
                     <b>Ouvert de 6h30 à 20h30</b><br>
-                    <b > Merci de votre visite - A très bientôt</b> <br>
+                    <b > Merci de votre visite - À très bientôt</b> <br>
                   </div>
 
                 </div>

@@ -38,6 +38,7 @@
                           </thead>
                           <tbody style="text-align: center;">
                             <tr *ngFor="let item of this.data | paginate: { itemsPerPage: 10, currentPage: p }">
+                              <td>{{item.date}}</td>
 
                               <td>
                                 <div class="dropdown">
@@ -54,12 +55,10 @@
                               <td>{{currencyFormat(item.montantCommande)}}</td>
                               <td>{{currencyFormat(item.montantLivraison)}}</td>
                               <td>
-                                <p *ngIf="item.paiement==1" >{{item.paiementText}}</p>
-                                <p *ngIf="item.paiement==2" >{{item.paiementText}}</p>
+                                <p  >{{item.paiementText}}</p>
                               </td>
                               <td>
-                                <p *ngIf="item.recuperation==1" >{{item.recuperationText}}</p>
-                                <p *ngIf="item.recuperation==2" >{{item.recuperationText}}</p>
+                                <p  >{{item.etatpaiement}}</p>
                               </td>
                               <td [ngClass]="{'bg-danger': item.etat==-1,'bg-secondary': item.etat==1,'bg-info': item.etat==2,'bg-warning': item.etat==3,'bg-primary': item.etat==4,'bg-success': item.etat==5}">
                                 <p *ngIf="item.etat==-1">{{item.etatText}}</p> 
@@ -72,7 +71,7 @@
                               <td>{{currencyFormat(item.monnaie)}}</td>
                               <td>
                                   <button class="btn btn-danger btn-lg" *ngIf="item.etat==1 && item.livreur!=''" (click)="modalOK(item,'2');">Valider</button>
-                                  <button class="btn btn-warning btn-lg" *ngIf="item.etat==1 && item.livreur==''" (click)="modalOK(item,'0');">Assigner</button>
+                                  <button class="btn btn-warning btn-lg" *ngIf="item.etat==1 && item.livreur==''" (click)="getLiv();modalOK(item,'0');">Assigner</button>
                                   <button class="btn btn-info btn-lg" *ngIf="item.etat==2" (click)="modalOK(item,'3');">Preparer</button>
                               </td>
                             </tr>

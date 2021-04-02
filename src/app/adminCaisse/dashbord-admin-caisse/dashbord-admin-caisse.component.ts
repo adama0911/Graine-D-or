@@ -9,7 +9,9 @@ import { AdminGeneralService } from 'src/app/services/adminGeneral/admin-general
   styleUrls: ['./dashbord-admin-caisse.component.scss']
 })
 export class DashbordAdminCaisseComponent implements OnInit {
-
+ /**
+  * Les variables locals utiliser
+  */
   public configuration: Config;
   public columns: Columns[];
   dd;
@@ -25,6 +27,10 @@ export class DashbordAdminCaisseComponent implements OnInit {
   audio
   dataToDisplay = [];
   listPanierToPrint =[]
+  /**
+   * handlePanier : permet de parser le tableau pour l'impression
+   * @param arg list du panier
+   */
   handlePanier(arg){
     console.log(arg)
     this.listPanierToPrint = [] 
@@ -32,6 +38,10 @@ export class DashbordAdminCaisseComponent implements OnInit {
     console.log(this.listPanierToPrint)
     //this.print()
   }
+  /**
+   * formateData : permet de formater le taablau des commandes 
+   * @param arg tableau de commande à formater
+   */
   formateData(arg){
   this.dataToDisplay = [];
 
@@ -80,15 +90,30 @@ export class DashbordAdminCaisseComponent implements OnInit {
     console.log(this.dataToDisplay)
     this.listeSave = this.dataToDisplay
   }
+  /**
+   * 
+   * @param date date dormat aaaa-mm-jj à covertir en jj-mm-aaaa
+   * @returns la date formaté
+   */
   displayDate(date){ 
     if(date != ""){
       return new Date(date).toLocaleString();
     }
     
   }
+  /**
+   * 
+   * @param somme un entier Ex: 10000 devient 10 000
+   * @returns la somme formater 
+   */
   currencyFormat(somme) : String{
     return Number(somme).toLocaleString() ;
   }
+  /**
+   * 
+   * @param arg tableau JSON 
+   * @returns Le tableau converti en chaine
+   */
   displayPanier(arg){
     if(arg.includes("[{")){
       if(arg != null || arg != undefined || arg != ""){
@@ -107,6 +132,9 @@ export class DashbordAdminCaisseComponent implements OnInit {
     
     
   }
+  /**
+   * searchAll :permet de filtrer le tableau de commande afficher
+   */
   searchAll = () => {
     let value = this.motcle;
   
@@ -119,25 +147,29 @@ export class DashbordAdminCaisseComponent implements OnInit {
     );
     this.dataToDisplay = filterTable;
   }
+  /**
+   * calculeForBashbord permet d'obtenir le nombre de commande et la somme des montants du tableau de commande afficher
+   * @param arg tableau de commande 
+   */
   calculeForBashbord(arg){
     this.nbrCommandes = 0;
     this.soldeGraineDor = 0;
-    this.soldeCompenseBBS = 0;
 
     this.nbrCommandes = arg.length;
     for(let i of arg){
       let somme =  parseInt(i.montant) ;
       this.soldeGraineDor = this.soldeGraineDor + somme;
-      if(i.mode_paiement == 3){
-        let somme =  parseInt(i.montant) ;
-        this.soldeCompenseBBS = this.soldeCompenseBBS + somme;     
-      }
+     
     }
   }
 
   constructor(private _serviceAdmin:AdminGeneralService) { 
     
   }
+  /**
+   * 
+   * @returns la date en format jj-mm-aaaa
+   */
   displayDate1(){
     return new Date().toLocaleString()
   }
@@ -151,6 +183,12 @@ export class DashbordAdminCaisseComponent implements OnInit {
   @ViewChild('recuperationTpl', { static: true }) recuperationTpl: TemplateRef<any>;
   @ViewChild('etatTpl', { static: true }) etatTpl: TemplateRef<any>;  
   public data = [ ];
+  /**
+   * monnairePrpa : permet de calculer le montant à préparer par livreur pour eventuel problème demonnaie
+   * @param mtt1 montant commande 
+   * @param mtt2 frais de livraison s'il y as
+   * @returns le montant à préparer
+   */
   monnairePrpa(mtt1 ,mtt2){
     let somme = parseInt(mtt1)+parseInt(mtt2);
     let temp = somme/10000;
@@ -159,6 +197,11 @@ export class DashbordAdminCaisseComponent implements OnInit {
     let monnaie = temp3 * 10000;
     return monnaie - somme;
   }
+  /**
+   * formateNumClient : permet juste de le + devant
+   * @param arg le numéro whatsapp du client 
+   * @returns le numéro sans le +
+   */
   formateNumClient(arg){
     if(arg.includes("+")){
       return arg.split("+")[1]
@@ -167,6 +210,9 @@ export class DashbordAdminCaisseComponent implements OnInit {
     }
     
   }
+  /**
+   * permet de mettre la commande en cours de livraison
+   */
   encoursLivraison(){
     this.loading = true;
 
@@ -203,6 +249,9 @@ export class DashbordAdminCaisseComponent implements OnInit {
     
    
   }
+  /**
+   * permet de mettre la commande en payer
+   */
   payer(){
     this.loading = true;
 
@@ -243,6 +292,9 @@ export class DashbordAdminCaisseComponent implements OnInit {
     
    
   }
+  /**
+   * pour l'impression
+   */
   print() {
     /* this.printService.init()
              .setBold(true)
@@ -273,7 +325,9 @@ export class DashbordAdminCaisseComponent implements OnInit {
     
  
    }
- 
+   /**
+    * pour la recherche par intervalle
+    */
   recherche(){
     this.loading = true;
 
@@ -297,7 +351,11 @@ export class DashbordAdminCaisseComponent implements OnInit {
       
     })
   }
+  
   periodiqueChecker:any;
+  /**
+   * permet d'arreter le'intervalle quand on quitte la page
+   */
   ngOnDestroy(){
     clearInterval(this.periodiqueChecker);
   }
@@ -321,6 +379,9 @@ export class DashbordAdminCaisseComponent implements OnInit {
       
       
     })
+    /**
+     * la recherche périodique par intervalle
+     */
     this.periodiqueChecker = setInterval(()=>{
       let d = (new Date().toJSON()).split("T")[0]
       let f = (new Date().toJSON()).split("T")[0]
@@ -330,18 +391,20 @@ export class DashbordAdminCaisseComponent implements OnInit {
         console.log(res)
         if(res.status == 1){
           console.log(this.listeSave.length+" "+res.data.length)
-         
-            this.calculeForBashbord(res.data)
-            let d = res.data.reverse()
-            this.data = d
-            this.listeSave = d
-            this.formateData(d)
           if(this.listeSave.length < res.data.length){
+           
+         
             this.loading = false;
             this.audio = new Audio();
             this.audio.src ='../../assets/hangouts_message_1.mp3';
             this.audio.play();
           }
+          this.calculeForBashbord(res.data)
+          let d = res.data.reverse()
+          this.data = d
+          this.listeSave = d
+          this.formateData(d)
+          this.loading = false;
          
         }else{
           this.loading = false;
@@ -352,6 +415,12 @@ export class DashbordAdminCaisseComponent implements OnInit {
     },20000)
 
   }
+  /**
+   * 
+   * @param obj objet JSON
+   * @param nom L'attribbue rechercher
+   * @returns la valeur de l'attribue
+   */
   displayData(obj,nom){
     if(obj != ""){
       
@@ -376,6 +445,9 @@ export class DashbordAdminCaisseComponent implements OnInit {
     }
    
   }
+  /**
+   * les modale utiliser
+   */
   showMoodalEncours(){
     document.getElementById('id0Encours').style.display = "block";
   }
@@ -429,6 +501,9 @@ export class DashbordAdminCaisseComponent implements OnInit {
     },3000)
     
   }
+  /**
+   * annuler une commande
+   */
   cancelCommande(){
     this.loading = true;
     //$param->user,$param->idCommande,$param->oldstate,$param->newstate
